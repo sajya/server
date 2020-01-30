@@ -1,0 +1,52 @@
+{
+    "name": "sajya/server",
+    "description": "Laravel JSON RPC server",
+    "keywords": [
+        "sajya",
+        "sajya"
+    ],
+    "homepage": "https://github.com/sajya/sajya",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandr Chernyaev",
+            "email": "bliz48rus@gmail.com",
+            "homepage": "https://sajya.be",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "laravel/framework": "^6.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^4.3",
+        "phpunit/phpunit": "^8.2",
+        "orchestra/testbench": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sajya\\Server\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sajya\\Server\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sajya\\Server\\ServerServiceProvider"
+            ]
+        }
+    }
+}
