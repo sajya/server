@@ -9,6 +9,10 @@
 
 JSON-RPC is a lightweight Remote Procedure Call protocol that utilizes JSON for its messaging envelopes.
 
+
+> **Note:** This project is in the early stages and is NOT ready for production usage yet.
+
+
 ## Installation
 
 You can install the package via composer:
