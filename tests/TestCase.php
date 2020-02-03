@@ -5,11 +5,25 @@ declare(strict_types=1);
 namespace Sajya\Server\Tests;
 
 use Illuminate\Foundation\Application;
+use Sajya\Server\Guide;
+use Sajya\Server\Procedure;
 use Sajya\Server\ServerServiceProvider;
+use Sajya\Server\Tests\Fixtures\DependencyInjectionProcedure;
 use Sajya\Server\Tests\Fixtures\SubtractProcedure;
+use Sajya\Server\Tests\Fixtures\SumProcedure;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
+
+    /**
+     * @var Procedure[]
+     */
+    private $mapProcedures = [
+        SubtractProcedure::class,
+        DependencyInjectionProcedure::class,
+        SumProcedure::class,
+    ];
+
 
     /**
      * @param \Illuminate\Foundation\Application $app
@@ -30,12 +44,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-
-        $app['router']->rpc('point', [
-            SubtractProcedure::class,
-        ])->name('rpc.point');
-
-
+        $app['router']->rpc('point', $this->mapProcedures)->name('rpc.point');
     }
 
+    /**
+     * @return Guide
+     */
+    public function getGuide(): Guide
+    {
+        return new Guide($this->mapProcedures);
+    }
 }

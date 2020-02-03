@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Http;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
@@ -26,9 +27,9 @@ class Request implements JsonSerializable
     /**
      * Request parameters.
      *
-     * @var array
+     * @var Collection
      */
-    protected $params = [];
+    protected $params;
 
     /**
      * JSON-RPC version of request.
@@ -36,6 +37,14 @@ class Request implements JsonSerializable
      * @var string
      */
     protected $version = '2.0';
+
+    /**
+     * Request constructor.
+     */
+    public function __construct()
+    {
+        $this->params = collect();
+    }
 
     /**
      * Set request state based on array.
@@ -67,22 +76,6 @@ class Request implements JsonSerializable
     }
 
     /**
-     * Retrieve param by index or key.
-     *
-     * @param int|string $index
-     *
-     * @return mixed|null Null when not found
-     */
-    public function getParam($index)
-    {
-        if (!array_key_exists($index, $this->params)) {
-            return null;
-        }
-
-        return $this->params[$index];
-    }
-
-    /**
      * Cast to string (JSON).
      *
      * @return string
@@ -100,10 +93,8 @@ class Request implements JsonSerializable
         $jsonArray['jsonrpc'] = $this->getVersion();
         $jsonArray['method'] = $this->getMethod();
 
-        $params = $this->getParams();
-
-        if (!empty($params)) {
-            $jsonArray['params'] = $params;
+        if ($this->getParams()->isNotEmpty()) {
+            $jsonArray['params'] = $this->getParams()->toArray();
         }
 
         if (null !== ($id = $this->getId())) {
@@ -118,7 +109,7 @@ class Request implements JsonSerializable
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -130,7 +121,7 @@ class Request implements JsonSerializable
      *
      * @return self
      */
-    public function setVersion($version = '2.0')
+    public function setVersion(string $version = '2.0')
     {
         $this->version = $version;
 
@@ -142,7 +133,7 @@ class Request implements JsonSerializable
      *
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -154,7 +145,7 @@ class Request implements JsonSerializable
      *
      * @return self
      */
-    public function setMethod($name)
+    public function setMethod(string $name)
     {
         $this->method = $name;
 
@@ -164,9 +155,9 @@ class Request implements JsonSerializable
     /**
      * Retrieve parameters.
      *
-     * @return array
+     * @return Collection
      */
-    public function getParams(): array
+    public function getParams(): Collection
     {
         return $this->params;
     }
@@ -180,43 +171,8 @@ class Request implements JsonSerializable
      */
     public function setParams(array $params)
     {
-        $this->params = [];
+        $this->params = $this->params->merge($params);
 
-        return $this->addParams($params);
-    }
-
-    /**
-     * Add many params.
-     *
-     * @param array $params
-     *
-     * @return self
-     */
-    public function addParams(array $params)
-    {
-        foreach ($params as $key => $value) {
-            $this->addParam($value, $key);
-        }
-        return $this;
-    }
-
-    /**
-     * Add a parameter to the request.
-     *
-     * @param mixed  $value
-     * @param string $key
-     *
-     * @return self
-     */
-    public function addParam($value, $key = null)
-    {
-        if ((null === $key) || !is_string($key)) {
-            $index = count($this->params);
-            $this->params[$index] = $value;
-            return $this;
-        }
-
-        $this->params[$key] = $value;
         return $this;
     }
 

@@ -22,6 +22,6 @@ class RequestTest extends TestCase
         $this->assertEquals('2.0', $request->getVersion());
         $this->assertEquals(1, $request->getId());
         $this->assertEquals('subtract', $request->getMethod());
-        $this->assertEquals([42, 23], $request->getParams());
+        $this->assertEquals([42, 23], $request->getParams()->toArray());
     }
 }

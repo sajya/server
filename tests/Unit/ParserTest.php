@@ -54,13 +54,12 @@ class ParserTest extends TestCase
         $requests = $content->makeRequests();
 
         $this->assertIsArray($requests);
-
         $request = reset($requests);
 
         $this->assertInstanceOf(Request::class, $request);
         $this->assertEquals('2.0', $request->getVersion());
         $this->assertEquals(1, $request->getId());
         $this->assertEquals('subtract', $request->getMethod());
-        $this->assertEquals([42, 23], $request->getParams());
+        $this->assertEquals([42, 23], $request->getParams()->toArray());
     }
 }

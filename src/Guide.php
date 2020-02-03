@@ -6,6 +6,7 @@ namespace Sajya\Server;
 
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
@@ -56,16 +57,29 @@ class Guide
     {
         $procedure = $this->findProcedure($request);
 
-        $result = $procedure === null
-            ? new Exception('Method "' . $request->getMethod() . '" not found ')
-            : $procedure->handle(...$request->getParams());
+
+        if ($procedure === null) {
+            $this->makeResponse($request, new Exception('Method "' . $request->getMethod() . '" not found '));
+        }
+
+        $params = $request->getParams();
+
+        $validation = Validator::make($params->toArray(), $procedure->rules($params));
+
+        if($validation->fails()){
+            \request()->validate();
+            dd('invalid');
+            //$validation->getMessageBag()->toArray();
+            //$validation->getMessageBag()->getMessages();
+            //$this->makeResponse($request, new Exception('Method "' . $request->getMethod() . '" not found '));
+        }
+
+        $params = collect($validation->validated());
+
+        $result = $procedure->handle($params);
 
 
-        return tap(new Response(), static function (Response $response) use ($request, $result) {
-            $response->setId($request->getId());
-            $response->setVersion($request->getVersion());
-            $response->setResult($result);
-        });
+        return $this->makeResponse($request, $result);
     }
 
     /**
@@ -86,10 +100,25 @@ class Guide
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(\Illuminate\Http\Request $request) : \Illuminate\Http\JsonResponse
+    public function __invoke(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
     {
         return response()->json(
             $this->handle($request->getContent())
         );
+    }
+
+    /**
+     * @param Request $request
+     * @param mixed   $result
+     *
+     * @return Response
+     */
+    private function makeResponse(Request $request, $result): Response
+    {
+        return tap(new Response(), static function (Response $response) use ($request, $result) {
+            $response->setId($request->getId());
+            $response->setVersion($request->getVersion());
+            $response->setResult($result);
+        });
     }
 }

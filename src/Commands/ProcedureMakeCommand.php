@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sajya\Server;
-
-namespace Orchid\Platform\Commands;
+namespace Sajya\Server\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 
-class MakeProcedureCommand extends GeneratorCommand
+class ProcedureMakeCommand extends GeneratorCommand
 {
     /**
      * The console command name.
@@ -38,7 +36,7 @@ class MakeProcedureCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '../stubs/procedure.stub';
+        return __DIR__ . '/../stubs/procedure.stub';
     }
 
     /**

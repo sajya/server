@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Orchid\Platform\Commands\MakeProcedureCommand;
+use Sajya\Server\Commands\ProcedureMakeCommand;
 
 class ServerServiceProvider extends ServiceProvider
 {
@@ -18,7 +18,7 @@ class ServerServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        MakeProcedureCommand::class
+        ProcedureMakeCommand::class
     ];
 
     /**

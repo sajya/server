@@ -7,7 +7,7 @@ namespace Sajya\Server\Tests\Fixtures;
 use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
-class SubtractProcedure extends Procedure
+class SumProcedure extends Procedure
 {
     /**
      * The name of the procedure that will be
@@ -15,7 +15,18 @@ class SubtractProcedure extends Procedure
      *
      * @var string
      */
-    public static string $name = 'subtract';
+    public static string $name = 'sum';
+
+    /**
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            'a' => 'integer|required',
+            'b' => 'integer|required',
+        ];
+    }
 
     /**
      * @param Collection $params
@@ -24,6 +35,6 @@ class SubtractProcedure extends Procedure
      */
     public function handle(Collection $params)
     {
-        return $params->first() - $params->last();
+        return  $params->get('a') + $params->get('b');
     }
 }
