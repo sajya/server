@@ -132,6 +132,7 @@ class Response implements JsonSerializable
     {
         if ($value instanceof Exception) {
             $this->setError($value);
+
             return $this;
         }
 

@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
-use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request as IlluminateRequest;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Validator;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
+use Sajya\Server\Lines\MethodDetect;
+use Sajya\Server\Lines\UsefulWork;
+use Sajya\Server\Lines\ValidationRequestFormat;
+use Sajya\Server\Lines\ValidationRequestParams;
 
 class Guide
 {
@@ -49,37 +54,22 @@ class Guide
     }
 
     /**
-     * @param \Sajya\Server\Http\Request $request
+     * @param Request $request
      *
      * @return Response
      */
     public function handleProcedure(Request $request): Response
     {
-        $procedure = $this->findProcedure($request);
-
-
-        if ($procedure === null) {
-            $this->makeResponse($request, new Exception('Method "' . $request->getMethod() . '" not found '));
-        }
-
-        $params = $request->getParams();
-
-        $validation = Validator::make($params->toArray(), $procedure->rules($params));
-
-        if($validation->fails()){
-            \request()->validate();
-            dd('invalid');
-            //$validation->getMessageBag()->toArray();
-            //$validation->getMessageBag()->getMessages();
-            //$this->makeResponse($request, new Exception('Method "' . $request->getMethod() . '" not found '));
-        }
-
-        $params = collect($validation->validated());
-
-        $result = $procedure->handle($params);
-
-
-        return $this->makeResponse($request, $result);
+        return app(Pipeline::class)
+            ->send(new State($this, $request))
+            ->through([
+                MethodDetect::class,
+                ValidationRequestFormat::class,
+                ValidationRequestParams::class,
+                UsefulWork::class,
+            ])
+            ->via('run')
+            ->then(fn(State $state) => $state->getResponse());
     }
 
     /**
@@ -96,29 +86,14 @@ class Guide
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param IlluminateRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function __invoke(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
+    public function __invoke(IlluminateRequest $request): JsonResponse
     {
         return response()->json(
             $this->handle($request->getContent())
         );
-    }
-
-    /**
-     * @param Request $request
-     * @param mixed   $result
-     *
-     * @return Response
-     */
-    private function makeResponse(Request $request, $result): Response
-    {
-        return tap(new Response(), static function (Response $response) use ($request, $result) {
-            $response->setId($request->getId());
-            $response->setVersion($request->getVersion());
-            $response->setResult($result);
-        });
     }
 }

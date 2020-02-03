@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use Sajya\Server\Guide;
 use Sajya\Server\Procedure;
 use Sajya\Server\ServerServiceProvider;
+use Sajya\Server\Tests\Fixtures\AbortProcedure;
 use Sajya\Server\Tests\Fixtures\DependencyInjectionProcedure;
 use Sajya\Server\Tests\Fixtures\SubtractProcedure;
 use Sajya\Server\Tests\Fixtures\SumProcedure;
@@ -22,6 +23,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         SubtractProcedure::class,
         DependencyInjectionProcedure::class,
         SumProcedure::class,
+        AbortProcedure::class,
     ];
 
 
