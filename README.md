@@ -1,9 +1,9 @@
 # Laravel JSON-RPC 2.0 server
 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/sajya/server.svg?style=flat-square)](https://packagist.org/packages/sajya/server)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/sajya/server.svg)](https://packagist.org/packages/sajya/server)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sajya/server/run-tests?label=tests)](https://github.com/sajya/server/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/sajya/server.svg?style=flat-square)](https://packagist.org/packages/sajya/server)
+[![Total Downloads](https://img.shields.io/packagist/dt/sajya/server.svg)](https://packagist.org/packages/sajya/server)
 
 
 
