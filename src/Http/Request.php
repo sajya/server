@@ -76,19 +76,9 @@ class Request implements JsonSerializable
     }
 
     /**
-     * Cast to string (JSON).
-     *
      * @return string
      */
-    public function __toString(): string
-    {
-        return $this->jsonSerialize();
-    }
-
-    /**
-     * @return string
-     */
-    public function jsonSerialize(): string
+    public function jsonSerialize(): array
     {
         $jsonArray['jsonrpc'] = $this->getVersion();
         $jsonArray['method'] = $this->getMethod();
@@ -101,7 +91,7 @@ class Request implements JsonSerializable
             $jsonArray['id'] = $id;
         }
 
-        return json_encode($jsonArray, JSON_THROW_ON_ERROR, 512);
+        return $jsonArray;
     }
 
     /**

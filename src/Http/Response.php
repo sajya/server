@@ -37,20 +37,11 @@ class Response implements JsonSerializable
      */
     protected $version;
 
-    /**
-     * Cast to string (JSON).
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->jsonSerialize();
-    }
 
     /**
      * @return string
      */
-    public function jsonSerialize(): string
+    public function jsonSerialize(): array
     {
         $response = ['id' => $this->getId()];
 
@@ -64,7 +55,7 @@ class Response implements JsonSerializable
             $response['jsonrpc'] = $version;
         }
 
-        return json_encode($response, JSON_THROW_ON_ERROR, 512);
+        return $response;
     }
 
     /**

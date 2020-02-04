@@ -7,7 +7,7 @@ namespace Sajya\Server\Tests\Fixtures;
 use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
-class SumProcedure extends Procedure
+class AlwaysResultProcedure extends Procedure
 {
     /**
      * The name of the procedure that will be
@@ -15,26 +15,15 @@ class SumProcedure extends Procedure
      *
      * @var string
      */
-    public static string $name = 'sum';
-
-    /**
-     * @return array
-     */
-    public function rules(): array
-    {
-        return [
-            'a' => 'integer|required',
-            'b' => 'integer|required',
-        ];
-    }
+    public static string $name = 'alwaysResult';
 
     /**
      * @param Collection $params
      *
-     * @return int
+     * @return null
      */
     public function handle(Collection $params)
     {
-        return $params->get('a') + $params->get('b');
+        return null;
     }
 }
