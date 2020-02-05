@@ -6,16 +6,11 @@ namespace Sajya\Server;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request as IlluminateRequest;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
-use Sajya\Server\Lines\MethodDetect;
-use Sajya\Server\Lines\UsefulWork;
-use Sajya\Server\Lines\ValidationRequestFormat;
-use Sajya\Server\Lines\ValidationRequestParams;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -63,16 +58,7 @@ class Guide
      */
     public function handleProcedure(Request $request): Response
     {
-        return app(Pipeline::class)
-            ->send(new State($this, $request))
-            ->through([
-                MethodDetect::class,
-                ValidationRequestFormat::class,
-                ValidationRequestParams::class,
-                UsefulWork::class,
-            ])
-            ->via('run')
-            ->then(fn(State $state) => $state->getResponse());
+        return HandleProcedure::dispatchNow($this, $request);
     }
 
     /**

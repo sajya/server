@@ -30,6 +30,11 @@ class Parser
     protected bool $batching = false;
 
     /**
+     * @var bool
+     */
+    protected bool $notification = false;
+
+    /**
      * ContentValidation constructor.
      *
      * @param string $content
