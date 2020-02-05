@@ -7,10 +7,11 @@
 
 The open and free JSON-RPC server for Laravel framework.
 
+> **Note:** This project is in the early stages and is NOT ready for production usage yet.
+
 Provides a lightweight remote procedure call protocol that uses JSON for messaging.
 
 #### Some features:
-
 
 - Simple and quick route adding
 - Validation of parameters and custom messages
