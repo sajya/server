@@ -21,7 +21,7 @@ class Response implements JsonSerializable
      *
      * @var string
      */
-    protected $id;
+    protected string $id;
 
     /**
      * Result
@@ -35,11 +35,11 @@ class Response implements JsonSerializable
      *
      * @var null|string
      */
-    protected $version;
+    protected ?string $version;
 
 
     /**
-     * @return string
+     * @return array
      */
     public function jsonSerialize(): array
     {
@@ -166,11 +166,11 @@ class Response implements JsonSerializable
      *
      * RPC error, if response results in fault.
      *
-     * @param mixed $error
+     * @param Exception|null $error
      *
-     * @return self
+     * @return Response
      */
-    public function setError(Exception $error = null)
+    public function setError(Exception $error = null) : Response
     {
         $this->error = $error;
 

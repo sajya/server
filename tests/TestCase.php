@@ -16,16 +16,15 @@ use Sajya\Server\Tests\Fixtures\SumProcedure;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-
     /**
-     * @var Procedure[]
+     * @var string[]
      */
-    private $mapProcedures = [
+    public array $mapProcedures = [
         SubtractProcedure::class,
         DependencyInjectionProcedure::class,
         SumProcedure::class,
         AbortProcedure::class,
-        AlwaysResultProcedure::class
+        AlwaysResultProcedure::class,
     ];
 
 

@@ -1,0 +1,6 @@
+{
+    "jsonrpc": "2.0",
+    "method": "alwaysResult",
+    "params": [],
+    "id": 1
+}

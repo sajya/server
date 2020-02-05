@@ -100,7 +100,7 @@ class State
      *
      * @return State
      */
-    public function makeResponse($result): State
+    public function makeResponse($result = null): State
     {
         $response = tap(new Response(), function (Response $response) use ($result) {
             $response->setId($this->request->getId());

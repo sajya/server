@@ -22,7 +22,7 @@ class Request implements JsonSerializable
      *
      * @var string
      */
-    protected $method;
+    protected string $method;
 
     /**
      * Request parameters.
@@ -36,7 +36,7 @@ class Request implements JsonSerializable
      *
      * @var string
      */
-    protected $version = '2.0';
+    protected string $version = '2.0';
 
     /**
      * Request constructor.
@@ -76,7 +76,7 @@ class Request implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function jsonSerialize(): array
     {
@@ -109,7 +109,7 @@ class Request implements JsonSerializable
      *
      * @param string $version
      *
-     * @return self
+     * @return Request
      */
     public function setVersion(string $version = '2.0')
     {
@@ -133,7 +133,7 @@ class Request implements JsonSerializable
      *
      * @param string $name
      *
-     * @return self
+     * @return Request
      */
     public function setMethod(string $name)
     {
@@ -181,7 +181,7 @@ class Request implements JsonSerializable
      *
      * @param mixed $name
      *
-     * @return self
+     * @return Request
      */
     public function setId($name)
     {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Illuminate\Support\Collection;
+
 abstract class Procedure
 {
     /**
@@ -54,13 +56,12 @@ abstract class Procedure
         return [];
     }
 
-
     /**
      * Execute the procedure.
      *
-     * @return array|string|integer
+     * @param Collection $params
+     *
+     * @return mixed
      */
-    /*
-    abstract public function handle();
-    */
+    abstract public function handle(Collection $params);
 }

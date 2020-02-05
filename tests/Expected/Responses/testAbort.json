@@ -1,0 +1,9 @@
+{
+    "id": "1",
+    "error": {
+        "code": 404,
+        "message": "Abort helper",
+        "data": []
+    },
+    "jsonrpc": "2.0"
+}

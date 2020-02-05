@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Lines;
 
+use RuntimeException;
 use Sajya\Server\Exceptions\RuntimeRpcException;
 use Sajya\Server\Line;
 use Sajya\Server\State;
@@ -15,6 +16,7 @@ class UsefulWork extends Line
      * @param State $state
      *
      * @return State
+     * @throws \Throwable
      */
     public function handler(State $state): State
     {
@@ -33,7 +35,7 @@ class UsefulWork extends Line
 
             return $state->makeResponse($exception);
 
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
 
             $data = config('app.debug')
                 ? $exception->getTrace()

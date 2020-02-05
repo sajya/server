@@ -1,0 +1,8 @@
+{
+    "jsonrpc": "2.0",
+    "method": "abort",
+    "params": [
+        "app.name"
+    ],
+    "id": 1
+}

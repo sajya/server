@@ -1,0 +1,9 @@
+{
+    "jsonrpc": "2.0",
+    "method": "sum",
+    "params": {
+        "a": "foo",
+        "b": "bar"
+    },
+    "id": 1
+}

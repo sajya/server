@@ -17,7 +17,7 @@ class ServerServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $commands = [
+    protected array $commands = [
         ProcedureMakeCommand::class
     ];
 
@@ -39,8 +39,7 @@ class ServerServiceProvider extends ServiceProvider
         Route::macro('rpc', function ($url, array $map = []) {
             $guide = app()->make(Guide::class, $map);
 
-            /* @var Router $this */
-            return $this->post($url, fn(Request $request) => $guide($request));
+            return Route::post($url, fn(Request $request) => $guide($request));
         });
     }
 }

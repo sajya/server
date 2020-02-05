@@ -14,7 +14,7 @@ abstract class Line
      * @param State   $state
      * @param Closure $next
      *
-     * @return mixed
+     * @return object
      */
     public function run(State $state, Closure $next): object
     {
@@ -32,8 +32,5 @@ abstract class Line
      *
      * @return State
      */
-    public function handler(State $state): State
-    {
-
-    }
+    abstract function handler(State $state): State;
 }

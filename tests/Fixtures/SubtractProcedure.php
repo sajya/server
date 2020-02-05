@@ -20,10 +20,10 @@ class SubtractProcedure extends Procedure
     /**
      * @param Collection $params
      *
-     * @return array|int|string|void
+     * @return int
      */
-    public function handle(Collection $params)
+    public function handle(Collection $params): int
     {
-        return $params->first() - $params->last();
+        return (int) $params->first() - (int) $params->last();
     }
 }

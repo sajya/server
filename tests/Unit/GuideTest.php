@@ -47,7 +47,7 @@ class GuideTest extends TestCase
         $result = $this->getGuide()->handleProcedure($request);
 
         $this->assertEquals(19, $result->getResult());
-        $this->assertJsonStringEqualsJsonString('{"id":"1","result":19,"jsonrpc":"2.0"}', (string)$result);
+        $this->assertJsonStringEqualsJsonString('{"id":"1","result":19,"jsonrpc":"2.0"}', json_encode($result, JSON_THROW_ON_ERROR, 512));
     }
 
     public function testExecuteSubtractProcedure(): void
@@ -55,6 +55,6 @@ class GuideTest extends TestCase
         $result = $this->getGuide()->handle('{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}');
 
         $this->assertJson($result);
-        $this->assertJsonStringEqualsJsonString('"{\"id\":\"1\",\"result\":19,\"jsonrpc\":\"2.0\"}"', $result);
+        $this->assertJsonStringEqualsJsonString('{"id": "1", "result": 19, "jsonrpc": "2.0"}', $result);
     }
 }

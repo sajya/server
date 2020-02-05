@@ -107,8 +107,8 @@ class Guide
         $files = (new Finder())->in($directory)->files();
 
         return collect($files)
-            ->map(fn(SplFileInfo $resource) => $this->createClassForResource($resource->getPathname(), $namespace))
-            ->filter(fn(SplFileInfo $resource) => is_subclass_of($resource, Procedure::class));
+            ->map(fn(SplFileInfo $resource) => $this->createClassForResource($resource, $namespace))
+            ->filter(fn(SplFileInfo $resource) => is_subclass_of($resource->getPathname(), Procedure::class));
     }
 
     /**
@@ -117,7 +117,7 @@ class Guide
      *
      * @return string
      */
-    private function createClassForResource(SplFileInfo $resource, string $namespace)
+    private function createClassForResource(SplFileInfo $resource, string $namespace): string
     {
         return $namespace . str_replace(
                 ['/', '.php'],
