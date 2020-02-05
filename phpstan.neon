@@ -2,7 +2,6 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
-
     paths:
         - src
         - tests
@@ -12,8 +11,3 @@ parameters:
 
     ignoreErrors:
         - '#Unsafe usage of new static#'
-
-    excludes_analyse:
-        - ./*/*/FileToBeExcluded.php
-
-    checkMissingIterableValueType: false
