@@ -10,29 +10,8 @@ The open and free JSON-RPC server for Laravel framework.
 Provides a lightweight remote procedure call protocol that uses JSON for messaging
 
 
-
 > **Note:** This project is in the early stages and is NOT ready for production usage yet.
 
-
-## Installation
-
-You can install the package via composer:
-
-```bash
-composer require sajya/server
-```
-
-## Usage
-
-``` php
-//..
-```
-
-### Testing
-
-``` bash
-composer test
-```
 
 ### Changelog
 
