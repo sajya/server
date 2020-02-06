@@ -20,9 +20,9 @@ class Request implements JsonSerializable
     /**
      * Requested method.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $method;
+    protected $method;
 
     /**
      * Request parameters.
@@ -120,9 +120,9 @@ class Request implements JsonSerializable
     /**
      * Get request method name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMethod(): string
+    public function getMethod(): ?string
     {
         return $this->method;
     }
@@ -168,7 +168,7 @@ class Request implements JsonSerializable
     /**
      * Retrieve request identifier.
      *
-     * @return string
+     * @return string|null|int
      */
     public function getId()
     {

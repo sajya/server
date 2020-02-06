@@ -19,9 +19,9 @@ class Response implements JsonSerializable
     /**
      * Request ID
      *
-     * @var string
+     * @var string|int|null
      */
-    protected string $id;
+    protected $id;
 
     /**
      * Result
