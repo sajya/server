@@ -64,7 +64,11 @@ class Request implements JsonSerializable
                 $method = Str::start(ucfirst($key), 'set');
 
                 if (in_array($method, $methods, true)) {
-                    $request->$method($value);
+                    try{
+                    $request->$method($value); // Проблема с типами при вызове
+                        }catch (Exception $e){
+
+                    }
                 }
 
                 if ($key === 'jsonrpc') {
