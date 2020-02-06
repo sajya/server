@@ -41,12 +41,15 @@ class Guide
     public function handle(string $content = null): string
     {
         $parser = new Parser($content);
-        $rpcRequests = $parser->makeRequests();
 
-        $result = collect($rpcRequests)
-            ->map(fn(Request $request) => $this->handleProcedure($request));
+        if (!$parser->isError()) {
+            $rpcRequests = $parser->makeRequests();
 
-        $response = $parser->isBatch() ? $result->all() : $result->first();
+            $result = collect($rpcRequests)
+                ->map(fn(Request $request) => $this->handleProcedure($request));
+
+            $response = $parser->isBatch() ? $result->all() : $result->first();
+        }
 
         return json_encode($response, JSON_THROW_ON_ERROR, 512);
     }

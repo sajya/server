@@ -6,6 +6,8 @@ namespace Sajya\Server\Http;
 
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class Parser
 {
@@ -47,10 +49,35 @@ class Parser
             $decode = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
             $this->decode = collect($decode);
             $this->batching = $this->decode->filter(fn($value) => !is_array($value))->isEmpty();
+
+            $validation = Validator::make($decode, $this->rules());
+            $this->isParseError = !$validation->fails();
         } catch (Exception $e) {
+            $this->decode = collect();
+            $this->isParseError = true;
+        } catch (\TypeError $exception) {
+            $this->decode = collect();
             $this->isParseError = true;
         }
     }
+
+    /**
+     * @return array
+     */
+    public function rules(): array
+    {
+        return collect([
+            'jsonrpc' => 'required|in:"2.0"',
+            'method'  => 'required|string',
+            'params'  => 'array',
+            'id'      => 'int|string',
+        ])
+            ->when($this->batching, static function (Collection $collection) {
+                return $collection->keyBy(fn(string $key) => Str::start($key, '*.'));
+            })
+            ->toArray();
+    }
+
 
     /**
      * @return bool

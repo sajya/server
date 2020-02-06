@@ -60,15 +60,10 @@ class Request implements JsonSerializable
 
         collect($collection)
             ->each(static function ($value, $key) use ($request, $methods) {
-
                 $method = Str::start(ucfirst($key), 'set');
 
                 if (in_array($method, $methods, true)) {
-                    try{
-                    $request->$method($value); // Проблема с типами при вызове
-                        }catch (Exception $e){
-
-                    }
+                    $request->$method($value);
                 }
 
                 if ($key === 'jsonrpc') {
