@@ -43,16 +43,18 @@ class Parser
      */
     public function __construct(string $content = '')
     {
+
         $this->content = $content;
 
         try {
             $decode = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
             $this->decode = collect($decode);
             $this->batching = $this->decode->filter(fn($value) => !is_array($value))->isEmpty();
-
             $validation = Validator::make($decode, $this->rules());
-            $this->isParseError = !$validation->fails();
+            $validation->fails();
+            //$this->isParseError = !$validation->fails();
         } catch (Exception $e) {
+
             $this->decode = collect();
             $this->isParseError = true;
         } catch (\TypeError $exception) {
@@ -66,17 +68,23 @@ class Parser
      */
     public function rules(): array
     {
+        Validator::extend('rule_id', function($attribute, $value, $parameters)
+        {
+            return is_null($value)||is_int($value)||is_string($value);
+        });
         return collect([
             'jsonrpc' => 'required|in:"2.0"',
             'method'  => 'required|string',
             'params'  => 'array',
-            'id'      => 'int|string',
+            'id'      => 'rule_id'
         ])
             ->when($this->batching, static function (Collection $collection) {
                 return $collection->keyBy(fn(string $key) => Str::start($key, '*.'));
             })
             ->toArray();
     }
+
+
 
 
     /**
