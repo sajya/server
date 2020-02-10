@@ -16,7 +16,7 @@ Provides a lightweight remote procedure call protocol that uses JSON for messagi
 - Simple and quick route adding
 - Validation of parameters and custom messages
 - Support batch requests
-- Support notification Requests
+- Support notification requests
 
 
 See the docs for everything: https://sajya.github.io/
