@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sajya\Server\Tests\Fixtures;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
@@ -34,12 +35,12 @@ class DependencyInjectionProcedure extends Procedure
     }
 
     /**
-     * @param Collection $params
+     * @param Request $request
      *
      * @return array|int|string|void
      */
-    public function handle(Collection $params)
+    public function handle(Request $request)
     {
-        return $this->config->get($params->first());
+        return $this->config->get($request->get(0));
     }
 }

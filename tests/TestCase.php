@@ -6,7 +6,6 @@ namespace Sajya\Server\Tests;
 
 use Illuminate\Foundation\Application;
 use Sajya\Server\Guide;
-use Sajya\Server\Procedure;
 use Sajya\Server\ServerServiceProvider;
 use Sajya\Server\Tests\Fixtures\AbortProcedure;
 use Sajya\Server\Tests\Fixtures\AlwaysResultProcedure;

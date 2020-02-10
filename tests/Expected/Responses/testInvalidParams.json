@@ -1,0 +1,16 @@
+{
+    "id": null,
+    "error": {
+        "code": -32602,
+        "message": "Invalid params",
+        "data": {
+            "method": [
+                "The method must be a string."
+            ],
+            "params": [
+                "The params must be an array."
+            ]
+        }
+    },
+    "jsonrpc": "2.0"
+}

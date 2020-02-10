@@ -7,7 +7,7 @@ namespace Sajya\Server\Http;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Sajya\Server\Exceptions\InvalidParams;
 
 class Parser
 {
@@ -43,48 +43,17 @@ class Parser
      */
     public function __construct(string $content = '')
     {
-
         $this->content = $content;
 
         try {
             $decode = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
             $this->decode = collect($decode);
             $this->batching = $this->decode->filter(fn($value) => !is_array($value))->isEmpty();
-            $validation = Validator::make($decode, $this->rules());
-            $validation->fails();
-            //$this->isParseError = !$validation->fails();
-        } catch (Exception $e) {
-
-            $this->decode = collect();
-            $this->isParseError = true;
-        } catch (\TypeError $exception) {
+        } catch (Exception| \TypeError $e) {
             $this->decode = collect();
             $this->isParseError = true;
         }
     }
-
-    /**
-     * @return array
-     */
-    public function rules(): array
-    {
-        Validator::extend('rule_id', function($attribute, $value, $parameters)
-        {
-            return is_null($value)||is_int($value)||is_string($value);
-        });
-        return collect([
-            'jsonrpc' => 'required|in:"2.0"',
-            'method'  => 'required|string',
-            'params'  => 'array',
-            'id'      => 'rule_id'
-        ])
-            ->when($this->batching, static function (Collection $collection) {
-                return $collection->keyBy(fn(string $key) => Str::start($key, '*.'));
-            })
-            ->toArray();
-    }
-
-
 
 
     /**
@@ -110,11 +79,14 @@ class Parser
     {
         if ($this->isBatch()) {
             return $this->decode
-                ->map(fn($options) => Request::loadArray($options))
+                ->map(fn($options) => $this->checkValidation($options))
+                ->map(fn($options) => $options instanceof Exception ? $options : Request::loadArray($options))
                 ->toArray();
         }
 
-        return [Request::loadArray($this->decode->toArray())];
+        $options = $this->checkValidation($this->decode->toArray());
+
+        return [is_array($options) ? Request::loadArray($options) : $options];
     }
 
     /**
@@ -123,5 +95,32 @@ class Parser
     public function isBatch(): bool
     {
         return $this->batching;
+    }
+
+    /**
+     * @param $options
+     *
+     * @return InvalidParams|array
+     */
+    public function checkValidation(array $options = [])
+    {
+        $validation = Validator::make($options, self::rules());
+
+        return $validation->fails()
+            ? new InvalidParams($validation->errors()->toArray())
+            : $options;
+    }
+
+    /**
+     * @return array
+     */
+    public static function rules(): array
+    {
+        return [
+            'jsonrpc' => 'required|in:"2.0"',
+            'method'  => 'required|string',
+            'params'  => 'array',
+            'id'      => 'regex:/^\d*(\.\d{2})?$/|nullable',
+        ];
     }
 }

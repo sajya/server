@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
-use Illuminate\Support\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 abstract class Procedure
 {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     /**
      * The name of the procedure that will be
      * displayed and taken into account in the search
@@ -59,9 +63,7 @@ abstract class Procedure
     /**
      * Execute the procedure.
      *
-     * @param Collection $params
-     *
      * @return mixed
      */
-    abstract public function handle(Collection $params);
+    //abstract public function handle();
 }

@@ -18,11 +18,9 @@ class AbortProcedure extends Procedure
     public static string $name = 'abort';
 
     /**
-     * @param Collection $params
      *
-     * @return array|int|string|void
      */
-    public function handle(Collection $params)
+    public function handle()
     {
         return abort(404, 'Abort helper');
     }

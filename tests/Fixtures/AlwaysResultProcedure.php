@@ -18,11 +18,9 @@ class AlwaysResultProcedure extends Procedure
     public static string $name = 'alwaysResult';
 
     /**
-     * @param Collection $params
-     *
-     * @return null
+     * @return |null
      */
-    public function handle(Collection $params)
+    public function handle()
     {
         return null;
     }

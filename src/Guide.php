@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request as IlluminateRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
-use Sajya\Server\Http\Response;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -21,45 +17,24 @@ class Guide
      *
      * @var Collection
      */
-    protected $map;
+    protected Collection $map;
 
     /**
      * Guide constructor.
      *
-     * @param array $map
+     * @param string|null|array $path
      */
-    public function __construct(array $map = [])
+    public function __construct($path = null)
     {
-        $this->map = collect($map);
-    }
+        $this->map = collect();
+        $path ??= (string)app();
 
-    /**
-     * @param string|null $content
-     *
-     * @return string
-     */
-    public function handle(string $content = null): string
-    {
-        $parser = new Parser($content);
+        if (is_array($path)) {
+            $this->map = $this->map->merge($path);
+            return;
+        }
 
-        $rpcRequests = $parser->makeRequests();
-
-        $result = collect($rpcRequests)
-            ->map(fn(Request $request) => $this->handleProcedure($request));
-
-        $response = $parser->isBatch() ? $result->all() : $result->first();
-
-        return json_encode($response, JSON_THROW_ON_ERROR, 512);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function handleProcedure(Request $request): Response
-    {
-        return HandleProcedure::dispatchNow($this, $request);
+        $this->map = $this->findProceduresClass($path);
     }
 
     /**
@@ -82,7 +57,7 @@ class Guide
      *
      * @return Collection
      */
-    public function findProceduresClass(string $path = 'Http/Procedures'): Collection
+    private function findProceduresClass(string $path = 'Http/Procedures'): Collection
     {
         $namespace = app()->getNamespace();
         $directory = app_path($path);
@@ -111,17 +86,5 @@ class Guide
                 ['\\', ''],
                 Str::after($resource->getPathname(), app_path() . DIRECTORY_SEPARATOR)
             );
-    }
-
-    /**
-     * @param IlluminateRequest $request
-     *
-     * @return JsonResponse
-     */
-    public function __invoke(IlluminateRequest $request): JsonResponse
-    {
-        return response()->json(
-            $this->handle($request->getContent())
-        );
     }
 }

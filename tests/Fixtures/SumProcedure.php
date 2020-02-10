@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Fixtures;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
@@ -18,23 +19,18 @@ class SumProcedure extends Procedure
     public static string $name = 'sum';
 
     /**
-     * @return array
-     */
-    public function rules(): array
-    {
-        return [
-            'a' => 'integer|required',
-            'b' => 'integer|required',
-        ];
-    }
-
-    /**
      * @param Collection $params
      *
      * @return int
      */
-    public function handle(Collection $params)
+    public function handle(Request $request)
     {
-        return $params->get('a') + $params->get('b');
+        $request->validate([
+            'a' => 'integer|required',
+            'b' => 'integer|required',
+        ]);
+
+
+        return $request->get('a') + $request->get('b');
     }
 }

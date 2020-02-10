@@ -28,27 +28,6 @@ class ParserTest extends TestCase
         $this->assertTrue($content->isError());
     }
 
-
-    public function testInvalidJsonTwo(): void
-    {
-        $result = $this->getGuide()->handle('{"jsonrpc": "2.0", "method": "foobar, "params": "bar", "baz]');
-
-        $this->assertJson($result);
-        $this->assertJsonStringEqualsJsonString('{"jsonrpc": "2.0", "error": {"code": -32700, "message": "Parse error"}, "id": null}', $result);
-    }
-
-   public function testBatchSumProcedure(): void
-    {
-        $result = $this->getGuide()
-            ->handle('[
-                {"jsonrpc": "2.0", "method": "sum", "params": {"a": 1, "b": 2}, "id": 1},
-                {"jsonrpc": "2.0", "method": "sum", "params": {"a": 3, "b": 4}, "id": 2}
-            ]');
-
-        $this->assertJson($result);
-        $this->assertJsonStringEqualsJsonString('[{"id": 1, "result": 3, "jsonrpc": "2.0"}, {"id": 2, "result": 7, "jsonrpc": "2.0"}]', $result);
-    }
-
     public function testBatchJson(): void
     {
         $json = '[{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}]';

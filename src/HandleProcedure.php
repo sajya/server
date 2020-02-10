@@ -4,67 +4,68 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Sajya\Server\Http\Request;
-use Sajya\Server\Http\Response;
-use Sajya\Server\Lines\MethodDetect;
-use Sajya\Server\Lines\UsefulWork;
-use Sajya\Server\Lines\ValidationRequestFormat;
-use Sajya\Server\Lines\ValidationRequestParams;
+use Illuminate\Support\Facades\App;
+use Illuminate\Validation\ValidationException;
+use RuntimeException;
+use Sajya\Server\Exceptions\InvalidParams;
+use Sajya\Server\Exceptions\RuntimeRpcException;
+use Sajya\Server\Tests\Fixtures\SumProcedure;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleProcedure implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Request
+     * @var Procedure
      */
-    protected Request $request;
-
-    /**
-     * @var Pipeline
-     */
-    protected Pipeline $pipeline;
-
-    /**
-     * @var Guide
-     */
-    protected Guide $guide;
+    protected Procedure $procedure;
 
     /**
      * Create a new job instance.
      *
-     * @param Guide   $guide
-     * @param Request $request
+     * @param Procedure $procedure
      */
-    public function __construct(Guide $guide, Request $request)
+    public function __construct(Procedure $procedure)
     {
-        $this->guide = $guide;
-        $this->request = $request;
-        $this->pipeline = app(Pipeline::class);
+        $this->procedure = $procedure;
     }
 
     /**
      * Execute the job.
      *
-     * @return Response
+     * @return mixed
      */
-    public function handle(): Response
+    public function handle()
     {
-        return $this->pipeline
-            ->send(new State($this->guide, $this->request))
-            ->through([
-                MethodDetect::class,
-                ValidationRequestFormat::class,
-                ValidationRequestParams::class,
-                UsefulWork::class,
-            ])
-            ->via('run')
-            ->then(fn(State $state) => $state->getResponse());
+        try {
+            return App::call(get_class($this->procedure) . '@handle');
+        } catch (HttpException | RuntimeException | Exception $exception) {
+
+            $message = $exception->getMessage();
+
+            $data = [];
+
+            $code = method_exists($exception, 'getStatusCode')
+                ? $exception->getStatusCode()
+                : $exception->getCode();
+
+            if ($exception instanceof ValidationException) {
+                return new InvalidParams($exception->validator->errors()->toArray());
+            }
+
+
+            $exception = new RuntimeRpcException($message, $code);
+            $exception->setData($data);
+
+
+            return $exception;
+        }
     }
 }

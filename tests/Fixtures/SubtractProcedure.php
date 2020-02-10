@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Fixtures;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
@@ -18,12 +19,12 @@ class SubtractProcedure extends Procedure
     public static string $name = 'subtract';
 
     /**
-     * @param Collection $params
+     * @param Request $request
      *
      * @return int
      */
-    public function handle(Collection $params): int
+    public function handle(Request $request): int
     {
-        return (int) $params->first() - (int) $params->last();
+        return (int)$request->get(0) - (int)$request->get(1);
     }
 }

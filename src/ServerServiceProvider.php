@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Sajya\Server\Commands\ProcedureMakeCommand;
+use Sajya\Server\Middleware\JsonToRequest;
 
 class ServerServiceProvider extends ServiceProvider
 {
@@ -36,10 +35,8 @@ class ServerServiceProvider extends ServiceProvider
     {
         $this->commands($this->commands);
 
-        Route::macro('rpc', function ($url, array $map = []) {
-            $guide = app()->make(Guide::class, $map);
-
-            return Route::post($url, fn(Request $request) => $guide($request));
+        Route::macro('rpc', function ($url, $patch = null) {
+            return Route::any($url, [JsonRpcController::class, 'handle']);
         });
     }
 }

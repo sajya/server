@@ -19,11 +19,12 @@ class ExpectedTest extends TestCase
     {
         $this->getRequestResponseContent()->each(function (array $params, string $key) {
 
-            $response = $this->getGuide()->handle($params['request']);
+            $response = $this
+                ->call('POST', route('rpc.point'), [], [], [], [], $params['request'])
+                ->getContent();
 
-            $this->assertJson($response);
+            $this->assertJson($response, 'Error:: ' . $key);
             $this->assertJsonStringEqualsJsonString($params['response'], $response, 'Error:: ' . $key);
-
         });
     }
 
