@@ -3,6 +3,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/sajya/server.svg)](https://packagist.org/packages/sajya/server)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sajya/server/run-tests?label=tests)](https://github.com/sajya/server/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![codecov](https://codecov.io/gh/sajya/server/branch/master/graph/badge.svg)](https://codecov.io/gh/sajya/server)
 [![Total Downloads](https://img.shields.io/packagist/dt/sajya/server.svg)](https://packagist.org/packages/sajya/server)
 
 
