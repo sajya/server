@@ -15,7 +15,6 @@ use Illuminate\Validation\ValidationException;
 use RuntimeException;
 use Sajya\Server\Exceptions\InvalidParams;
 use Sajya\Server\Exceptions\RuntimeRpcException;
-use Sajya\Server\Tests\Fixtures\SumProcedure;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleProcedure implements ShouldQueue
@@ -50,8 +49,6 @@ class HandleProcedure implements ShouldQueue
 
             $message = $exception->getMessage();
 
-            $data = [];
-
             $code = method_exists($exception, 'getStatusCode')
                 ? $exception->getStatusCode()
                 : $exception->getCode();
@@ -60,12 +57,7 @@ class HandleProcedure implements ShouldQueue
                 return new InvalidParams($exception->validator->errors()->toArray());
             }
 
-
-            $exception = new RuntimeRpcException($message, $code);
-            $exception->setData($data);
-
-
-            return $exception;
+            return new RuntimeRpcException($message, $code);
         }
     }
 }

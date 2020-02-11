@@ -36,7 +36,7 @@ class ServerServiceProvider extends ServiceProvider
         $this->commands($this->commands);
 
         Route::macro('rpc', function ($url, $patch = null) {
-            return Route::any($url, [JsonRpcController::class, 'handle']);
+            return Route::post($url, [JsonRpcController::class, 'handle']);
         });
     }
 }

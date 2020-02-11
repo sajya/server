@@ -18,7 +18,7 @@ class AlwaysResultProcedure extends Procedure
     public static string $name = 'alwaysResult';
 
     /**
-     * @return |null
+     * @return null
      */
     public function handle()
     {

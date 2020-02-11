@@ -27,7 +27,7 @@ class Guide
     public function __construct($path = null)
     {
         $this->map = collect();
-        $path ??= (string)app();
+        $path ??= app_path();
 
         if (is_array($path)) {
             $this->map = $this->map->merge($path);

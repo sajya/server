@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
-use Sajya\Server\Tests\TestCase;
 use Sajya\Server\Http\Request;
+use Sajya\Server\Tests\TestCase;
 
 class RequestTest extends TestCase
 {
@@ -23,5 +23,20 @@ class RequestTest extends TestCase
         $this->assertEquals(1, $request->getId());
         $this->assertEquals('subtract', $request->getMethod());
         $this->assertEquals([42, 23], $request->getParams()->toArray());
+    }
+
+    public function testRevertRequest(): void
+    {
+        $request = tap(new Request(), function (Request $request) {
+            $request->setId(1);
+            $request->setMethod('subtract');
+            $request->setParams([42, 23]);
+            $request->setVersion('2.0');
+        });
+
+        $json = json_encode($request);
+
+        $this->assertJson($json);
+        $this->assertEquals('{"jsonrpc":"2.0","method":"subtract","params":[42,23],"id":"1"}', $json);
     }
 }

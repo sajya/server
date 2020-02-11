@@ -25,7 +25,7 @@ class JsonRpcController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      *
-     * @return false|string
+     * @return mixed
      */
     public function handle(\Illuminate\Http\Request $request)
     {
@@ -80,14 +80,13 @@ class JsonRpcController extends Controller
             AlwaysResultProcedure::class,
         ]);
 
-        \request()->merge($request->getParams()->toArray());
+        \request()->replace($request->getParams()->toArray());
 
         $procedure = $guide->findProcedure($request);
 
         if ($procedure === null) {
             return $this->makeResponse(new MethodNotFound(), $request);
         }
-
 
         $result = HandleProcedure::dispatchNow($procedure);
 

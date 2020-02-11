@@ -19,7 +19,7 @@ class SumProcedure extends Procedure
     public static string $name = 'sum';
 
     /**
-     * @param Collection $params
+     * @param Request $request
      *
      * @return int
      */

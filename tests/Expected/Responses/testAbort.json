@@ -3,7 +3,7 @@
     "error": {
         "code": 404,
         "message": "Abort helper",
-        "data": []
+        "data": null
     },
     "jsonrpc": "2.0"
 }

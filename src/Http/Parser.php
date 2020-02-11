@@ -98,7 +98,7 @@ class Parser
     }
 
     /**
-     * @param $options
+     * @param array $options
      *
      * @return InvalidParams|array
      */
