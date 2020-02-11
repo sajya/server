@@ -7,7 +7,6 @@ namespace Sajya\Server;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Sajya\Server\Commands\ProcedureMakeCommand;
-use Sajya\Server\Middleware\JsonToRequest;
 
 class ServerServiceProvider extends ServiceProvider
 {
