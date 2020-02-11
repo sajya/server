@@ -23,8 +23,9 @@
     "require-dev": {
         "nunomaduro/larastan": "^0.5.1",
         "orchestra/testbench": "~4.0",
-        "phpunit/phpunit": "^8.2",
-        "symfony/var-dumper": "^4.3"
+        "symfony/var-dumper": "^4.3",
+        "phpunit/php-code-coverage": "^7.0",
+        "phpunit/phpunit": "^8.2"
     },
     "autoload": {
         "psr-4": {
