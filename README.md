@@ -5,11 +5,12 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sajya/server/run-tests?label=tests)](https://github.com/sajya/server/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/sajya/server.svg)](https://packagist.org/packages/sajya/server)
 
-The open and free JSON-RPC server for Laravel framework.
+
+This open project aims to provide the ability to easily implement the JSON-RPC 2.0 server specification for the Laravel.
 
 > **Note:** This project is in the early stages and is NOT ready for production usage yet.
 
-Provides a lightweight remote procedure call protocol that uses JSON for messaging.
+
 
 #### Some features:
 
