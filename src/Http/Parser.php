@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Sajya\Server\Exceptions\InvalidParams;
+use Sajya\Server\Exceptions\InvalidRequestException;
+use Sajya\Server\Exceptions\ParseErrorException;
 
 class Parser
 {
@@ -48,7 +50,15 @@ class Parser
         try {
             $decode = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
             $this->decode = collect($decode);
-            $this->batching = $this->decode->filter(fn($value) => !is_array($value))->isEmpty();
+
+            $this->batching = $this->decode->keys()->filter(function ($value) {
+                return is_string($value);
+            })->isEmpty();
+
+            if ($this->decode->isEmpty()) {
+                $this->batching = false;
+            }
+
         } catch (Exception| \TypeError $e) {
             $this->decode = collect();
             $this->isParseError = true;
@@ -65,21 +75,22 @@ class Parser
     }
 
     /**
-     * @return array|mixed
+     * @return Collection
      */
-    public function getContent()
+    public function getContent(): Collection
     {
         return $this->decode;
     }
 
     /**
-     * @return Request[]
+     * @return Collection<\Sajya\Server\Http\Request>
      */
     public function makeRequests(): array
     {
         if ($this->isBatch()) {
             return $this->decode
                 ->map(fn($options) => $this->checkValidation($options))
+                ->whenEmpty(fn(Collection $collection) => $collection->push($this->checkValidation()))
                 ->map(fn($options) => $options instanceof Exception ? $options : Request::loadArray($options))
                 ->toArray();
         }
@@ -98,17 +109,43 @@ class Parser
     }
 
     /**
-     * @param array $options
+     * @param bool|string|array|int $options
      *
-     * @return InvalidParams|array
+     * @return InvalidParams|ParseErrorException|InvalidRequestException|array
      */
-    public function checkValidation(array $options = [])
+    public function checkValidation($options = [])
     {
+        if ($this->isError()) {
+            return new ParseErrorException();
+        }
+
+        if (!is_array($options) || !$this->isAssociative($options)) {
+            return new InvalidRequestException();
+        }
+
         $validation = Validator::make($options, self::rules());
 
         return $validation->fails()
             ? new InvalidParams($validation->errors()->toArray())
             : $options;
+    }
+
+    /**
+     * @param $array
+     *
+     * @return bool
+     */
+    private function isAssociative(array $array): bool
+    {
+        $keys = array_keys($array);
+
+        foreach ($keys as $key) {
+            if (is_string($key)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

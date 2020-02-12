@@ -14,7 +14,8 @@ class InvalidRequestException extends RpcException
     public function __construct($data = null)
     {
         parent::__construct();
-        $this->data = $data;
+
+        $this->setData($data);
     }
 
     /**

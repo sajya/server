@@ -8,7 +8,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Sajya\Server\Exceptions\MethodNotFound;
-use Sajya\Server\Exceptions\ParseErrorException;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
@@ -31,13 +30,7 @@ class JsonRpcController extends Controller
     {
         $parser = new Parser($request->getContent());
 
-        if ($parser->isError()) {
-            return $this->makeResponse(new ParseErrorException());
-        }
-
-        $rpcRequests = collect($parser->makeRequests());
-
-        $result = $rpcRequests
+        $result = collect($parser->makeRequests())
             ->map(fn($request) => $request instanceof Request
                 ? $this->handleProcedure($request)
                 : $this->makeResponse($request)
