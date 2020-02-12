@@ -83,7 +83,7 @@ class Parser
     }
 
     /**
-     * @return Collection<\Sajya\Server\Http\Request>
+     * @return Request[]|Exception[]
      */
     public function makeRequests(): array
     {
@@ -131,7 +131,7 @@ class Parser
     }
 
     /**
-     * @param $array
+     * @param array $array
      *
      * @return bool
      */
