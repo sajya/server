@@ -1,4 +1,4 @@
-# Laravel JSON-RPC 2.0 server
+# Laravel JSON-RPC
 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/sajya/server.svg)](https://packagist.org/packages/sajya/server)
