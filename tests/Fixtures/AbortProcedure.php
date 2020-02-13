@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Fixtures;
 
-use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
 class AbortProcedure extends Procedure
@@ -20,8 +19,8 @@ class AbortProcedure extends Procedure
     /**
      *
      */
-    public function handle()
+    public function handle(): void
     {
-        return abort(404, 'Abort helper');
+        abort(404, 'Abort helper');
     }
 }

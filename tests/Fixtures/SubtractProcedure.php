@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sajya\Server\Tests\Fixtures;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
 class SubtractProcedure extends Procedure
@@ -25,6 +24,6 @@ class SubtractProcedure extends Procedure
      */
     public function handle(Request $request): int
     {
-        return (int)$request->get(0) - (int)$request->get(1);
+        return (int)$request->get('0') - (int)$request->get('1');
     }
 }

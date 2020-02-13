@@ -6,7 +6,6 @@ namespace Sajya\Server\Tests\Fixtures;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
 class DependencyInjectionProcedure extends Procedure
@@ -41,6 +40,6 @@ class DependencyInjectionProcedure extends Procedure
      */
     public function handle(Request $request)
     {
-        return $this->config->get($request->get(0));
+        return $this->config->get($request->get('0'));
     }
 }

@@ -1,34 +1,25 @@
 <?php
 
-
 namespace Sajya\Server;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller;
 use Sajya\Server\Exceptions\MethodNotFound;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
-use Sajya\Server\Tests\Fixtures\AbortProcedure;
-use Sajya\Server\Tests\Fixtures\AlwaysResultProcedure;
-use Sajya\Server\Tests\Fixtures\DependencyInjectionProcedure;
-use Sajya\Server\Tests\Fixtures\SubtractProcedure;
-use Sajya\Server\Tests\Fixtures\SumProcedure;
 
-class JsonRpcController extends Controller
+class JsonRpcController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    /**
+     * @var Guide
+     */
+    protected ?Guide $guide;
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return mixed
      */
-    public function handle(\Illuminate\Http\Request $request)
+    public function handle()
     {
-        $parser = new Parser($request->getContent());
+        $parser = new Parser((string)\request()->getContent());
 
         $result = collect($parser->makeRequests())
             ->map(fn($request) => $request instanceof Request
@@ -40,6 +31,22 @@ class JsonRpcController extends Controller
 
         return json_encode($response, JSON_THROW_ON_ERROR, 512);
     }
+
+
+    /**
+     * Invoke the controller method.
+     *
+     * @param array $procedures
+     *
+     * @return mixed
+     */
+    public function __invoke(array $procedures)
+    {
+        $this->guide = new Guide($procedures);
+
+        return $this->handle();
+    }
+
 
     /**
      * @param Request $request
@@ -65,17 +72,9 @@ class JsonRpcController extends Controller
      */
     public function handleProcedure(Request $request): Response
     {
-        $guide = new Guide([
-            SubtractProcedure::class,
-            DependencyInjectionProcedure::class,
-            SumProcedure::class,
-            AbortProcedure::class,
-            AlwaysResultProcedure::class,
-        ]);
-
         \request()->replace($request->getParams()->toArray());
 
-        $procedure = $guide->findProcedure($request);
+        $procedure = $this->guide->findProcedure($request);
 
         if ($procedure === null) {
             return $this->makeResponse(new MethodNotFound(), $request);
@@ -85,5 +84,4 @@ class JsonRpcController extends Controller
 
         return $this->makeResponse($result, $request);
     }
-
 }

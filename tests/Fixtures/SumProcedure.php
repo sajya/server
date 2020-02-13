@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sajya\Server\Tests\Fixtures;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
 class SumProcedure extends Procedure
@@ -23,7 +22,7 @@ class SumProcedure extends Procedure
      *
      * @return int
      */
-    public function handle(Request $request)
+    public function handle(Request $request): int
     {
         $request->validate([
             'a' => 'integer|required',

@@ -16,7 +16,7 @@ class ServerServiceProvider extends ServiceProvider
      * @var array
      */
     protected array $commands = [
-        ProcedureMakeCommand::class
+        ProcedureMakeCommand::class,
     ];
 
     /**
@@ -34,8 +34,10 @@ class ServerServiceProvider extends ServiceProvider
     {
         $this->commands($this->commands);
 
-        Route::macro('rpc', function ($url, $patch = null) {
-            return Route::post($url, [JsonRpcController::class, 'handle']);
+        Route::macro('rpc', function (string $uri, array $procedures = []) {
+
+            return Route::match(['POST'], $uri, '\Sajya\Server\JsonRpcController')
+                ->defaults('procedures', $procedures);
         });
     }
 }

@@ -9,7 +9,7 @@ class InvalidParams extends RpcException
     /**
      * InvalidParams constructor.
      *
-     * @param null $data
+     * @param mixed|null $data
      */
     public function __construct($data = null)
     {

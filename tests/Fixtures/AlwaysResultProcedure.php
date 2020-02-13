@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Fixtures;
 
-use Illuminate\Support\Collection;
 use Sajya\Server\Procedure;
 
 class AlwaysResultProcedure extends Procedure

@@ -73,7 +73,7 @@ abstract class RpcException extends RuntimeException implements JsonSerializable
     }
 
     /**
-     * @return array
+     * @return array{code:int, message:?string, data:?array}
      */
     public function jsonSerialize(): array
     {
