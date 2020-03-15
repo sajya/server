@@ -15,11 +15,13 @@ class JsonRpcController
     protected ?Guide $guide;
 
     /**
-     * @return mixed
+     * @param string $content
+     *
+     * @return string
      */
-    public function handle()
+    public function handle(string $content = ''): string
     {
-        $parser = new Parser((string)\request()->getContent());
+        $parser = new Parser($content);
 
         $result = collect($parser->makeRequests())
             ->map(fn($request) => $request instanceof Request
@@ -40,11 +42,11 @@ class JsonRpcController
      *
      * @return mixed
      */
-    public function __invoke(array $procedures)
+    public function __invoke(\Illuminate\Http\Request $request, array $procedures)
     {
         $this->guide = new Guide($procedures);
 
-        return $this->handle();
+        return $this->handle($request->getContent());
     }
 
 
