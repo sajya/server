@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
 use Sajya\Server\Exceptions\InvalidParams;
@@ -22,16 +23,16 @@ class HandleProcedure implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Procedure
+     * @var string
      */
-    protected Procedure $procedure;
+    protected string $procedure;
 
     /**
      * Create a new job instance.
      *
-     * @param Procedure $procedure
+     * @param string $procedure
      */
-    public function __construct(Procedure $procedure)
+    public function __construct(string $procedure)
     {
         $this->procedure = $procedure;
     }
@@ -44,7 +45,7 @@ class HandleProcedure implements ShouldQueue
     public function handle()
     {
         try {
-            return App::call(get_class($this->procedure) . '@handle');
+            return App::call($this->procedure);
         } catch (HttpException | RuntimeException | Exception $exception) {
 
             $message = $exception->getMessage();

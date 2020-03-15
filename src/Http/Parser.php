@@ -49,22 +49,19 @@ class Parser
 
         try {
             $decode = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+
             $this->decode = collect($decode);
+            $this->batching = $this->decode
+                ->keys()
+                ->filter(fn($value) => is_string($value))
+                ->isEmpty();
 
-            $this->batching = $this->decode->keys()->filter(function ($value) {
-                return is_string($value);
-            })->isEmpty();
-
-            if ($this->decode->isEmpty()) {
-                $this->batching = false;
-            }
-
+            $this->batching = $this->decode->isEmpty() ? false : $this->batching;
         } catch (Exception| \TypeError $e) {
             $this->decode = collect();
             $this->isParseError = true;
         }
     }
-
 
     /**
      * @return bool
@@ -137,15 +134,7 @@ class Parser
      */
     private function isAssociative(array $array): bool
     {
-        $keys = array_keys($array);
-
-        foreach ($keys as $key) {
-            if (is_string($key)) {
-                return true;
-            }
-        }
-
-        return false;
+        return collect($array)->keys()->filter(fn($key) => is_string($key))->isNotEmpty();
     }
 
     /**

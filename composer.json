@@ -18,6 +18,7 @@
     "require": {
         "php": "^7.4",
         "ext-json": "*",
+        "doctrine/annotations": "^1.8",
         "laravel/framework": "6.*",
         "orchestra/testbench": "4.*"
     },

@@ -1,0 +1,86 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Sajya\Server\Tests;
+
+use Illuminate\Config\Repository;
+use Illuminate\Http\Request;
+use Sajya\Server\Procedure;
+
+class FixtureProcedure extends Procedure
+{
+    /**
+     * The name of the procedure that will be
+     * displayed and taken into account in the search
+     *
+     * @var string
+     */
+    public static string $name = 'fixture';
+
+    /**
+     * @var Repository
+     */
+    private Repository $config;
+
+    /**
+     * DependencyInjectionProcedure constructor.
+     *
+     * @param Repository $repository
+     */
+    public function __construct(Repository $repository)
+    {
+        $this->config = $repository;
+    }
+
+    /**
+     *
+     */
+    public function abort(): void
+    {
+        abort(404, 'Abort helper');
+    }
+
+    /**
+     * @return null
+     */
+    public function alwaysResult()
+    {
+        return null;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array|int|string|void
+     */
+    public function dependencyInjection(Request $request)
+    {
+        return $this->config->get($request->get('0'));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return int
+     */
+    public function subtract(Request $request): int
+    {
+        return (int)$request->get('0') - (int)$request->get('1');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return int
+     */
+    public function validationMethod(Request $request): int
+    {
+        $request->validate([
+            'a' => 'integer|required',
+            'b' => 'integer|required',
+        ]);
+
+        return $request->get('a') + $request->get('b');
+    }
+}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Sajya\Server\Commands\ProcedureMakeCommand;
@@ -34,10 +35,11 @@ class ServerServiceProvider extends ServiceProvider
     {
         $this->commands($this->commands);
 
-        Route::macro('rpc', function (string $uri, array $procedures = []) {
+        AnnotationRegistry::registerLoader('class_exists');
 
-            return Route::match(['POST'], $uri, '\Sajya\Server\JsonRpcController')
-                ->defaults('procedures', $procedures);
-        });
+        Route::macro('rpc',
+            fn(string $uri, array $procedures = []) => Route::match(['POST'], $uri, JsonRpcController::class)
+                ->defaults('procedures', $procedures)
+        );
     }
 }

@@ -1,6 +1,6 @@
 {
     "jsonrpc": "2.0",
-    "method": "dependencyInjection",
+    "method": "fixture@dependencyInjection",
     "params": [
         "app.name"
     ],

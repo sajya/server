@@ -7,11 +7,6 @@ namespace Sajya\Server\Tests;
 use Illuminate\Foundation\Application;
 use Sajya\Server\Guide;
 use Sajya\Server\ServerServiceProvider;
-use Sajya\Server\Tests\Fixtures\AbortProcedure;
-use Sajya\Server\Tests\Fixtures\AlwaysResultProcedure;
-use Sajya\Server\Tests\Fixtures\DependencyInjectionProcedure;
-use Sajya\Server\Tests\Fixtures\SubtractProcedure;
-use Sajya\Server\Tests\Fixtures\SumProcedure;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -19,13 +14,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
      * @var string[]
      */
     public array $mapProcedures = [
-        SubtractProcedure::class,
-        DependencyInjectionProcedure::class,
-        SumProcedure::class,
-        AbortProcedure::class,
-        AlwaysResultProcedure::class,
+        FixtureProcedure::class,
     ];
-
 
     /**
      * @param \Illuminate\Foundation\Application $app

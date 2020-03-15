@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Sajya\Server;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use ReflectionClass;
 use Sajya\Server\Http\Request;
 
 class Guide
@@ -29,13 +31,48 @@ class Guide
     /**
      * @param Request $request
      *
-     * @return null|Procedure
+     * @return null|string
      */
-    public function findProcedure(Request $request): ?Procedure
+    public function findProcedure(Request $request): ?string
     {
+        $class = Str::beforeLast($request->getMethod(), '@');
+        $method = Str::afterLast($request->getMethod(), '@');
+
         return $this->map
-            ->map(fn($procedure) => !is_object($procedure) ? app()->make($procedure) : $procedure)
-            ->filter(fn(Procedure $procedure) => $procedure::$name === $request->getMethod())
+            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn(string $procedure) => Str::finish($procedure, '@' . $method))
             ->first();
+    }
+
+    /**
+     * @param string $procedure
+     * @param string $method
+     *
+     * @return bool
+     */
+    private function checkExistPublicMethod(string $procedure, string $method): bool
+    {
+        try {
+            return (new \ReflectionMethod($procedure, $method))->isPublic();
+        } catch (\Exception $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * @param string $procedure
+     *
+     * @return string
+     * @throws \ReflectionException
+     */
+    private function getProcedureName($procedure): ?string
+    {
+        try {
+            $class = new ReflectionClass($procedure);
+            return $class->getStaticPropertyValue('name');
+        } catch (\Exception $exception) {
+            return null;
+        }
     }
 }

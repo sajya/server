@@ -69,6 +69,7 @@ class JsonRpcController
      * @param Request $request
      *
      * @return Response
+     * @throws \ReflectionException
      */
     public function handleProcedure(Request $request): Response
     {

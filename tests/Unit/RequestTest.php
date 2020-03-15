@@ -34,7 +34,7 @@ class RequestTest extends TestCase
             $request->setVersion('2.0');
         });
 
-        $json = json_encode($request);
+        $json = json_encode($request, JSON_THROW_ON_ERROR, 512);
 
         $this->assertJson($json);
         $this->assertEquals('{"jsonrpc":"2.0","method":"subtract","params":[42,23],"id":"1"}', $json);

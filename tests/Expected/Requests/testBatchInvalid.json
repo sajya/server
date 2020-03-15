@@ -1,7 +1,7 @@
 [
     {
         "jsonrpc": "2.0",
-        "method": "sum",
+        "method": "fixture@validationMethod",
         "params": [
             1,
             2,
