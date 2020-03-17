@@ -11,7 +11,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
 use Sajya\Server\Exceptions\InvalidParams;
