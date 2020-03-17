@@ -24,7 +24,7 @@ class Guide
     /**
      * Guide constructor.
      *
-     * @param array $procedures
+     * @param string[] $procedures
      */
     public function __construct(array $procedures = [])
     {

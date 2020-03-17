@@ -52,7 +52,7 @@ class FixtureProcedure extends Procedure
     /**
      * @param Request $request
      *
-     * @return array|int|string|void
+     * @return mixed
      */
     public function dependencyInjection(Request $request)
     {

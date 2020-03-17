@@ -20,7 +20,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * @param \Illuminate\Foundation\Application $app
      *
-     * @return array
+     * @return string[]
      */
     protected function getPackageProviders($app)
     {

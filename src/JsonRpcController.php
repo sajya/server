@@ -14,8 +14,8 @@ class JsonRpcController
     /**
      * Invoke the controller method.
      *
-     * @param Request $request
-     * @param array   $procedures
+     * @param Request  $request
+     * @param string[] $procedures
      *
      * @return mixed
      */

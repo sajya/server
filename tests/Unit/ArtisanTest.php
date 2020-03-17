@@ -8,7 +8,7 @@ use Sajya\Server\Tests\TestCase;
 
 class ArtisanTest extends TestCase
 {
-    public function testArtisanMakeProcedure()
+    public function testArtisanMakeProcedure(): void
     {
         $this->artisan('make:procedure', ['name' => 'Test' . time()])
             ->expectsOutput('Procedure created successfully.')

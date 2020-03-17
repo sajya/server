@@ -13,7 +13,7 @@ class ServerServiceProvider extends ServiceProvider
     /**
      * The available command shortname.
      *
-     * @var array
+     * @var string[]
      */
     protected array $commands = [
         ProcedureMakeCommand::class,
