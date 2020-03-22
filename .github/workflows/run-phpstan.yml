@@ -3,7 +3,7 @@ name: Static Analysis
 on: [push]
 
 jobs:
-  dusk-host:
+  analysis:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
