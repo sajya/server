@@ -1,0 +1,8 @@
+{
+    "jsonrpc": "2.0",
+    "method": "fixture@validationMethod",
+    "params": {
+        "a": 1,
+        "b": 2
+    }
+}

@@ -57,6 +57,12 @@ class Parser
                 ->isEmpty();
 
             $this->batching = $this->decode->isEmpty() ? false : $this->batching;
+
+            $emptyIdRequest = $this->decode
+                ->when(!$this->batching, fn($request) => collect([$request]))
+                ->first(fn($value) => !isset($value['id']));
+
+            $this->notification = $emptyIdRequest !== null;
         } catch (Exception| \TypeError $e) {
             $this->decode = collect();
             $this->isParseError = true;
@@ -103,6 +109,14 @@ class Parser
     public function isBatch(): bool
     {
         return $this->batching;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNotification(): bool
+    {
+        return $this->notification;
     }
 
     /**

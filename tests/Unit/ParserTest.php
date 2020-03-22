@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
-use Sajya\Server\Tests\TestCase;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
+use Sajya\Server\Tests\TestCase;
 
 class ParserTest extends TestCase
 {
@@ -61,5 +61,26 @@ class ParserTest extends TestCase
         $this->assertEquals(1, $request->getId());
         $this->assertEquals('subtract', $request->getMethod());
         $this->assertEquals([42, 23], $request->getParams()->toArray());
+    }
+
+    public function testNotificationJson(): void
+    {
+        $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23]}';
+
+        $content = new Parser($json);
+
+        $this->assertTrue($content->isNotification());
+    }
+
+    public function testBathNotificationJson(): void
+    {
+        $json = '[
+            {"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1},
+            {"jsonrpc": "2.0", "method": "subtract", "params": [42, 23]}
+        ]';
+
+        $content = new Parser($json);
+
+        $this->assertTrue($content->isNotification());
     }
 }

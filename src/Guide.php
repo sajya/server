@@ -42,7 +42,7 @@ class Guide
 
         $result = collect($parser->makeRequests())
             ->map(fn($request) => $request instanceof Request
-                ? $this->handleProcedure($request)
+                ? $this->handleProcedure($request, $parser->isNotification())
                 : $this->makeResponse($request)
             );
 
@@ -70,11 +70,11 @@ class Guide
 
     /**
      * @param Request $request
+     * @param bool    $notification
      *
      * @return Response
-     * @throws \ReflectionException
      */
-    public function handleProcedure(Request $request): Response
+    public function handleProcedure(Request $request, bool $notification): Response
     {
         \request()->replace($request->getParams()->toArray());
 
@@ -84,7 +84,9 @@ class Guide
             return $this->makeResponse(new MethodNotFound(), $request);
         }
 
-        $result = HandleProcedure::dispatchNow($procedure);
+        $result = $notification
+            ? HandleProcedure::dispatchAfterResponse($procedure)
+            : HandleProcedure::dispatchNow($procedure);
 
         return $this->makeResponse($result, $request);
     }
