@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DummyNamespace;
 
+use Illuminate\Http\Request;
 use Sajya\Server\Procedure;
-use Illuminate\Support\Collection;
 
 class DummyClass extends Procedure
 {
@@ -20,11 +20,11 @@ class DummyClass extends Procedure
     /**
      * Execute the procedure.
      *
-     * @param Collection $params
+     * @param Request $request
      *
      * @return array|string|integer
      */
-    public function handle(Collection $params)
+    public function handle(Request $request)
     {
         // write your code
     }
