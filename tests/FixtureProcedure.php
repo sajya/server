@@ -6,6 +6,7 @@ namespace Sajya\Server\Tests;
 
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Sajya\Server\Procedure;
 
 class FixtureProcedure extends Procedure
@@ -81,6 +82,10 @@ class FixtureProcedure extends Procedure
             'b' => 'integer|required',
         ]);
 
-        return $request->get('a') + $request->get('b');
+        $result = $request->get('a') + $request->get('b');
+
+        Log::info('Result procedure: ' . $result);
+
+        return $result;
     }
 }

@@ -4,45 +4,84 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Sajya\Server\Tests\TestCase;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class ExpectedTest extends TestCase
 {
-    private const REQUEST_PATH = __DIR__ . '/../Expected/Requests';
-    private const RESPONSE_PATH = __DIR__ . '/../Expected/Responses';
-
-
-    public function testExpectedRequestResponse(): void
+    /**
+     * @return \Generator
+     */
+    public function exampleCalls(): ?\Generator
     {
-        $this->getRequestResponseContent()->each(function (array $params, string $key) {
-
-            $response = $this
-                ->call('POST', route('rpc.point'), [], [], [], [], $params['request'])
-                ->getContent();
-
-            $this->assertJson($response, 'Error:: ' . $key);
-            $this->assertJsonStringEqualsJsonString($params['response'], $response, 'Error:: ' . $key);
-        });
+        yield ['testAbort'];
+        yield ['testBatchInvalid'];
+        yield ['testBatchNotificationSum', function () {
+            Log::shouldReceive('info')
+                ->twice()
+                ->with('Result procedure: 3')
+                ->with('Result procedure: 4');
+        }];
+        yield ['testBatchOneError'];
+        yield ['testBatchSum'];
+        yield ['testDependencyInjection'];
+        yield ['testFindProcedure'];
+        yield ['testInvalidParams'];
+        yield ['testNotificationSum', function () {
+            Log::shouldReceive('info')
+                ->once()
+                ->with('Result procedure: 3');
+        }];
+        yield ['testNullResult'];
+        yield ['testParseError'];
+        yield ['testSimpleInValidationSum'];
+        yield ['testSimpleValidationSum'];
+        yield ['testWithAnEmptyArray'];
+        yield ['testWithAnInvalidBatchButNotEmpty'];
+        yield ['testWithInvalidBatch'];
     }
 
 
-    private function getRequestResponseContent(): Collection
+    /**
+     * @param string   $file
+     * @param \Closure $before
+     * @param \Closure $after
+     *
+     * @dataProvider exampleCalls
+     *
+     * @throws \Throwable
+     */
+    public function testHasCorrectRequestResponse(string $file, \Closure $before = null, \Closure $after = null): void
     {
-        $requests = collect((new Finder())->in(self::REQUEST_PATH)->files())
-            ->transform(fn(SplFileInfo $info) => $info->getContents());
+        if ($before !== null) {
+            $before();
+        }
 
-        $responses = collect((new Finder())->in(self::RESPONSE_PATH)->files())
-            ->transform(fn(SplFileInfo $info) => $info->getContents());
+        $response = $this->callRPC($file);
 
-        return $requests->map(static function (string $request, string $key) use ($responses) {
-            $keyResponse = str_replace(self::REQUEST_PATH, self::RESPONSE_PATH, $key,);
-
-            $response = $responses->get($keyResponse);
-
-            return compact('request', 'response');
-        });
+        if ($after !== null) {
+            $after($response);
+        }
     }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    private function callRPC(string $path): string
+    {
+        $request = file_get_contents("./tests/Expected/Requests/$path.json");
+        $response = file_get_contents("./tests/Expected/Responses/$path.json");
+
+        $actualJson = $this
+            ->call('POST', route('rpc.point'), [], [], [], [], $request)
+            ->getContent();
+
+        $this->assertJson($response);
+        $this->assertJsonStringEqualsJsonString($actualJson, $response);
+
+        return $response;
+    }
+
 }
