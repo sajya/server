@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
+use Closure;
+use Generator;
 use Illuminate\Support\Facades\Log;
 use Sajya\Server\Tests\TestCase;
+use Throwable;
 
 class ExpectedTest extends TestCase
 {
     /**
-     * @return \Generator
+     * @return Generator
      */
-    public function exampleCalls(): ?\Generator
+    public function exampleCalls(): ?Generator
     {
         yield ['testAbort'];
         yield ['testBatchInvalid'];
-        yield ['testBatchNotificationSum', function () {
+        yield ['testBatchNotificationSum', static function () {
             Log::shouldReceive('info')
                 ->twice()
                 ->with('Result procedure: 3')
@@ -27,7 +30,7 @@ class ExpectedTest extends TestCase
         yield ['testDependencyInjection'];
         yield ['testFindProcedure'];
         yield ['testInvalidParams'];
-        yield ['testNotificationSum', function () {
+        yield ['testNotificationSum', static function () {
             Log::shouldReceive('info')
                 ->once()
                 ->with('Result procedure: 3');
@@ -43,15 +46,15 @@ class ExpectedTest extends TestCase
 
 
     /**
-     * @param string   $file
-     * @param \Closure $before
-     * @param \Closure $after
+     * @param string  $file
+     * @param Closure $before
+     * @param Closure $after
      *
      * @dataProvider exampleCalls
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function testHasCorrectRequestResponse(string $file, \Closure $before = null, \Closure $after = null): void
+    public function testHasCorrectRequestResponse(string $file, Closure $before = null, Closure $after = null): void
     {
         if ($before !== null) {
             $before();
