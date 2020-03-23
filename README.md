@@ -9,9 +9,6 @@
 
 This open project aims to provide the ability to easily implement the JSON-RPC 2.0 server specification for the Laravel.
 
-> **Note:** This project is in the early stages and is NOT ready for production usage yet.
-
-
 
 #### Some features:
 
