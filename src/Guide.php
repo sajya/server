@@ -15,7 +15,7 @@ use Sajya\Server\Http\Response;
 class Guide
 {
     /**
-     * Stores all available RPC commands
+     * Stores all available RPC commands.
      *
      * @var Collection
      */
@@ -41,7 +41,7 @@ class Guide
         $parser = new Parser($content);
 
         $result = collect($parser->makeRequests())
-            ->map(fn($request) => $request instanceof Request
+            ->map(fn ($request) => $request instanceof Request
                 ? $this->handleProcedure($request, $parser->isNotification())
                 : $this->makeResponse($request)
             );
@@ -102,9 +102,9 @@ class Guide
         $method = Str::afterLast($request->getMethod(), '@');
 
         return $this->map
-            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
-            ->map(fn(string $procedure) => Str::finish($procedure, '@' . $method))
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn (string $procedure) => Str::finish($procedure, '@'.$method))
             ->first();
     }
 
@@ -133,6 +133,7 @@ class Guide
     {
         try {
             $class = new ReflectionClass($procedure);
+
             return $class->getStaticPropertyValue('name');
         } catch (\Exception $exception) {
             return null;

@@ -10,7 +10,7 @@ class ArtisanTest extends TestCase
 {
     public function testArtisanMakeProcedure(): void
     {
-        $this->artisan('make:procedure', ['name' => 'Test' . time()])
+        $this->artisan('make:procedure', ['name' => 'Test'.time()])
             ->expectsOutput('Procedure created successfully.')
             ->assertExitCode(0);
     }

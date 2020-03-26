@@ -44,7 +44,6 @@ class ExpectedTest extends TestCase
         yield ['testWithInvalidBatch'];
     }
 
-
     /**
      * @param string  $file
      * @param Closure $before
@@ -86,5 +85,4 @@ class ExpectedTest extends TestCase
 
         return $response;
     }
-
 }

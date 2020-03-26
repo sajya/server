@@ -10,33 +10,32 @@ use JsonSerializable;
 class Response implements JsonSerializable
 {
     /**
-     * Response error
+     * Response error.
      *
      * @var null|\Exception
      */
     protected $error;
 
     /**
-     * Request ID
+     * Request ID.
      *
      * @var string|int|null
      */
     protected $id;
 
     /**
-     * Result
+     * Result.
      *
      * @var mixed
      */
     protected $result;
 
     /**
-     * JSON-RPC version
+     * JSON-RPC version.
      *
      * @var null|string
      */
     protected ?string $version;
-
 
     /**
      * @return array
@@ -69,7 +68,7 @@ class Response implements JsonSerializable
     }
 
     /**
-     * Set request ID
+     * Set request ID.
      *
      * @param mixed $name
      *
@@ -93,7 +92,7 @@ class Response implements JsonSerializable
     }
 
     /**
-     * Get response error
+     * Get response error.
      *
      * @return null|\Exception
      */
@@ -133,7 +132,7 @@ class Response implements JsonSerializable
     }
 
     /**
-     * Retrieve JSON-RPC version
+     * Retrieve JSON-RPC version.
      *
      * @return null|string
      */
@@ -154,15 +153,17 @@ class Response implements JsonSerializable
         $version = (string) $version;
         if ('2.0' === $version) {
             $this->version = '2.0';
+
             return $this;
         }
 
         $this->version = null;
+
         return $this;
     }
 
     /**
-     * Set result error
+     * Set result error.
      *
      * RPC error, if response results in fault.
      *
@@ -170,11 +171,10 @@ class Response implements JsonSerializable
      *
      * @return Response
      */
-    public function setError(Exception $error = null) : Response
+    public function setError(Exception $error = null): Response
     {
         $this->error = $error;
 
         return $this;
     }
-
 }

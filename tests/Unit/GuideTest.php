@@ -8,7 +8,6 @@ use Sajya\Server\Http\Request;
 use Sajya\Server\Tests\FixtureProcedure;
 use Sajya\Server\Tests\TestCase;
 
-
 class GuideTest extends TestCase
 {
     public function testFindMethodProcedure(): void
@@ -20,7 +19,7 @@ class GuideTest extends TestCase
             $request->setVersion('2.0');
         });
 
-        $this->assertEquals(FixtureProcedure::class . '@subtract', $this->getGuide()->findProcedure($request));
+        $this->assertEquals(FixtureProcedure::class.'@subtract', $this->getGuide()->findProcedure($request));
     }
 
     public function testNotFoundMethodProcedure(): void

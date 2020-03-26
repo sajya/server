@@ -46,7 +46,6 @@ class HandleProcedure implements ShouldQueue
         try {
             return App::call($this->procedure);
         } catch (HttpException | RuntimeException | Exception $exception) {
-
             $message = $exception->getMessage();
 
             $code = method_exists($exception, 'getStatusCode')

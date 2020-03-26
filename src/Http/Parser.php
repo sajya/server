@@ -19,12 +19,12 @@ class Parser
     protected bool $isParseError = false;
 
     /**
-     * Raw content
+     * Raw content.
      */
     protected string $content;
 
     /**
-     * Extract content
+     * Extract content.
      */
     protected ?Collection $decode;
 
@@ -53,17 +53,17 @@ class Parser
             $this->decode = collect($decode);
             $this->batching = $this->decode
                 ->keys()
-                ->filter(fn($value) => is_string($value))
+                ->filter(fn ($value) => is_string($value))
                 ->isEmpty();
 
             $this->batching = $this->decode->isEmpty() ? false : $this->batching;
 
             $emptyIdRequest = $this->decode
-                ->when(!$this->batching, fn($request) => collect([$request]))
-                ->first(fn($value) => !isset($value['id']));
+                ->when(! $this->batching, fn ($request) => collect([$request]))
+                ->first(fn ($value) => ! isset($value['id']));
 
             $this->notification = $emptyIdRequest !== null;
-        } catch (Exception| \TypeError $e) {
+        } catch (Exception | \TypeError $e) {
             $this->decode = collect();
             $this->isParseError = true;
         }
@@ -92,9 +92,9 @@ class Parser
     {
         if ($this->isBatch()) {
             return $this->decode
-                ->map(fn($options) => $this->checkValidation($options))
-                ->whenEmpty(fn(Collection $collection) => $collection->push($this->checkValidation()))
-                ->map(fn($options) => $options instanceof Exception ? $options : Request::loadArray($options))
+                ->map(fn ($options) => $this->checkValidation($options))
+                ->whenEmpty(fn (Collection $collection) => $collection->push($this->checkValidation()))
+                ->map(fn ($options) => $options instanceof Exception ? $options : Request::loadArray($options))
                 ->toArray();
         }
 
@@ -130,7 +130,7 @@ class Parser
             return new ParseErrorException();
         }
 
-        if (!is_array($options) || !$this->isAssociative($options)) {
+        if (! is_array($options) || ! $this->isAssociative($options)) {
             return new InvalidRequestException();
         }
 
@@ -148,7 +148,7 @@ class Parser
      */
     private function isAssociative(array $array): bool
     {
-        return collect($array)->keys()->filter(fn($key) => is_string($key))->isNotEmpty();
+        return collect($array)->keys()->filter(fn ($key) => is_string($key))->isNotEmpty();
     }
 
     /**

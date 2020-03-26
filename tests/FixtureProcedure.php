@@ -13,7 +13,7 @@ class FixtureProcedure extends Procedure
 {
     /**
      * The name of the procedure that will be
-     * displayed and taken into account in the search
+     * displayed and taken into account in the search.
      *
      * @var string
      */
@@ -34,9 +34,6 @@ class FixtureProcedure extends Procedure
         $this->config = $repository;
     }
 
-    /**
-     *
-     */
     public function abort(): void
     {
         abort(404, 'Abort helper');
@@ -47,7 +44,6 @@ class FixtureProcedure extends Procedure
      */
     public function alwaysResult()
     {
-        return null;
     }
 
     /**
@@ -67,7 +63,7 @@ class FixtureProcedure extends Procedure
      */
     public function subtract(Request $request): int
     {
-        return (int)$request->get('0') - (int)$request->get('1');
+        return (int) $request->get('0') - (int) $request->get('1');
     }
 
     /**
@@ -84,7 +80,7 @@ class FixtureProcedure extends Procedure
 
         $result = $request->get('a') + $request->get('b');
 
-        Log::info('Result procedure: ' . $result);
+        Log::info('Result procedure: '.$result);
 
         return $result;
     }

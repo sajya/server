@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Sajya\Server\Http;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
 class Request implements JsonSerializable
 {
     /**
-     * Request ID
+     * Request ID.
      *
      * @var mixed
      */
@@ -105,7 +104,7 @@ class Request implements JsonSerializable
     }
 
     /**
-     * Set JSON-RPC version
+     * Set JSON-RPC version.
      *
      * @param string $version
      *
@@ -177,7 +176,7 @@ class Request implements JsonSerializable
     }
 
     /**
-     * Set request identifier
+     * Set request identifier.
      *
      * @param mixed $name
      *

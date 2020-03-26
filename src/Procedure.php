@@ -14,7 +14,7 @@ abstract class Procedure
 
     /**
      * The name of the procedure that will be
-     * displayed and taken into account in the search
+     * displayed and taken into account in the search.
      *
      * @var string
      */

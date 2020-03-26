@@ -18,7 +18,6 @@ class RequestTest extends TestCase
             $request->setVersion('2.0');
         });
 
-
         $this->assertEquals('2.0', $request->getVersion());
         $this->assertEquals(1, $request->getId());
         $this->assertEquals('subtract', $request->getMethod());

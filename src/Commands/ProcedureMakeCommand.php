@@ -36,7 +36,7 @@ class ProcedureMakeCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/../../stubs/procedure.stub';
+        return __DIR__.'/../../stubs/procedure.stub';
     }
 
     /**
@@ -48,6 +48,6 @@ class ProcedureMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Http\Procedures';
+        return $rootNamespace.'\Http\Procedures';
     }
 }
