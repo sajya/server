@@ -1,13 +1,22 @@
-# Laravel JSON-RPC
+<p align="center">
+    <img src="https://sajya.github.io/assets/img/laravel-sajya.svg" height="64px;" alt="Laravel Breadcrumbs">
+</p>
 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/sajya/server.svg)](https://packagist.org/packages/sajya/server)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sajya/server/run-tests?label=tests)](https://github.com/sajya/server/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![codecov](https://codecov.io/gh/sajya/server/branch/master/graph/badge.svg)](https://codecov.io/gh/sajya/server)
-[![Total Downloads](https://img.shields.io/packagist/dt/sajya/server.svg)](https://packagist.org/packages/sajya/server)
+<p align="center">
+    <a href="https://packagist.org/packages/sajya/server"><img src="https://img.shields.io/packagist/v/sajya/server.svg" alt="Latest Version on Packagist"></a>
+    
+<a href="https://github.com/sajya/server/actions?query=workflow%3Arun-tests+branch%3Amaster"><img src="https://img.shields.io/github/workflow/status/sajya/server/run-tests?label=tests" alt="GitHub Tests Action Status"></a>
+
+<a href="https://codecov.io/gh/sajya/server"><img src="https://codecov.io/gh/sajya/server/branch/master/graph/badge.svg" alt="codecov"></a>
+
+<a href="https://packagist.org/packages/sajya/server"><img src="https://img.shields.io/packagist/dt/sajya/server.svg" alt="Total Downloads"></a>
+</p>
 
 
-This open project aims to provide the ability to easily implement the JSON-RPC 2.0 server specification for the Laravel.
+## Introduction
+
+Sajia is an open source project aims to provide the ability to easily implement the JSON-RPC 2.0 server specification for the Laravel.
 
 
 #### Some features:
