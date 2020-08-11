@@ -64,7 +64,7 @@ class FixtureProcedure extends Procedure
      */
     public function subtract(Request $request): int
     {
-        return (int)$request->get('0') - (int)$request->get('1');
+        return (int) $request->get('0') - (int) $request->get('1');
     }
 
     /**
@@ -81,7 +81,7 @@ class FixtureProcedure extends Procedure
 
         $result = $request->get('a') + $request->get('b');
 
-        Log::info('Result procedure: ' . $result);
+        Log::info('Result procedure: '.$result);
 
         return $result;
     }
