@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class JsonRpcController
 {
     /**
-     * @var Guide
+     * @var Guide|null
      */
     protected ?Guide $guide;
 

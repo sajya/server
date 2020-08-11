@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
+use ReflectionMethod;
 use Sajya\Server\Exceptions\MethodNotFound;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
@@ -28,7 +30,12 @@ class Guide
      */
     public function __construct(array $procedures = [])
     {
-        $this->map = collect($procedures);
+        $this->map = collect($procedures)
+            ->each(fn(string $class) => abort_unless(
+                is_subclass_of($class, Procedure::class),
+                500,
+                "Class '$class' must extends " . Procedure::class
+            ));
     }
 
     /**
@@ -41,7 +48,7 @@ class Guide
         $parser = new Parser($content);
 
         $result = collect($parser->makeRequests())
-            ->map(fn ($request) => $request instanceof Request
+            ->map(fn($request) => $request instanceof Request
                 ? $this->handleProcedure($request, $parser->isNotification())
                 : $this->makeResponse($request)
             );
@@ -52,8 +59,8 @@ class Guide
     }
 
     /**
-     * @param Request $request
-     * @param mixed   $result
+     * @param mixed        $result
+     * @param Request|null $request
      *
      * @return Response
      */
@@ -61,11 +68,10 @@ class Guide
     {
         $request ??= new Request();
 
-        return tap(new Response(), function (Response $response) use ($request, $result) {
-            $response->setId($request->getId());
-            $response->setVersion($request->getVersion());
-            $response->setResult($result);
-        });
+        return tap(new Response(), fn(Response $response) => $response->setId($request->getId())
+            ->setVersion($request->getVersion())
+            ->setResult($result)
+        );
     }
 
     /**
@@ -79,6 +85,7 @@ class Guide
         \request()->replace($request->getParams()->toArray());
 
         $procedure = $this->findProcedure($request);
+
 
         if ($procedure === null) {
             return $this->makeResponse(new MethodNotFound(), $request);
@@ -102,9 +109,9 @@ class Guide
         $method = Str::afterLast($request->getMethod(), '@');
 
         return $this->map
-            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
-            ->map(fn (string $procedure) => Str::finish($procedure, '@'.$method))
+            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn(string $procedure) => Str::finish($procedure, '@' . $method))
             ->first();
     }
 
@@ -116,27 +123,16 @@ class Guide
      */
     private function checkExistPublicMethod(string $procedure, string $method): bool
     {
-        try {
-            return (new \ReflectionMethod($procedure, $method))->isPublic();
-        } catch (\Exception $exception) {
-            return false;
-        }
+        return (new ReflectionMethod($procedure, $method))->isPublic();
     }
 
     /**
      * @param string $procedure
      *
      * @return string
-     * @throws \ReflectionException
      */
-    private function getProcedureName($procedure): ?string
+    private function getProcedureName(string $procedure): string
     {
-        try {
-            $class = new ReflectionClass($procedure);
-
-            return $class->getStaticPropertyValue('name');
-        } catch (\Exception $exception) {
-            return null;
-        }
+        return (new ReflectionClass($procedure))->getStaticPropertyValue('name');
     }
 }

@@ -4,12 +4,24 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
+use Sajya\Server\Guide;
 use Sajya\Server\Http\Request;
+use Sajya\Server\Procedure;
 use Sajya\Server\Tests\FixtureProcedure;
 use Sajya\Server\Tests\TestCase;
 
 class GuideTest extends TestCase
 {
+    public function testExtendsProcedure(): void
+    {
+        $this->expectErrorMessage("Class 'Sajya\Server\Tests\Unit\GuideTest' must extends " . Procedure::class);
+
+        new Guide([
+            FixtureProcedure::class,
+            GuideTest::class,
+        ]);
+    }
+
     public function testFindMethodProcedure(): void
     {
         $request = tap(new Request(), static function (Request $request) {

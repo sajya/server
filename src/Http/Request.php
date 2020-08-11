@@ -22,14 +22,14 @@ class Request implements JsonSerializable
      *
      * @var string|null
      */
-    protected $method;
+    protected ?string $method;
 
     /**
      * Request parameters.
      *
      * @var Collection
      */
-    protected $params;
+    protected Collection $params;
 
     /**
      * JSON-RPC version of request.
@@ -51,7 +51,7 @@ class Request implements JsonSerializable
      *
      * @param array $collection
      *
-     * @return \Sajya\Server\Http\Request
+     * @return Request
      */
     public static function loadArray(array $collection): Request
     {
@@ -79,8 +79,10 @@ class Request implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $jsonArray['jsonrpc'] = $this->getVersion();
-        $jsonArray['method'] = $this->getMethod();
+        $jsonArray = [
+            'jsonrpc' => $this->getVersion(),
+            'method'  => $this->getMethod(),
+        ];
 
         if ($this->getParams()->isNotEmpty()) {
             $jsonArray['params'] = $this->getParams()->toArray();
@@ -110,7 +112,7 @@ class Request implements JsonSerializable
      *
      * @return Request
      */
-    public function setVersion(string $version = '2.0')
+    public function setVersion(string $version = '2.0'): Request
     {
         $this->version = $version;
 
@@ -134,7 +136,7 @@ class Request implements JsonSerializable
      *
      * @return Request
      */
-    public function setMethod(string $name)
+    public function setMethod(string $name): Request
     {
         $this->method = $name;
 
@@ -178,13 +180,13 @@ class Request implements JsonSerializable
     /**
      * Set request identifier.
      *
-     * @param mixed $name
+     * @param int|string $name
      *
      * @return Request
      */
-    public function setId($name)
+    public function setId($name): Request
     {
-        $this->id = (string) $name;
+        $this->id = (string)$name;
 
         return $this;
     }

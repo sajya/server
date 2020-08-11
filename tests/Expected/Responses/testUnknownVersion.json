@@ -1,0 +1,13 @@
+{
+    "id": null,
+    "jsonrpc": "2.0",
+    "error": {
+        "code": -32602,
+        "data": {
+            "jsonrpc": [
+                "The selected jsonrpc is invalid."
+            ]
+        },
+        "message": "Invalid params"
+    }
+}

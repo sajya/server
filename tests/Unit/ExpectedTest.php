@@ -15,7 +15,7 @@ class ExpectedTest extends TestCase
     /**
      * @return Generator
      */
-    public function exampleCalls(): ?Generator
+    public function exampleCalls(): Generator
     {
         yield ['testAbort'];
         yield ['testBatchInvalid'];
@@ -42,6 +42,9 @@ class ExpectedTest extends TestCase
         yield ['testWithAnEmptyArray'];
         yield ['testWithAnInvalidBatchButNotEmpty'];
         yield ['testWithInvalidBatch'];
+        yield ['testUnknownVersion'];
+        yield ['testInternalError'];
+        yield ['testCallCloseMethod'];
     }
 
     /**
