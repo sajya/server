@@ -12,7 +12,7 @@ class Response implements JsonSerializable
     /**
      * Response error.
      *
-     * @var null|\Exception
+     * @var null|Exception
      */
     protected $error;
 
@@ -60,7 +60,7 @@ class Response implements JsonSerializable
     /**
      * Get request ID.
      *
-     * @return mixed
+     * @return string|int|null
      */
     public function getId()
     {
@@ -70,11 +70,11 @@ class Response implements JsonSerializable
     /**
      * Set request ID.
      *
-     * @param mixed $name
+     * @param string|int|null $name
      *
      * @return self
      */
-    public function setId($name)
+    public function setId($name): self
     {
         $this->id = $name;
 
@@ -86,7 +86,7 @@ class Response implements JsonSerializable
      *
      * @return bool
      */
-    public function isError()
+    public function isError(): bool
     {
         return $this->getError() instanceof Exception;
     }
@@ -94,9 +94,9 @@ class Response implements JsonSerializable
     /**
      * Get response error.
      *
-     * @return null|\Exception
+     * @return null|Exception
      */
-    public function getError()
+    public function getError(): ?Exception
     {
         return $this->error;
     }
@@ -118,7 +118,7 @@ class Response implements JsonSerializable
      *
      * @return self
      */
-    public function setResult($value)
+    public function setResult($value): self
     {
         if ($value instanceof Exception) {
             $this->setError($value);
@@ -136,7 +136,7 @@ class Response implements JsonSerializable
      *
      * @return null|string
      */
-    public function getVersion()
+    public function getVersion(): ?string
     {
         return $this->version;
     }
@@ -148,16 +148,9 @@ class Response implements JsonSerializable
      *
      * @return self
      */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
-        $version = (string) $version;
-        if ('2.0' === $version) {
-            $this->version = '2.0';
-
-            return $this;
-        }
-
-        $this->version = null;
+        $this->version = $version;
 
         return $this;
     }

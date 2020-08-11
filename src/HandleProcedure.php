@@ -13,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
+use Sajya\Server\Exceptions\InternalErrorException;
 use Sajya\Server\Exceptions\InvalidParams;
 use Sajya\Server\Exceptions\RuntimeRpcException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -54,6 +55,10 @@ class HandleProcedure implements ShouldQueue
 
             if ($exception instanceof ValidationException) {
                 return new InvalidParams($exception->validator->errors()->toArray());
+            }
+
+            if ($code === 500) {
+                return new InternalErrorException();
             }
 
             return new RuntimeRpcException($message, $code);

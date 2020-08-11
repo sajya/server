@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Sajya\Server\Exceptions\InvalidParams;
 use Sajya\Server\Exceptions\InvalidRequestException;
 use Sajya\Server\Exceptions\ParseErrorException;
+use TypeError;
 
 class Parser
 {
@@ -53,17 +54,17 @@ class Parser
             $this->decode = collect($decode);
             $this->batching = $this->decode
                 ->keys()
-                ->filter(fn ($value) => is_string($value))
+                ->filter(fn($value) => is_string($value))
                 ->isEmpty();
 
             $this->batching = $this->decode->isEmpty() ? false : $this->batching;
 
             $emptyIdRequest = $this->decode
-                ->when(! $this->batching, fn ($request) => collect([$request]))
-                ->first(fn ($value) => ! isset($value['id']));
+                ->when(!$this->batching, fn($request) => collect([$request]))
+                ->first(fn($value) => !isset($value['id']));
 
             $this->notification = $emptyIdRequest !== null;
-        } catch (Exception | \TypeError $e) {
+        } catch (Exception | TypeError $e) {
             $this->decode = collect();
             $this->isParseError = true;
         }
@@ -90,15 +91,17 @@ class Parser
      */
     public function makeRequests(): array
     {
+        $content = $this->getContent();
+
         if ($this->isBatch()) {
-            return $this->decode
-                ->map(fn ($options) => $this->checkValidation($options))
-                ->whenEmpty(fn (Collection $collection) => $collection->push($this->checkValidation()))
-                ->map(fn ($options) => $options instanceof Exception ? $options : Request::loadArray($options))
+            return $content
+                ->map(fn($options) => $this->checkValidation($options))
+                ->whenEmpty(fn(Collection $collection) => $collection->push($this->checkValidation()))
+                ->map(fn($options) => $options instanceof Exception ? $options : Request::loadArray($options))
                 ->toArray();
         }
 
-        $options = $this->checkValidation($this->decode->toArray());
+        $options = $this->checkValidation($content->toArray());
 
         return [is_array($options) ? Request::loadArray($options) : $options];
     }
@@ -148,7 +151,10 @@ class Parser
      */
     private function isAssociative(array $array): bool
     {
-        return collect($array)->keys()->filter(fn ($key) => is_string($key))->isNotEmpty();
+        return collect($array)
+            ->keys()
+            ->filter(fn($key) => is_string($key))
+            ->isNotEmpty();
     }
 
     /**

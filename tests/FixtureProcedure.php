@@ -40,9 +40,9 @@ class FixtureProcedure extends Procedure
     }
 
     /**
-     * @return null
+     * @return void
      */
-    public function alwaysResult()
+    public function alwaysResult(): void
     {
     }
 
@@ -80,8 +80,22 @@ class FixtureProcedure extends Procedure
 
         $result = $request->get('a') + $request->get('b');
 
-        Log::info('Result procedure: '.$result);
+        Log::info('Result procedure: ' . $result);
 
         return $result;
+    }
+
+
+    public function internalError(): void
+    {
+        abort(500);
+    }
+
+    /**
+     * @return string
+     */
+    protected function closeMethod(): string
+    {
+        return 'Dont Ok';
     }
 }

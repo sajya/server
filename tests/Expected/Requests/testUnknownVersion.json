@@ -1,0 +1,6 @@
+{
+    "jsonrpc": "12.0",
+    "method": "fixture@alwaysResult",
+    "params": [],
+    "id": 1
+}
