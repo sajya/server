@@ -97,4 +97,9 @@ class FixtureProcedure extends Procedure
     {
         return 'Dont Ok';
     }
+
+    public function runtimeError(): void
+    {
+        abort(502, 'Bad Gateway');
+    }
 }

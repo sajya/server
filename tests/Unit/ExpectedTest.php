@@ -45,6 +45,7 @@ class ExpectedTest extends TestCase
         yield ['testUnknownVersion'];
         yield ['testInternalError'];
         yield ['testCallCloseMethod'];
+        yield ['testRuntimeError'];
     }
 
     /**

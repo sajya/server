@@ -1,0 +1,9 @@
+{
+    "error": {
+        "code": 502,
+        "data": null,
+        "message": "Bad Gateway"
+    },
+    "id": "1",
+    "jsonrpc": "2.0"
+}
