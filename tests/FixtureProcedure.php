@@ -7,6 +7,7 @@ namespace Sajya\Server\Tests;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Sajya\Server\Exceptions\RuntimeRpcException;
 use Sajya\Server\Procedure;
 
 class FixtureProcedure extends Procedure
@@ -63,7 +64,7 @@ class FixtureProcedure extends Procedure
      */
     public function subtract(Request $request): int
     {
-        return (int) $request->get('0') - (int) $request->get('1');
+        return (int)$request->get('0') - (int)$request->get('1');
     }
 
     /**
@@ -80,7 +81,7 @@ class FixtureProcedure extends Procedure
 
         $result = $request->get('a') + $request->get('b');
 
-        Log::info('Result procedure: '.$result);
+        Log::info('Result procedure: ' . $result);
 
         return $result;
     }
@@ -98,8 +99,8 @@ class FixtureProcedure extends Procedure
         return 'Dont Ok';
     }
 
-    public function runtimeError(): void
+    public function runtimeError()
     {
-        abort(502, 'Bad Gateway');
+        throw new RuntimeRpcException();
     }
 }

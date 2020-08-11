@@ -1,8 +1,8 @@
 {
     "error": {
-        "code": 502,
+        "code": -1,
         "data": null,
-        "message": "Bad Gateway"
+        "message": "Unknown"
     },
     "id": "1",
     "jsonrpc": "2.0"
