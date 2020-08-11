@@ -10,7 +10,9 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 
 abstract class Procedure
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     /**
      * The name of the procedure that will be

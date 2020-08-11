@@ -80,11 +80,10 @@ class FixtureProcedure extends Procedure
 
         $result = $request->get('a') + $request->get('b');
 
-        Log::info('Result procedure: ' . $result);
+        Log::info('Result procedure: '.$result);
 
         return $result;
     }
-
 
     public function internalError(): void
     {

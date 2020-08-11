@@ -14,7 +14,7 @@ class GuideTest extends TestCase
 {
     public function testExtendsProcedure(): void
     {
-        $this->expectErrorMessage("Class 'Sajya\Server\Tests\Unit\GuideTest' must extends " . Procedure::class);
+        $this->expectErrorMessage("Class 'Sajya\Server\Tests\Unit\GuideTest' must extends ".Procedure::class);
 
         new Guide([
             FixtureProcedure::class,
