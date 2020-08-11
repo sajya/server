@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
-use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -31,10 +30,10 @@ class Guide
     public function __construct(array $procedures = [])
     {
         $this->map = collect($procedures)
-            ->each(fn(string $class) => abort_unless(
+            ->each(fn (string $class) => abort_unless(
                 is_subclass_of($class, Procedure::class),
                 500,
-                "Class '$class' must extends " . Procedure::class
+                "Class '$class' must extends ".Procedure::class
             ));
     }
 
@@ -48,7 +47,8 @@ class Guide
         $parser = new Parser($content);
 
         $result = collect($parser->makeRequests())
-            ->map(fn($request) => $request instanceof Request
+            ->map(
+                fn ($request) => $request instanceof Request
                 ? $this->handleProcedure($request, $parser->isNotification())
                 : $this->makeResponse($request)
             );
@@ -68,7 +68,9 @@ class Guide
     {
         $request ??= new Request();
 
-        return tap(new Response(), fn(Response $response) => $response->setId($request->getId())
+        return tap(
+            new Response(),
+            fn (Response $response) => $response->setId($request->getId())
             ->setVersion($request->getVersion())
             ->setResult($result)
         );
@@ -85,7 +87,6 @@ class Guide
         \request()->replace($request->getParams()->toArray());
 
         $procedure = $this->findProcedure($request);
-
 
         if ($procedure === null) {
             return $this->makeResponse(new MethodNotFound(), $request);
@@ -109,9 +110,9 @@ class Guide
         $method = Str::afterLast($request->getMethod(), '@');
 
         return $this->map
-            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
-            ->map(fn(string $procedure) => Str::finish($procedure, '@' . $method))
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn (string $procedure)    => Str::finish($procedure, '@'.$method))
             ->first();
     }
 

@@ -186,7 +186,7 @@ class Request implements JsonSerializable
      */
     public function setId($name): Request
     {
-        $this->id = (string)$name;
+        $this->id = (string) $name;
 
         return $this;
     }
