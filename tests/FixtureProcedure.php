@@ -7,6 +7,7 @@ namespace Sajya\Server\Tests;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Sajya\Server\Exceptions\RuntimeRpcException;
 use Sajya\Server\Procedure;
 
 class FixtureProcedure extends Procedure
@@ -96,5 +97,10 @@ class FixtureProcedure extends Procedure
     protected function closeMethod(): string
     {
         return 'Dont Ok';
+    }
+
+    public function runtimeError()
+    {
+        throw new RuntimeRpcException();
     }
 }
