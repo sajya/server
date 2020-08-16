@@ -6,6 +6,7 @@ namespace Sajya\Server;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
@@ -24,12 +25,19 @@ class Guide
     protected Collection $map;
 
     /**
+     * @var bool
+     */
+    private bool $debugMode = false;
+
+    /**
      * Guide constructor.
      *
      * @param string[] $procedures
      */
     public function __construct(array $procedures = [])
     {
+        $this->debugMode = config('app.debug');
+
         $this->map = collect($procedures)
             ->each(fn (string $class) => abort_unless(
                 is_subclass_of($class, Procedure::class),
@@ -91,6 +99,10 @@ class Guide
 
         if ($procedure === null) {
             return $this->makeResponse(new MethodNotFound(), $request);
+        }
+
+        if ($this->debugMode) {
+            Log::info(sprintf('JSON-RPC Call: %s', $procedure), $request->jsonSerialize());
         }
 
         $result = $notification
