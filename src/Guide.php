@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -40,9 +41,9 @@ class Guide
     /**
      * @param string $content
      *
-     * @return string
+     * @return JsonResponse
      */
-    public function handle(string $content = ''): string
+    public function handle(string $content = ''): JsonResponse
     {
         $parser = new Parser($content);
 
@@ -55,7 +56,7 @@ class Guide
 
         $response = $parser->isBatch() ? $result->all() : $result->first();
 
-        return json_encode($response, JSON_THROW_ON_ERROR, 512);
+        return response()->json($response);
     }
 
     /**
