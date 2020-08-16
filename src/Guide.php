@@ -110,6 +110,10 @@ class Guide
         $class = Str::beforeLast($request->getMethod(), '@');
         $method = Str::afterLast($request->getMethod(), '@');
 
+        if (Str::contains($request->getMethod(), '@') === false) {
+            $method = 'handle';
+        }
+
         return $this->map
             ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
             ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
