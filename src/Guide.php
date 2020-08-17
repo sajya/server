@@ -48,7 +48,7 @@ class Guide
 
         $result = collect($parser->makeRequests())
             ->map(
-                fn($request) => $request instanceof Request
+                fn ($request) => $request instanceof Request
                     ? $this->handleProcedure($request, $parser->isNotification())
                     : $this->makeResponse($request)
             );

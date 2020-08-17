@@ -88,8 +88,9 @@ class ExpectedTest extends TestCase
     /**
      * @param string $path
      *
-     * @return TestResponse
      * @throws \JsonException
+     *
+     * @return TestResponse
      */
     private function callRPC(string $path): TestResponse
     {
