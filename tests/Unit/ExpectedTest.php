@@ -18,7 +18,7 @@ class ExpectedTest extends TestCase
      */
     public function exampleCalls(): Generator
     {
-        yield ['testAbort', null, function ($response) {
+        yield ['testAbort', null, function (TestResponse $response) {
             $response->assertJsonStructure([
                 'id',
                 'error' => [
@@ -32,6 +32,22 @@ class ExpectedTest extends TestCase
                 'jsonrpc',
             ]);
         }];
+
+        yield ['testAbort', function () {
+            config()->set('app.debug', false);
+        }, function (TestResponse $response) {
+            $json = $response->getContent();
+            $result = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
+            $this->assertFalse(isset(
+                $result['file'],
+                $result['line'],
+                $result['trace'],
+            ));
+
+            config()->set('app.debug', true);
+        }];
+
 
         yield ['testBatchInvalid'];
         yield ['testBatchNotificationSum', static function () {
