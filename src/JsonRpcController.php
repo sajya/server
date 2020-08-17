@@ -2,6 +2,7 @@
 
 namespace Sajya\Server;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class JsonRpcController
@@ -17,12 +18,14 @@ class JsonRpcController
      * @param Request  $request
      * @param string[] $procedures
      *
-     * @return mixed
+     * @return JsonResponse
      */
-    public function __invoke(Request $request, array $procedures)
+    public function __invoke(Request $request, array $procedures): JsonResponse
     {
         $guide = new Guide($procedures);
 
-        return $guide->handle($request->getContent());
+        $response = $guide->handle($request->getContent());
+
+        return response()->json($response);
     }
 }

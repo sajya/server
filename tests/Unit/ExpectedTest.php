@@ -7,6 +7,7 @@ namespace Sajya\Server\Tests\Unit;
 use Closure;
 use Generator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Testing\TestResponse;
 use Sajya\Server\Tests\TestCase;
 use Throwable;
 
@@ -17,7 +18,36 @@ class ExpectedTest extends TestCase
      */
     public function exampleCalls(): Generator
     {
-        yield ['testAbort'];
+        yield ['testAbort', null, function (TestResponse $response) {
+            $response->assertJsonStructure([
+                'id',
+                'error' => [
+                    'code',
+                    'message',
+                    'data',
+                    'file',
+                    'line',
+                    'trace',
+                ],
+                'jsonrpc',
+            ]);
+        }];
+
+        yield ['testAbort', function () {
+            config()->set('app.debug', false);
+        }, function (TestResponse $response) {
+            $json = $response->getContent();
+            $result = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
+            $this->assertFalse(isset(
+                $result['file'],
+                $result['line'],
+                $result['trace'],
+            ));
+
+            config()->set('app.debug', true);
+        }];
+
         yield ['testBatchInvalid'];
         yield ['testBatchNotificationSum', static function () {
             Log::shouldReceive('info')
@@ -73,20 +103,21 @@ class ExpectedTest extends TestCase
     /**
      * @param string $path
      *
-     * @return string
+     * @throws \JsonException
+     *
+     * @return TestResponse
      */
-    private function callRPC(string $path): string
+    private function callRPC(string $path): TestResponse
     {
         $request = file_get_contents("./tests/Expected/Requests/$path.json");
         $response = file_get_contents("./tests/Expected/Responses/$path.json");
 
-        $actualJson = $this
+        return $this
             ->call('POST', route('rpc.point'), [], [], [], [], $request)
-            ->getContent();
-
-        $this->assertJson($response);
-        $this->assertJsonStringEqualsJsonString($actualJson, $response);
-
-        return $response;
+            ->assertOk()
+            ->assertHeader('content-type', 'application/json')
+            ->assertJson(
+                json_decode($response, true, 512, JSON_THROW_ON_ERROR)
+            );
     }
 }
