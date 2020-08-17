@@ -22,6 +22,7 @@
     </filter>
     <php>
         <server name="APP_NAME" value="Sajya"/>
+        <server name="APP_DEBUG" value="true"/>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>

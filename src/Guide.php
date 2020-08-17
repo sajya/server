@@ -40,22 +40,22 @@ class Guide
     /**
      * @param string $content
      *
-     * @return string
+     * @return Response[]|Response
      */
-    public function handle(string $content = ''): string
+    public function handle(string $content = '')
     {
         $parser = new Parser($content);
 
         $result = collect($parser->makeRequests())
             ->map(
-                fn ($request) => $request instanceof Request
-                ? $this->handleProcedure($request, $parser->isNotification())
-                : $this->makeResponse($request)
+                fn($request) => $request instanceof Request
+                    ? $this->handleProcedure($request, $parser->isNotification())
+                    : $this->makeResponse($request)
             );
 
-        $response = $parser->isBatch() ? $result->all() : $result->first();
-
-        return json_encode($response, JSON_THROW_ON_ERROR, 512);
+        return $parser->isBatch()
+            ? $result->all()
+            : $result->first();
     }
 
     /**
