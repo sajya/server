@@ -48,7 +48,6 @@ class ExpectedTest extends TestCase
             config()->set('app.debug', true);
         }];
 
-
         yield ['testBatchInvalid'];
         yield ['testBatchNotificationSum', static function () {
             Log::shouldReceive('info')
