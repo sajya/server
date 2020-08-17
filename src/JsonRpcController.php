@@ -4,6 +4,7 @@ namespace Sajya\Server;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class JsonRpcController
 {
