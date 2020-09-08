@@ -18,7 +18,9 @@ class ExpectedTest extends TestCase
      */
     public function exampleCalls(): Generator
     {
-        yield ['testAbort', null, function (TestResponse $response) {
+        yield ['testAbort', function () {
+            config()->set('app.debug', true);
+        }, function (TestResponse $response) {
             $response->assertJsonStructure([
                 'id',
                 'error' => [
