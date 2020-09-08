@@ -6,21 +6,19 @@
         "json-prc",
         "api"
     ],
-    "homepage": "https://github.com/sajya/sajya",
+    "homepage": "https://sajya.github.io",
     "license": "MIT",
     "authors": [
         {
             "name": "Alexandr Chernyaev",
-            "email": "bliz48rus@gmail.com",
-            "homepage": "https://sajya.be",
-            "role": "Developer"
+            "email": "bliz48rus@gmail.com"
         }
     ],
     "require": {
         "php": "^7.4",
         "ext-json": "*",
-        "laravel/framework": "7.*",
-        "orchestra/testbench": "5.*"
+        "laravel/framework": "8.*",
+        "orchestra/testbench": "6.*"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.0",
