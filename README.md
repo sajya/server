@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://sajya.github.io/assets/img/laravel-sajya.svg" height="64px;" alt="Laravel Breadcrumbs">
+    <img src="https://sajya.github.io/assets/img/laravel-sajya.svg" height="64px;" alt="Laravel JSON RPC">
 </p>
 
 
@@ -22,9 +22,9 @@ Sajya is an open-source project aiming to implement the JSON-RPC 2.0 server spec
 - Support batch requests
 - Support notification requests
 
+## Official Documentation
 
-See the docs for everything: https://sajya.github.io/
-
+Documentation for Sajya can be found on its [website](https://sajya.github.io/).
 
 ### Changelog
 
@@ -33,6 +33,10 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Maintainers
+
+Sajya is developed and maintained by [Alexandr Chernyaev](https://github.com/tabuna).
 
 ## License
 
