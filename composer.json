@@ -23,7 +23,7 @@
     "require-dev": {
         "symfony/var-dumper": "^5.0",
         "phpunit/php-code-coverage": "^9.0",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "psr-4": {
