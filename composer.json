@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^5.0",
-        "phpunit/php-code-coverage": "^8.0",
+        "phpunit/php-code-coverage": "^9.0",
         "phpunit/phpunit": "^9.0"
     },
     "autoload": {
