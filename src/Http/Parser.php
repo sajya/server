@@ -60,8 +60,8 @@ class Parser
             $this->batching = $this->decode->isEmpty() ? false : $this->batching;
 
             $emptyIdRequest = $this->decode
-                ->when(!$this->batching, fn ($request) => collect([$request]))
-                ->first(fn ($value) => !isset($value['id']));
+                ->when(! $this->batching, fn ($request) => collect([$request]))
+                ->first(fn ($value) => ! isset($value['id']));
 
             $this->notification = $emptyIdRequest !== null;
         } catch (Exception | TypeError $e) {
@@ -133,7 +133,7 @@ class Parser
             return new ParseErrorException();
         }
 
-        if (!is_array($options) || !$this->isAssociative($options)) {
+        if (! is_array($options) || ! $this->isAssociative($options)) {
             return new InvalidRequestException();
         }
 
