@@ -99,6 +99,14 @@ class FixtureProcedure extends Procedure
         return 'Dont Ok';
     }
 
+    /**
+     * @return string
+     */
+    public function ok(): string
+    {
+        return 'Ok';
+    }
+
     public function runtimeError()
     {
         throw new RuntimeRpcException();
