@@ -15,6 +15,8 @@ use Sajya\Server\Http\Response;
 
 class Guide
 {
+    protected const DEFAULT_DELIMITER = '@';
+
     /**
      * Stores all available RPC commands.
      *
@@ -23,11 +25,19 @@ class Guide
     protected Collection $map;
 
     /**
+     * Stores delimiter
+     *
+     * @var string
+     */
+    protected string $delimiter;
+
+    /**
      * Guide constructor.
      *
-     * @param string[] $procedures
+     * @param string[]    $procedures
+     * @param null|string $delimiter
      */
-    public function __construct(array $procedures = [])
+    public function __construct(array $procedures = [], ?string $delimiter = null)
     {
         $this->map = collect($procedures)
             ->each(fn (string $class) => abort_unless(
@@ -35,6 +45,7 @@ class Guide
                 500,
                 "Class '$class' must extends ".Procedure::class
             ));
+        $this->delimiter = $delimiter ?? self::DEFAULT_DELIMITER;
     }
 
     /**
@@ -106,8 +117,8 @@ class Guide
      */
     public function findProcedure(Request $request): ?string
     {
-        $class = Str::beforeLast($request->getMethod(), '@');
-        $method = Str::afterLast($request->getMethod(), '@');
+        $class = Str::beforeLast($request->getMethod(), $this->delimiter);
+        $method = Str::afterLast($request->getMethod(), $this->delimiter);
 
         return $this->map
             ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)

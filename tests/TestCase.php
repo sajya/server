@@ -37,6 +37,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getEnvironmentSetUp($app): void
     {
         $app['router']->rpc('point', $this->mapProcedures)->name('rpc.point');
+        $app['router']->rpc('delimiter', $this->mapProcedures, '.')->name('rpc.delimiter');
     }
 
     /**
