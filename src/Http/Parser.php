@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Sajya\Server\Exceptions\InvalidParams;
 use Sajya\Server\Exceptions\InvalidRequestException;
 use Sajya\Server\Exceptions\ParseErrorException;
+use Sajya\Server\Rules\Identifier;
 use TypeError;
 
 class Parser
@@ -166,7 +167,7 @@ class Parser
             'jsonrpc' => 'required|in:"2.0"',
             'method'  => 'required|string',
             'params'  => 'array',
-            'id'      => 'regex:/^\d*(\.\d{2})?$/|nullable',
+            'id'      => new Identifier(),
         ];
     }
 }
