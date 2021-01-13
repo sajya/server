@@ -95,8 +95,7 @@ class ExpectedTest extends TestCase
         Closure $before = null,
         Closure $after = null,
         string $route = 'rpc.point'
-    ): void
-    {
+    ): void {
         if ($before !== null) {
             $before();
         }
@@ -112,8 +111,9 @@ class ExpectedTest extends TestCase
      * @param string $path
      * @param string $route
      *
-     * @return TestResponse
      * @throws \JsonException
+     *
+     * @return TestResponse
      */
     private function callRPC(string $path, string $route): TestResponse
     {
