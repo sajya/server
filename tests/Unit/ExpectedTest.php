@@ -9,7 +9,6 @@ use Generator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
 use Sajya\Server\Tests\TestCase;
-use Throwable;
 
 class ExpectedTest extends TestCase
 {
@@ -59,7 +58,7 @@ class ExpectedTest extends TestCase
         }];
         yield ['testBatchOneError'];
         yield ['testBatchSum'];
-        yield ['testDelimiter'];
+        yield ['testDelimiter', null, null, 'rpc.delimiter'];
         yield ['testDependencyInjection'];
         yield ['testFindProcedure'];
         yield ['testInvalidParams'];
@@ -82,21 +81,27 @@ class ExpectedTest extends TestCase
     }
 
     /**
-     * @param string  $file
-     * @param Closure $before
-     * @param Closure $after
+     * @param string       $file
+     * @param Closure|null $before
+     * @param Closure|null $after
+     * @param string       $route
      *
+     * @throws \JsonException
      * @dataProvider exampleCalls
      *
-     * @throws Throwable
      */
-    public function testHasCorrectRequestResponse(string $file, Closure $before = null, Closure $after = null): void
+    public function testHasCorrectRequestResponse(
+        string $file,
+        Closure $before = null,
+        Closure $after = null,
+        string $route = 'rpc.point'
+    ): void
     {
         if ($before !== null) {
             $before();
         }
 
-        $response = $this->callRPC($file);
+        $response = $this->callRPC($file, $route);
 
         if ($after !== null) {
             $after($response);
@@ -105,17 +110,15 @@ class ExpectedTest extends TestCase
 
     /**
      * @param string $path
-     *
-     * @throws \JsonException
+     * @param string $route
      *
      * @return TestResponse
+     * @throws \JsonException
      */
-    private function callRPC(string $path): TestResponse
+    private function callRPC(string $path, string $route): TestResponse
     {
         $request = file_get_contents("./tests/Expected/Requests/$path.json");
         $response = file_get_contents("./tests/Expected/Responses/$path.json");
-
-        $route = false !== strpos($path, 'Delimiter') ? 'rpc.delimiter' : 'rpc.point';
 
         return $this
             ->call('POST', route($route), [], [], [], [], $request)

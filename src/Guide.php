@@ -37,7 +37,7 @@ class Guide
      * @param string[]    $procedures
      * @param null|string $delimiter
      */
-    public function __construct(array $procedures = [], ?string $delimiter = null)
+    public function __construct(array $procedures = [], ?string $delimiter = self::DEFAULT_DELIMITER)
     {
         $this->map = collect($procedures)
             ->each(fn (string $class) => abort_unless(
