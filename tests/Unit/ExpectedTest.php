@@ -59,6 +59,7 @@ class ExpectedTest extends TestCase
         }];
         yield ['testBatchOneError'];
         yield ['testBatchSum'];
+        yield ['testDelimiter'];
         yield ['testDependencyInjection'];
         yield ['testFindProcedure'];
         yield ['testInvalidParams'];
@@ -114,8 +115,10 @@ class ExpectedTest extends TestCase
         $request = file_get_contents("./tests/Expected/Requests/$path.json");
         $response = file_get_contents("./tests/Expected/Responses/$path.json");
 
+        $route = false !== strpos($path, 'Delimiter') ? 'rpc.delimiter' : 'rpc.point';
+
         return $this
-            ->call('POST', route('rpc.point'), [], [], [], [], $request)
+            ->call('POST', route($route), [], [], [], [], $request)
             ->assertOk()
             ->assertHeader('content-type', 'application/json')
             ->assertJson(

@@ -15,14 +15,15 @@ class JsonRpcController
     /**
      * Invoke the controller method.
      *
-     * @param Request  $request
-     * @param string[] $procedures
+     * @param Request     $request
+     * @param string[]    $procedures
+     * @param null|string $delimiter
      *
      * @return JsonResponse
      */
-    public function __invoke(Request $request, array $procedures): JsonResponse
+    public function __invoke(Request $request, array $procedures, ?string $delimiter = null): JsonResponse
     {
-        $guide = new Guide($procedures);
+        $guide = new Guide($procedures, $delimiter);
 
         $response = $guide->handle($request->getContent());
 
