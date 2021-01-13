@@ -28,6 +28,6 @@ class Identifier implements Rule
      */
     public function message()
     {
-        return 'The :attribute must be string or integer.';
+        return 'The :attribute must be a string or integer.';
     }
 }

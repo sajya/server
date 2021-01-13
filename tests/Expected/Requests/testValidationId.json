@@ -1,0 +1,7 @@
+{
+    "jsonrpc": "2.0",
+    "method": "fixture@ok",
+    "id": [
+        "test"
+    ]
+}

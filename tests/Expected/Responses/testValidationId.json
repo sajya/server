@@ -1,0 +1,13 @@
+{
+    "id": null,
+    "error": {
+        "code": -32602,
+        "message": "Invalid params",
+        "data": {
+            "id": [
+                "The id must be a string or integer."
+            ]
+        }
+    },
+    "jsonrpc": "2.0"
+}
