@@ -11,16 +11,20 @@ class HelpersTraitTest extends TestCase
 {
     use ProceduralRequests;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->setRpcRoute('rpc.point');
-    }
-
-    public function testHelperOk(): void
+    public function testHelperRouteOk(): void
     {
         $this
+            ->setRpcRoute('rpc.point')
+            ->callProcedure('fixture@ok')
+            ->assertJsonFragment([
+                'result' => 'Ok',
+            ]);
+    }
+
+    public function testHelperUrlOk(): void
+    {
+        $this
+            ->setRpcUrl(route('rpc.point'))
             ->callProcedure('fixture@ok')
             ->assertJsonFragment([
                 'result' => 'Ok',
