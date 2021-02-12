@@ -1,13 +1,13 @@
 name: run-tests
 
-on: 
+on:
   # Run action on every push and PR
   push:
   pull_request:
 
   # Run action at midnight to test against any updated dependencies
   schedule:
-  - cron: '0 0 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   test:
@@ -39,7 +39,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, zlib
           coverage: xdebug
 
       - name: Install dependencies

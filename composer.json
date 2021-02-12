@@ -45,6 +45,9 @@
     "config": {
         "sort-packages": true
     },
+    "suggest": {
+        "ext-zlib": "Required to compress the response into gzip"
+    },
     "prefer-stable": true,
     "extra": {
         "laravel": {
