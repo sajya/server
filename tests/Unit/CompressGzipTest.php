@@ -22,7 +22,7 @@ class CompressGzipTest extends TestCase
         ])
             ->assertOk()
             ->assertHeader('content-type', 'application/json')
-            ->assertHeader('Content-Encoding', 'gzip');
+            ->assertHeader('content-encoding', 'gzip');
 
         $content = gzdecode($response->getContent());
 
@@ -30,11 +30,12 @@ class CompressGzipTest extends TestCase
         $this->assertStringContainsString('"result":"Ok"', $content);
     }
 
-    public function testNoSupportCompress()
+    public function testSendWithoutCompressResponse(): void
     {
         $this
             ->setRpcRoute('rpc.compress')
             ->callProcedure('fixture@ok')
+            ->assertHeaderMissing('content-encoding')
             ->assertJsonFragment([
                 'result' => 'Ok',
             ]);
