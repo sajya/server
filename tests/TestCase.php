@@ -6,6 +6,7 @@ namespace Sajya\Server\Tests;
 
 use Illuminate\Foundation\Application;
 use Sajya\Server\Guide;
+use Sajya\Server\Middleware\GzipCompress;
 use Sajya\Server\ServerServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -38,6 +39,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         $app['router']->rpc('point', $this->mapProcedures)->name('rpc.point');
         $app['router']->rpc('delimiter', $this->mapProcedures, '.')->name('rpc.delimiter');
+        $app['router']->rpc('compress', $this->mapProcedures)->middleware(GzipCompress::class)->name('rpc.compress');
     }
 
     /**
