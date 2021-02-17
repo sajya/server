@@ -55,5 +55,6 @@ return PhpCsFixer\Config::create()
         ],
         'single_trait_insert_per_statement'   => true,
         'trim_array_spaces'                   => true,
+        'declare_strict_types'                => true,
     ])
     ->setFinder($finder);
