@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sajya\Server;
 
 use Illuminate\Http\JsonResponse;
