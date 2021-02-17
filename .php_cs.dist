@@ -12,7 +12,8 @@ $finder = Symfony\Component\Finder\Finder::create()
 
 return PhpCsFixer\Config::create()
     ->setRules([
-        '@PSR2'                               => true,
+        '@PSR12'                              => true,
+        'declare_strict_types'                => true,
         'array_syntax'                        => [
             'syntax' => 'short',
         ],
@@ -55,6 +56,5 @@ return PhpCsFixer\Config::create()
         ],
         'single_trait_insert_per_statement'   => true,
         'trim_array_spaces'                   => true,
-        'declare_strict_types'                => true,
     ])
     ->setFinder($finder);
