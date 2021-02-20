@@ -7,7 +7,6 @@ namespace Sajya\Server\Middleware;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class GzipCompress
 {
@@ -33,7 +32,7 @@ class GzipCompress
      * @param JsonResponse $response
      * @param int          $compress
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function compress($response, int $compress)
     {

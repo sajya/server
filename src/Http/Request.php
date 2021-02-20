@@ -59,7 +59,7 @@ class Request implements JsonSerializable
         $methods = get_class_methods($request);
 
         collect($collection)
-            ->each(static function ($value, $key) use ($request, $methods) {
+            ->each(static function ($value, string $key) use ($request, $methods) {
                 $method = Str::start(ucfirst($key), 'set');
 
                 if (in_array($method, $methods, true)) {
