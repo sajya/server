@@ -61,7 +61,7 @@ abstract class RpcException extends RuntimeException implements JsonSerializable
     }
 
     /**
-     * @param null $data
+     * @param mixed|null $data
      *
      * @return $this
      */

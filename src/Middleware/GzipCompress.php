@@ -33,7 +33,7 @@ class GzipCompress
      * @param JsonResponse $response
      * @param int          $compress
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function compress($response, int $compress)
     {

@@ -28,7 +28,7 @@ class Parser
     /**
      * Extract content.
      */
-    protected ?Collection $decode;
+    protected Collection $decode;
 
     /**
      * @var bool

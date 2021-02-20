@@ -21,9 +21,10 @@
     },
     "require-dev": {
         "orchestra/testbench": "6.*",
-        "symfony/var-dumper": "^5.0",
         "phpunit/php-code-coverage": "^9.0",
-        "phpunit/phpunit": "^9.4"
+        "phpunit/phpunit": "^9.4",
+        "symfony/var-dumper": "^5.0",
+        "vimeo/psalm": "^4.6"
     },
     "conflict": {
         "mockery/mockery": "<1.4.2"
