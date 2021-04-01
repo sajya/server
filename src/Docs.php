@@ -18,7 +18,6 @@ use Sajya\Server\Annotations\Result;
 
 class Docs
 {
-
     /**
      * @var string[]
      */
@@ -47,13 +46,11 @@ class Docs
     {
         return collect($this->procedures)
             ->map(function (string $class) {
-
                 $reflectionClass = new ReflectionClass($class);
                 $name = $reflectionClass->getProperty('name')->getValue();
 
                 return collect($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC))
                     ->map(function (ReflectionMethod $method) use ($name) {
-
                         $request = [
                             "jsonrpc" => "2.0",
                             "id"      => 1,
@@ -98,7 +95,7 @@ class Docs
 
         $values = $this
             ->getAnnotationsFrom($method, $class)
-            ->mapWithKeys(fn(object $param) => [$param->name => $param->value]);
+            ->mapWithKeys(fn (object $param) => [$param->name => $param->value]);
 
         foreach ($values as $key => $param) {
             $key = Str::of($key);
@@ -123,15 +120,15 @@ class Docs
     {
         $annotations = (new AnnotationReader())->getMethodAnnotations($method);
 
-        return collect($annotations)->filter(fn($annotation) => is_a($annotation, $class));
+        return collect($annotations)->filter(fn ($annotation) => is_a($annotation, $class));
     }
-
 
     /**
      * @param array $value
      *
-     * @return \Illuminate\Support\Stringable
      * @throws \JsonException
+     *
+     * @return \Illuminate\Support\Stringable
      */
     private function highlight(array $value): Stringable
     {
@@ -159,7 +156,6 @@ class Docs
 
         return $docs;
     }
-
 
     /**
      * @param array $array

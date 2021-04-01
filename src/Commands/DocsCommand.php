@@ -30,8 +30,9 @@ class DocsCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return int
      * @throws \Throwable
+     *
+     * @return int
      */
     public function handle()
     {
@@ -41,6 +42,7 @@ class DocsCommand extends Command
 
         if ($route === null) {
             $this->warn("Route '$routeName' not found");
+
             return 1;
         }
 

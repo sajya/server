@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
-
 use Illuminate\Support\Facades\Route;
 use Sajya\Server\Docs;
 use Sajya\Server\Tests\TestCase;
