@@ -29,22 +29,23 @@
 </head>
 <body>
 
-
-<div class="col-lg-8 mx-auto pt-md-5">
-    <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-        <span class="d-flex align-items-center text-dark text-decoration-none me-auto user-select-none">
+<div class="container">
+<div class="col-lg-11 mx-auto pt-3 pt-md-5">
+    <header class="row d-flex align-items-center pb-md-3 mb-4 mb-md-5 border-bottom">
+        <span class="col d-flex align-items-center text-dark text-decoration-none me-auto user-select-none">
             <img alt="Starter template" src="https://sajya.github.io/assets/img/logo.svg" width="45" class="me-2">
             <span class="fs-3">
-               {{ $title }} <span class="text-muted ps-2 fs-6">{ JSON-RPC } Documentation</span>
+               {{ $title }}
+                <span class="text-muted ps-md-2 fs-6 d-block d-md-inline">{ JSON-RPC } Documentation</span>
             </span>
         </span>
 
-        <mark class="px-2 user-select-all">{{ $uri }}</mark>
+        <mark class="col-12 col-md-auto px-2 user-select-all mt-2 mt-md-0">{{ $uri }}</mark>
     </header>
 
     @foreach($procedures as $procedure)
 
-        <div class="row g-5">
+        <div class="row g-2 g-md-5">
             <div class="col-12 col-md-3 pe-md-0">
                 <h4 class="user-select-all mb-3">
                     {{ $procedure['name'] }}
@@ -93,6 +94,7 @@
             Created by the <a href="http://sajya.github.io" class="text-dark" target="_blank">Sajya</a>.
         </div>
     </footer>
+</div>
 </div>
 
 </body>
