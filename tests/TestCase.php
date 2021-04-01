@@ -40,6 +40,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['router']->rpc('point', $this->mapProcedures)->name('rpc.point');
         $app['router']->rpc('delimiter', $this->mapProcedures, '.')->name('rpc.delimiter');
         $app['router']->rpc('compress', $this->mapProcedures)->middleware(GzipCompress::class)->name('rpc.compress');
+        $app['router']->rpc('docs', [FixtureDocsProcedure::class])->name('rpc.docs');
     }
 
     /**
