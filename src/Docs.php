@@ -10,11 +10,11 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
+use phpDocumentor\Reflection\DocBlockFactory;
 use ReflectionClass;
 use ReflectionMethod;
 use Sajya\Server\Annotations\Param;
 use Sajya\Server\Annotations\Result;
-use phpDocumentor\Reflection\DocBlockFactory;
 
 class Docs
 {
@@ -98,7 +98,7 @@ class Docs
 
         $values = $this
             ->getAnnotationsFrom($method, $class)
-            ->mapWithKeys(fn($param) => [$param->name => $param->value]);
+            ->mapWithKeys(fn(object $param) => [$param->name => $param->value]);
 
         foreach ($values as $key => $param) {
             $key = Str::of($key);
@@ -117,14 +117,13 @@ class Docs
      * @param ReflectionMethod $method
      * @param string           $class
      *
-     * @return array
+     * @return Collection
      */
     private function getAnnotationsFrom(ReflectionMethod $method, string $class): Collection
     {
         $annotations = (new AnnotationReader())->getMethodAnnotations($method);
 
-        return collect($annotations)
-            ->filter(fn($annotation) => is_a($annotation, $class));
+        return collect($annotations)->filter(fn($annotation) => is_a($annotation, $class));
     }
 
 

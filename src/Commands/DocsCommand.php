@@ -52,7 +52,7 @@ class DocsCommand extends Command
             'procedures' => $docs->getAnnotations(),
         ]);
 
-        Storage::disk()->put($this->option('path') . $this->option('name'), $html);
+        Storage::disk()->put($this->option('path') . $this->option('name'), $html->render());
         $this->info('Documentation was generated successfully.');
 
         return 0;
