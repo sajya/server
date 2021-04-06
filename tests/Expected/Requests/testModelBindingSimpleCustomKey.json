@@ -1,0 +1,8 @@
+{
+    "jsonrpc": "2.0",
+    "method": "fixture@getUserNameCustomKey",
+    "params": {
+        "user": "test@domain.com"
+    },
+    "id": 1
+}

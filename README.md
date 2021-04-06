@@ -19,6 +19,7 @@ Sajya is an open-source project aiming to implement the JSON-RPC 2.0 server spec
 
 - Quick and straightforward route adding
 - Validation of parameters and custom messages
+- Parameter model binding to resolve method dependencies
 - Support batch requests
 - Support notification requests
 

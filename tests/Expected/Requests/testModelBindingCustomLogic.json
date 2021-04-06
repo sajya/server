@@ -1,0 +1,8 @@
+{
+    "jsonrpc": "2.0",
+    "method": "fixture@getUserNameCustomLogic",
+    "params": {
+        "user": 3
+    },
+    "id": 1
+}
