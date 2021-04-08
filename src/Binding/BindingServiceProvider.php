@@ -138,13 +138,13 @@ class BindingServiceProvider
         $scope = '',
         $procedureMethodParam = null
     ): void {
-        $key = $this->makeKey($requestParam, $scope, $procedureMethodParam);
-        $this->binders[$key] = RouteBinding::forCallback($this->container, $binder);
-        $this->scopes[$key] = $scope;
         if (is_null($procedureMethodParam)) {
             $procedureMethodParam = is_array($requestParam) ? end($requestParam) : $requestParam;
             $procedureMethodParam = explode(':', $procedureMethodParam)[0];
         }
+        $key = $this->makeKey($requestParam, $scope, $procedureMethodParam);
+        $this->binders[$key] = RouteBinding::forCallback($this->container, $binder);
+        $this->scopes[$key] = $scope;
         $this->procedureMethodParams[$key] = $procedureMethodParam;
         $this->requestParameters[$key] = $requestParam;
     }
