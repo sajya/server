@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
+use Sajya\Server\Binding\BoundMethod;
 use Sajya\Server\Exceptions\InternalErrorException;
 use Sajya\Server\Exceptions\InvalidParams;
 use Sajya\Server\Exceptions\RuntimeRpcException;

@@ -7,7 +7,7 @@ namespace Sajya\Server\Tests;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Sajya\Server\Binding\HandlesRequestParameters;
-use Sajya\Server\BindsParameters;
+use Sajya\Server\Binding\BindsParameters;
 
 class FixtureRequest extends FormRequest implements BindsParameters
 {
