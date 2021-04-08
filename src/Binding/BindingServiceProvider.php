@@ -56,32 +56,33 @@ class BindingServiceProvider
     /**
      * Create a new instance.
      *
-     * @param  Container|null  $container
+     * @param Container|null $container
+     *
      * @return void
      */
     public function __construct(Container $container = null)
     {
-        $this->container = $container ?: new Container;
+        $this->container = $container ?: new Container();
     }
 
     /**
      * Register a model binder for a request parameter.
      *
-     * @param string|string[]       $requestParam The parameter name in the RPC request to use for the model binding.
-     *                                            If the parameter is nested, use an array, where each string
-     *                                            corresponds to an attribute to look into, e.g. `['post','id']` will
-     *                                            use the `id` attribute of the `post` attribute.
-     *                                            The last or only attribute may also be suffixed with a colon and the
-     *                                            field name to be used for the resolution, e.g.: `user:email` or
-     *                                            `post:slug`.
-     * @param string                       $class The class name to resolve.
-     * @param string|callable|mixed[]|null $scope Optional, default: ''.
-     *                                            For details see {@see RPC::bind()}.
-     * @param null|string   $procedureMethodParam Optional, default: same as `$requestParam`.
-     *                                            For details see {@see RPC::bind()}.
-     * @param null|\Closure      $failureCallback Optional. If provided, it is called if the automatic model
-     *                                            resolution fails and can be used to perform a custom resolution
-     *                                            (return an instance to be used) or error handling.
+     * @param string|string[]              $requestParam         The parameter name in the RPC request to use for the model binding.
+     *                                                           If the parameter is nested, use an array, where each string
+     *                                                           corresponds to an attribute to look into, e.g. `['post','id']` will
+     *                                                           use the `id` attribute of the `post` attribute.
+     *                                                           The last or only attribute may also be suffixed with a colon and the
+     *                                                           field name to be used for the resolution, e.g.: `user:email` or
+     *                                                           `post:slug`.
+     * @param string                       $class                The class name to resolve.
+     * @param string|callable|mixed[]|null $scope                Optional, default: ''.
+     *                                                           For details see {@see RPC::bind()}.
+     * @param null|string                  $procedureMethodParam Optional, default: same as `$requestParam`.
+     *                                                           For details see {@see RPC::bind()}.
+     * @param null|\Closure                $failureCallback      Optional. If provided, it is called if the automatic model
+     *                                                           resolution fails and can be used to perform a custom resolution
+     *                                                           (return an instance to be used) or error handling.
      *
      * @return void
      *
@@ -106,25 +107,25 @@ class BindingServiceProvider
     /**
      * Register a custom binder for a request parameter.
      *
-     * @param string|string[]                 $requestParam The parameter name in the RPC request to use for the model
-     *                                                      binding.
-     *                                                      If the parameter is nested, use an array, where each string
-     *                                                      corresponds to an attribute to look into,
-     *                                                      e.g. `['post','id']` will use the `id`  attribute of the
-     *                                                      `post` attribute.
-     * @param string|callable                       $binder The callback to perform the resolution. Should return the
-     *                                                      instance to be used.
-     * @param string|callable|mixed[]|null           $scope Optional, default: ''.
-     *                                                      This defines where the binding will be applied:
-     *                                                      - Empty string: globally, for all Procedures & all methods
-     *                                                      - Procedure name: for all methods of the given Procedure
-     *                                                      - `Procedure@method`: for the given method
-     *                                                      - PHP callable: for the given method
-     *                                                      If array is provided, it may contain multiple strings and
-     *                                                      callables, each will be applied.
-     * @param null|string             $procedureMethodParam Optional, default: same as `$requestParam` or last element
-     *                                                      Provide it, if the PHP method parameter has a different name
-     *                                                      than the RPC request parameter.
+     * @param string|string[]              $requestParam         The parameter name in the RPC request to use for the model
+     *                                                           binding.
+     *                                                           If the parameter is nested, use an array, where each string
+     *                                                           corresponds to an attribute to look into,
+     *                                                           e.g. `['post','id']` will use the `id`  attribute of the
+     *                                                           `post` attribute.
+     * @param string|callable              $binder               The callback to perform the resolution. Should return the
+     *                                                           instance to be used.
+     * @param string|callable|mixed[]|null $scope                Optional, default: ''.
+     *                                                           This defines where the binding will be applied:
+     *                                                           - Empty string: globally, for all Procedures & all methods
+     *                                                           - Procedure name: for all methods of the given Procedure
+     *                                                           - `Procedure@method`: for the given method
+     *                                                           - PHP callable: for the given method
+     *                                                           If array is provided, it may contain multiple strings and
+     *                                                           callables, each will be applied.
+     * @param null|string                  $procedureMethodParam Optional, default: same as `$requestParam` or last element
+     *                                                           Provide it, if the PHP method parameter has a different name
+     *                                                           than the RPC request parameter.
      *
      * @return void
      *
@@ -151,13 +152,14 @@ class BindingServiceProvider
     /**
      * Makes a key to be used with the arrays containing the bindings and related configuration.
      *
-     * @param string|array                        $requestParam         The parameter in the RPC request to bind for.
-     * @param string|callable|string[]|callable[] $scope                See the `$bind` parameter of {@see bind()}.
-     * @param string|null                         $procedureMethod      The parameter of the Procedure method to bind
-     *                                                                  for.
+     * @param string|array                        $requestParam    The parameter in the RPC request to bind for.
+     * @param string|callable|string[]|callable[] $scope           See the `$bind` parameter of {@see bind()}.
+     * @param string|null                         $procedureMethod The parameter of the Procedure method to bind
+     *                                                             for.
+     *
+     * @throws \JsonException
      *
      * @return string
-     * @throws \JsonException
      */
     private function makeKey($requestParam, $scope, ?string $procedureMethod): string
     {
@@ -173,8 +175,9 @@ class BindingServiceProvider
      * @param string          $targetParam       The name of the parameter of the Procedure method to bind for.
      * @param string|callable $targetCallable    The target Procedure method to bind for.
      *
-     * @return false|mixed False if cannot resolve, the resolved instance otherwise.
      * @throws BindingResolutionException
+     *
+     * @return false|mixed False if cannot resolve, the resolved instance otherwise.
      */
     public function resolveInstance($requestParameters, $targetParam, $targetCallable = '')
     {
@@ -188,6 +191,7 @@ class BindingServiceProvider
             if (is_null($value)) {
                 return false;
             }
+
             return $this->performBinding($key, $value);
         } catch (\Throwable $e) {
             throw new BindingResolutionException('Failed to perform binding resolution.', -32003, $e);
@@ -199,20 +203,20 @@ class BindingServiceProvider
      *
      * @see makeKey()
      *
-     * @param string          $targetParam       The name of the parameter of the Procedure method to bind for.
-     * @param string|callable $targetCallable    The target Procedure method to bind for.
+     * @param string          $targetParam    The name of the parameter of the Procedure method to bind for.
+     * @param string|callable $targetCallable The target Procedure method to bind for.
      *
      * @return false|string False if cannot be found or the key otherwise.
      */
     public function findKey($targetParam, $targetCallable = '')
     {
         foreach ($this->procedureMethodParams as $key => $boundProcedureMethodParam) {
-            if ($boundProcedureMethodParam !==  $targetParam) {
+            if ($boundProcedureMethodParam !== $targetParam) {
                 continue;
             }
 
             $maybeBoundScope = $this->scopes[$key];
-            if (!is_array($maybeBoundScope)) {
+            if (! is_array($maybeBoundScope)) {
                 $maybeBoundScope = [$maybeBoundScope];
             }
             foreach ($maybeBoundScope as $container) {
@@ -221,6 +225,7 @@ class BindingServiceProvider
                 }
             }
         }
+
         return false;
     }
 
@@ -234,7 +239,7 @@ class BindingServiceProvider
      */
     protected static function doesCallableContain($container, $contained)
     {
-        if (''===$contained || '' === $container) {
+        if ('' === $contained || '' === $container) {
             return true;
         }
         // Note: php7 considers array with classname and method name callable
@@ -246,20 +251,22 @@ class BindingServiceProvider
             if (is_callable($contained)) {
                 return $container === $contained;
             }
+
             return false;
         }
         if (is_callable($contained)) {
             $container = Str::parseCallback($container);
+
             return $container === $contained;
         }
 
         $container = static::preparescopeForComparision($container);
         $contained = static::preparescopeForComparision($contained);
 
-        if (false===$container || false===$contained) {
+        if (false === $container || false === $contained) {
             return false;
         }
-        if (count($container)>count($contained)) {
+        if (count($container) > count($contained)) {
             return false;
         }
         foreach ($container as $index => $part) {
@@ -267,6 +274,7 @@ class BindingServiceProvider
                 return false;
             }
         }
+
         return true;
     }
 
@@ -283,16 +291,17 @@ class BindingServiceProvider
             // In php8 a "callable" array pointing at a non-static method is not
             // considered callable, but only a regular array, so we handle those
             // here
-            if (count($scope)!=2) {
+            if (count($scope) != 2) {
                 return false;
             }
             $scope = implode('@', $scope);
         }
-        if (!is_string($scope)) {
+        if (! is_string($scope)) {
             return false;
         }
         // Split into comparable bits around \ and @ characters
         $scope = preg_split('/[@\\\]/', $scope);
+
         return $scope;
     }
 

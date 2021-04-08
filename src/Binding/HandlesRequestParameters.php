@@ -20,16 +20,17 @@ trait HandlesRequestParameters
      */
     protected static function resolveRequestValue(array $requestParameters, $requestParam)
     {
-        if (!is_array($requestParam)) {
+        if (! is_array($requestParam)) {
             return $requestParameters[$requestParam] ?? null;
         }
         $value = $requestParameters;
         foreach ($requestParam as $param) {
-            if (!isset($value[$param])) {
+            if (! isset($value[$param])) {
                 return null;
             }
             $value = $value[$param];
         }
+
         return $value;
     }
 }

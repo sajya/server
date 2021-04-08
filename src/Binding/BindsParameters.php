@@ -31,7 +31,7 @@ interface BindsParameters
      *                  parameters, e.g.: `['user'=>['user','address:email']]`.
      */
     public function getBindings(): array;
-    
+
     /**
      * Makes the parameter to be injected into the Procedure method.
      *

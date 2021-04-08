@@ -88,10 +88,10 @@ class FixtureProcedure extends Procedure
 
         return $result;
     }
-    
+
     /**
      * @param Request $request
-     * @param User    $user User resolved by global bindings.
+     * @param User    $user    User resolved by global bindings.
      *
      * @return string
      */
@@ -99,7 +99,7 @@ class FixtureProcedure extends Procedure
     {
         return $user->getAttribute('name');
     }
-    
+
     /**
      * @param FixtureRequest $request
      * @param User           $userById User resolved by the default resolution logic using ID as key.
@@ -110,7 +110,7 @@ class FixtureProcedure extends Procedure
     {
         return $userById->getAttribute('name');
     }
-    
+
     /**
      * @param FixtureRequest $request
      * @param User           $userNestedId User resolved by the default resolution logic using ID as key.
@@ -121,7 +121,7 @@ class FixtureProcedure extends Procedure
     {
         return $userNestedId->getAttribute('name');
     }
-    
+
     /**
      * @param FixtureRequest $request
      * @param User           $userByEmail User resolved by the default resolution logic using Email as key.
@@ -132,7 +132,7 @@ class FixtureProcedure extends Procedure
     {
         return $userByEmail->getAttribute('name');
     }
-    
+
     /**
      * @param FixtureRequest $request
      * @param User           $userCustom User resolved by the custom resolution logic.
@@ -143,7 +143,7 @@ class FixtureProcedure extends Procedure
     {
         return $userCustom->getAttribute('name');
     }
-    
+
     /**
      * @param FixtureRequest $request
      * @param null|User      $userCustom User resolved by the custom resolution logic.
@@ -154,7 +154,7 @@ class FixtureProcedure extends Procedure
     {
         return is_null($userCustom) ? 'No user' : $userCustom->getAttribute('name');
     }
-    
+
     /**
      * @param FixtureRequest $request
      * @param User           $customer User resolved by the custom resolution logic.
@@ -165,11 +165,11 @@ class FixtureProcedure extends Procedure
     {
         return $customer->getAttribute('name');
     }
-    
+
     /**
      * @param FixtureRequest $request
-     * @param Filesystem $wrongTypeVar Should trigger an exception, because
-     *                                 it does not implement {@see UrlRoutable}.
+     * @param Filesystem     $wrongTypeVar Should trigger an exception, because
+     *                                     it does not implement {@see UrlRoutable}.
      *
      * @return string
      */
@@ -177,7 +177,7 @@ class FixtureProcedure extends Procedure
     {
         return gettype($wrongTypeVar);
     }
-    
+
     public function internalError(): void
     {
         abort(500);

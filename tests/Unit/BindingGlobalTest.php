@@ -24,7 +24,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -34,10 +35,11 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             }
         );
-    
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -46,16 +48,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-    
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-    
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Bind using nested parameter.
      */
@@ -64,7 +66,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             ['customer','user'],
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -74,31 +77,32 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             }
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
             "params"  => [
                 "customer" => [
                     'title' => 'Dr.',
-                    'user' => 6
+                    'user'  => 6,
                 ],
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Bind using nested parameter with a name other than the Procedure method parameter's name..
      */
@@ -107,7 +111,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             ['user','id'],
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -117,33 +122,34 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             '',
             'user' // Since now we bind the 'id', but the method parameter is called '$user'
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
             "params"  => [
                 "user" => [
                     'title' => 'Dr.',
-                    'id' => 6
+                    'id'    => 6,
                 ],
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Bind using a Procedure::method scope declared as string.
      */
@@ -152,7 +158,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -162,11 +169,12 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             'Sajya\Server\Tests\FixtureProcedure@getUserName'
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -175,16 +183,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Bind using a Procedure scope declared as string.
      */
@@ -193,7 +201,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -203,11 +212,12 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             'Sajya\Server\Tests\FixtureProcedure'
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -216,16 +226,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Bind using a Procedure scope declared as string.
      */
@@ -234,7 +244,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -244,11 +255,12 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             'Sajya\Server\Tests'
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -257,16 +269,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Bind using a Procedure::method scope declared as PHP callable.
      */
@@ -275,7 +287,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -285,11 +298,12 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             [FixtureProcedure::class,'getUserName']
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -298,16 +312,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Bind using multiple target scopes.
      */
@@ -316,7 +330,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -326,15 +341,16 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             [
                 'Sajya\Server\Tests\FixtureProcedure@subtract',
                 [FixtureProcedure::class,'getUserName'],
-                'Sajya\Server\Tests\FixtureProcedure@getUserNameDefaultKey'
+                'Sajya\Server\Tests\FixtureProcedure@getUserNameDefaultKey',
             ]
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -343,16 +359,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Multiple scoped bindings.
      */
@@ -361,12 +377,14 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
                 $userMock = \Mockery::mock(User::class);
                 $userMock->shouldNotReceive('getAttribute');
+
                 return $userMock;
             },
             'Sajya\Server\Tests\FixtureProcedure@subtract'
@@ -374,7 +392,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -384,11 +403,12 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             [FixtureProcedure::class,'getUserName']
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -397,16 +417,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Multiple scoped bindings should be applied in order they are defined.
      */
@@ -415,7 +435,8 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
@@ -425,6 +446,7 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Custom User');
+
                 return $userMock;
             },
             ''
@@ -432,17 +454,19 @@ class BindingGlobalTest extends TestCase
         RPC::bind(
             'user',
             /**
-             * @param  string  $parameter
+             * @param string $parameter
+             *
              * @return User|Authenticatable
              */
             static function (string $parameter) {
                 $userMock = \Mockery::mock(User::class);
                 $userMock->shouldNotReceive('getAttribute');
+
                 return $userMock;
             },
             [FixtureProcedure::class,'getUserName']
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -451,16 +475,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Custom User",
+            'id'      => 1,
+            "result"  => "Custom User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Simple case of model.
      */
@@ -476,9 +500,9 @@ class BindingGlobalTest extends TestCase
                  ->with('name')
                  ->andReturn('User 3');
         app()->instance(User::class, $userMock);
-        
+
         RPC::model('user', User::class);
-    
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -487,16 +511,16 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-    
+
         $response = [
-            'id' => 1,
-            "result" => "User 3",
+            'id'      => 1,
+            "result"  => "User 3",
             "jsonrpc" => "2.0",
         ];
-    
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox Failure callback should be called, if automatic model binding fails.
      */
@@ -509,7 +533,7 @@ class BindingGlobalTest extends TestCase
                  ->andReturnFalse();
         $userMock->shouldNotReceive('getAttribute');
         app()->instance(User::class, $userMock);
-        
+
         RPC::model(
             'user',
             User::class,
@@ -524,10 +548,11 @@ class BindingGlobalTest extends TestCase
                          ->once()
                          ->with('name')
                          ->andReturn('Fallback User');
+
                 return $userMock;
             }
         );
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserName",
@@ -536,30 +561,31 @@ class BindingGlobalTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
-            "result" => "Fallback User",
+            'id'      => 1,
+            "result"  => "Fallback User",
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @param array|string $request
      * @param array        $response
      * @param string       $route
      *
-     * @return TestResponse
      * @throws \JsonException
+     *
+     * @return TestResponse
      */
     private function callRpcWith($request, array $response, string $route = 'rpc.point'): TestResponse
     {
-        if (!is_string($request)) {
+        if (! is_string($request)) {
             $request = json_encode($request, JSON_THROW_ON_ERROR);
         }
-        
+
         return $this
             ->call('POST', route($route), [], [], [], [], $request)
             ->assertOk()

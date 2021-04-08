@@ -145,7 +145,7 @@ class BindingRequestTest extends TestCase
                 json_decode($response, true, 512, JSON_THROW_ON_ERROR)
             );
     }
-    
+
     /**
      * @testdox We should get an error, if null is returned by {@see BindsParameters::resolveParameter()}
      *          when the related Procedure method does not define the parameter as optional.
@@ -159,7 +159,7 @@ class BindingRequestTest extends TestCase
                  ->with(5)
                  ->andReturn(null);
         app()->instance(User::class, $userMock);
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserNameCustomLogic",
@@ -168,18 +168,18 @@ class BindingRequestTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
+            'id'    => 1,
             'error' => [
                 'code' => -32000,
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox We should get an error, if the object returned by {@see BindsParameters::resolveParameter()}
      *          does not correspond to the type of object expected by the Procedure method.
@@ -193,7 +193,7 @@ class BindingRequestTest extends TestCase
                  ->with(5)
                  ->andReturn(new \stdClass());
         app()->instance(User::class, $userMock);
-    
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserNameCustomLogic",
@@ -202,18 +202,18 @@ class BindingRequestTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-    
+
         $response = [
-            'id' => 1,
+            'id'    => 1,
             'error' => [
                 'code' => -32001,
             ],
             "jsonrpc" => "2.0",
         ];
-    
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox We should get an error, if the object expected by the Procedure method
      *          does not implement {@see UrlRoutable}, but is expected to be resolved
@@ -224,7 +224,7 @@ class BindingRequestTest extends TestCase
         config()->set('app.debug', false);
         $userMock = \Mockery::mock(User::class);
         app()->instance(User::class, $userMock);
-        
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserNameWrong",
@@ -233,18 +233,18 @@ class BindingRequestTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
+            'id'    => 1,
             'error' => [
                 'code' => -32002,
             ],
             "jsonrpc" => "2.0",
         ];
-    
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @testdox We should get an error, if the Model instance cannot be resolved
      *          automatically, e.g. due to invalid ID.
@@ -258,7 +258,7 @@ class BindingRequestTest extends TestCase
                  ->once()
                  ->with(1, null)
                  ->andReturnFalse();
-    
+
         $request = [
             "id"      => 1,
             "method"  => "fixture@getUserNameDefaultField",
@@ -267,32 +267,33 @@ class BindingRequestTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+
         $response = [
-            'id' => 1,
+            'id'    => 1,
             'error' => [
                 'code' => -32003,
             ],
             "jsonrpc" => "2.0",
         ];
-    
+
         return $this->callRpcWith($request, $response);
     }
-    
+
     /**
      * @param array|string $request
      * @param array        $response
      * @param string       $route
      *
-     * @return TestResponse
      * @throws \JsonException
+     *
+     * @return TestResponse
      */
     private function callRpcWith($request, array $response, string $route = 'rpc.point'): TestResponse
     {
-        if (!is_string($request)) {
+        if (! is_string($request)) {
             $request = json_encode($request, JSON_THROW_ON_ERROR);
         }
-    
+
         return $this
             ->call('POST', route($route), [], [], [], [], $request)
             ->assertOk()
