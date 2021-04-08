@@ -10,14 +10,14 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Testing\TestResponse;
 use Sajya\Server\Tests\TestCase;
 
-class BindingTest extends TestCase
+class BindingRequestTest extends TestCase
 {
     /**
      * @return Generator
      */
     public function exampleCalls(): Generator
     {
-        yield ['testModelBindingSimpleDefaultKey', function () {
+        yield ['testModelBindingSimpleDefaultField', function () {
             config()->set('app.debug', true);
             $userMock = \Mockery::mock(User::class);
             $userMock->shouldReceive('resolveRouteBinding')
@@ -30,7 +30,7 @@ class BindingTest extends TestCase
                      ->andReturn('User 1');
             app()->instance(User::class, $userMock);
         }];
-        yield ['testModelBindingSimpleCustomKey', function () {
+        yield ['testModelBindingSimpleCustomField', function () {
             config()->set('app.debug', true);
             $userMock = \Mockery::mock(User::class);
             $userMock->shouldReceive('resolveRouteBinding')
@@ -41,6 +41,19 @@ class BindingTest extends TestCase
                      ->once()
                      ->with('name')
                      ->andReturn('User 2');
+            app()->instance(User::class, $userMock);
+        }];
+        yield ['testModelBindingSimpleNestedParameter', function () {
+            config()->set('app.debug', true);
+            $userMock = \Mockery::mock(User::class);
+            $userMock->shouldReceive('resolveRouteBinding')
+                     ->once()
+                     ->with(3, null)
+                     ->andReturnSelf();
+            $userMock->shouldReceive('getAttribute')
+                     ->once()
+                     ->with('name')
+                     ->andReturn('User 3');
             app()->instance(User::class, $userMock);
         }];
         yield ['testModelBindingCustomLogic', function () {
@@ -66,6 +79,19 @@ class BindingTest extends TestCase
             $userMock->shouldReceive('get')
                      ->never()
                      ->with('name');
+            app()->instance(User::class, $userMock);
+        }];
+        yield ['testModelBindingCustomLogicNested', function () {
+            config()->set('app.debug', true);
+            $userMock = \Mockery::mock(User::class);
+            $userMock->shouldReceive('resolveRouteBinding')
+                     ->once()
+                     ->with(3)
+                     ->andReturnSelf();
+            $userMock->shouldReceive('getAttribute')
+                     ->once()
+                     ->with('name')
+                     ->andReturn('User 3');
             app()->instance(User::class, $userMock);
         }];
     }
@@ -141,7 +167,6 @@ class BindingTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        $request = json_encode($request, JSON_THROW_ON_ERROR);
         
         $response = [
             'id' => 1,
@@ -151,11 +176,7 @@ class BindingTest extends TestCase
             "jsonrpc" => "2.0",
         ];
         
-        return $this
-            ->call('POST', route('rpc.point'), [], [], [], [], $request)
-            ->assertOk()
-            ->assertHeader('content-type', 'application/json')
-            ->assertJson($response);
+        return $this->callRpcWith($request, $response);
     }
     
     /**
@@ -180,7 +201,6 @@ class BindingTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        $request = json_encode($request, JSON_THROW_ON_ERROR);
     
         $response = [
             'id' => 1,
@@ -189,12 +209,8 @@ class BindingTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
-        return $this
-            ->call('POST', route('rpc.point'), [], [], [], [], $request)
-            ->assertOk()
-            ->assertHeader('content-type', 'application/json')
-            ->assertJson($response);
+    
+        return $this->callRpcWith($request, $response);
     }
     
     /**
@@ -216,7 +232,6 @@ class BindingTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        $request = json_encode($request, JSON_THROW_ON_ERROR);
         
         $response = [
             'id' => 1,
@@ -225,12 +240,8 @@ class BindingTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
-        return $this
-            ->call('POST', route('rpc.point'), [], [], [], [], $request)
-            ->assertOk()
-            ->assertHeader('content-type', 'application/json')
-            ->assertJson($response);
+    
+        return $this->callRpcWith($request, $response);
     }
     
     /**
@@ -249,13 +260,12 @@ class BindingTest extends TestCase
     
         $request = [
             "id"      => 1,
-            "method"  => "fixture@getUserNameDefaultKey",
+            "method"  => "fixture@getUserNameDefaultField",
             "params"  => [
                 "user" => 1,
             ],
             "jsonrpc" => "2.0",
         ];
-        $request = json_encode($request, JSON_THROW_ON_ERROR);
         
         $response = [
             'id' => 1,
@@ -264,9 +274,26 @@ class BindingTest extends TestCase
             ],
             "jsonrpc" => "2.0",
         ];
-        
+    
+        return $this->callRpcWith($request, $response);
+    }
+    
+    /**
+     * @param array|string $request
+     * @param array        $response
+     * @param string       $route
+     *
+     * @return TestResponse
+     * @throws \JsonException
+     */
+    private function callRpcWith($request, array $response, string $route = 'rpc.point'): TestResponse
+    {
+        if (!is_string($request)) {
+            $request = json_encode($request, JSON_THROW_ON_ERROR);
+        }
+    
         return $this
-            ->call('POST', route('rpc.point'), [], [], [], [], $request)
+            ->call('POST', route($route), [], [], [], [], $request)
             ->assertOk()
             ->assertHeader('content-type', 'application/json')
             ->assertJson($response);

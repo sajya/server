@@ -24,7 +24,11 @@ interface BindsParameters
      *                  parameter of the Procedure method, where the email attribute
      *                  of the Model is set by the 'address' parameter in the RPC
      *                  request.
-     *
+     *                  It is also possible to use nested parameters. E.g.: if the
+     *                  request contains a `user` parameter, which contains an `id`
+     *                  parameter, it can be mapped as: `['user'=>['user','id']]`.
+     *                  It is also possible to combine the custom field and nested
+     *                  parameters, e.g.: `['user'=>['user','address:email']]`.
      */
     public function getBindings(): array;
     

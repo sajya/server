@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Reflector;
+use Sajya\Server\Binding\HandlesRequestParameters;
 
-/**
- * Class BoundMethod
- */
 class BoundMethod extends \Illuminate\Container\BoundMethod
 {
+    use HandlesRequestParameters;
+    
     /**
      * Get the dependency for the given call parameter.
      *
-     * @param \Illuminate\Container\Container $container
+     * @param Container $container
      * @param \ReflectionParameter            $parameter
      * @param array                           $parameters
      * @param array                           $dependencies
@@ -61,7 +62,7 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
                     if (!$instance instanceof UrlRoutable) {
                         throw new BindingResolutionException('Mapped parameter type must implement `UrlRoutable` interface.', -32002);
                     }
-                    [ $instanceValue, $instanceField ] = self::getValueAndFieldFromMapEntry($parameterMap[$paramName]);
+                    [ $instanceValue, $instanceField ] = self::getValueAndFieldByMapEntry($parameterMap[$paramName]);
                     if (!$model = $instance->resolveRouteBinding($instanceValue, $instanceField)) {
                         throw (new ModelNotFoundException('', -32003))->setModel(get_class($instance), [$instanceValue]);
                     }
@@ -74,9 +75,26 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
         parent::addDependencyForCallParameter($container, $parameter, $parameters, $dependencies);
     }
     
-    private static function getValueAndFieldFromMapEntry($mapEntry)
+    /**
+     * Determines the value and the field to be used for model lookup based on the current request.
+     *
+     * @param array|string $requestParamMapEntry
+     *
+     * @return array
+     */
+    private static function getValueAndFieldByMapEntry($requestParamMapEntry)
     {
-        $entry = explode(':', $mapEntry);
-        return [request($entry[0]), $entry[1] ?? null];
+        if (is_array($requestParamMapEntry)) {
+            $last = end($requestParamMapEntry);
+            $entry = explode(':', $last);
+            $requestParamMapEntry[count($requestParamMapEntry)-1] = $entry[0];
+        } elseif (is_string($requestParamMapEntry)) {
+            $entry = explode(':', $requestParamMapEntry);
+            $requestParamMapEntry = $entry[0];
+        } else {
+            throw new \LogicException('$requestParamMapEntry must be an array or string.');
+        }
+        $value = self::resolveRequestValue(request()->request->all(), $requestParamMapEntry);
+        return [$value, $entry[1] ?? null];
     }
 }

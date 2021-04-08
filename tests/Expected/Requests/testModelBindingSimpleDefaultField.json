@@ -1,6 +1,6 @@
 {
     "jsonrpc": "2.0",
-    "method": "fixture@getUserNameDefaultKey",
+    "method": "fixture@getUserNameDefaultField",
     "params": {
         "user": 1
     },

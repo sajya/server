@@ -6,10 +6,13 @@ namespace Sajya\Server\Tests;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Sajya\Server\Binding\HandlesRequestParameters;
 use Sajya\Server\BindsParameters;
 
 class FixtureRequest extends FormRequest implements BindsParameters
 {
+    use HandlesRequestParameters;
+    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -40,7 +43,8 @@ class FixtureRequest extends FormRequest implements BindsParameters
         return [
             'userById'    => 'user',
             'userByEmail' => 'user:email',
-            'wrongTypeVar'=> 'user'
+            'wrongTypeVar'=> 'user',
+            'userNestedId'=> ['user','id']
         ];
     }
     
@@ -55,6 +59,10 @@ class FixtureRequest extends FormRequest implements BindsParameters
         if ('userCustom' === $parameterName) {
             $user = app()->make(User::class);
             return $user->resolveRouteBinding($this->input('user'));
+        }
+        if ('customer' === $parameterName) {
+            $user = app()->make(User::class);
+            return $user->resolveRouteBinding(static::resolveRequestValue($this->request->all(), ['user','id']));
         }
         return false;
     }

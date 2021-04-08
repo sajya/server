@@ -90,14 +90,36 @@ class FixtureProcedure extends Procedure
     }
     
     /**
+     * @param Request $request
+     * @param User    $user User resolved by global bindings.
+     *
+     * @return string
+     */
+    public function getUserName(Request $request, User $user): string
+    {
+        return $user->getAttribute('name');
+    }
+    
+    /**
      * @param FixtureRequest $request
      * @param User           $userById User resolved by the default resolution logic using ID as key.
      *
      * @return string
      */
-    public function getUserNameDefaultKey(FixtureRequest $request, User $userById): string
+    public function getUserNameDefaultField(FixtureRequest $request, User $userById): string
     {
         return $userById->getAttribute('name');
+    }
+    
+    /**
+     * @param FixtureRequest $request
+     * @param User           $userNestedId User resolved by the default resolution logic using ID as key.
+     *
+     * @return string
+     */
+    public function getUserNameNestedParameter(FixtureRequest $request, User $userNestedId): string
+    {
+        return $userNestedId->getAttribute('name');
     }
     
     /**
@@ -131,6 +153,17 @@ class FixtureProcedure extends Procedure
     public function getUserNameCustomLogicNullable(FixtureRequest $request, ?User $userCustom = null): string
     {
         return is_null($userCustom) ? 'No user' : $userCustom->getAttribute('name');
+    }
+    
+    /**
+     * @param FixtureRequest $request
+     * @param User           $customer User resolved by the custom resolution logic.
+     *
+     * @return string
+     */
+    public function getUserNameCustomLogicNested(FixtureRequest $request, User $customer): string
+    {
+        return $customer->getAttribute('name');
     }
     
     /**
