@@ -17,42 +17,42 @@ use Sajya\Server\Facades\RPC;
 class BindingServiceProvider
 {
     use HandlesRequestParameters;
-    
+
     /**
      * The IoC container instance.
      *
      * @var Container
      */
     protected Container $container;
-    
+
     /**
      * The registered parameter binders.
      *
      * @var array
      */
     protected array $binders = [];
-    
+
     /**
      * The registered binding targets.
      *
      * @var array
      */
     protected array $scopes = [];
-    
+
     /**
      * The registered procedure method parameters.
      *
      * @var array
      */
     protected array $procedureMethodParams = [];
-    
+
     /**
      * The registered request parameters.
      *
      * @var array
      */
     protected array $requestParameters = [];
-    
+
     /**
      * Create a new instance.
      *
@@ -63,7 +63,7 @@ class BindingServiceProvider
     {
         $this->container = $container ?: new Container;
     }
-    
+
     /**
      * Register a model binder for a request parameter.
      *
@@ -102,7 +102,7 @@ class BindingServiceProvider
             $procedureMethodParam
         );
     }
-    
+
     /**
      * Register a custom binder for a request parameter.
      *
@@ -147,29 +147,25 @@ class BindingServiceProvider
         $this->procedureMethodParams[$key] = $procedureMethodParam;
         $this->requestParameters[$key] = $requestParam;
     }
-    
+
     /**
      * Makes a key to be used with the arrays containing the bindings and related configuration.
      *
      * @param string|array                        $requestParam         The parameter in the RPC request to bind for.
      * @param string|callable|string[]|callable[] $scope                See the `$bind` parameter of {@see bind()}.
-     * @param string                              $procedureMethodParam The parameter of the Procedure method to bind
+     * @param string|null                         $procedureMethod      The parameter of the Procedure method to bind
      *                                                                  for.
      *
      * @return string
      * @throws \JsonException
      */
-    private function makeKey($requestParam, $scope, $procedureMethodParam)
+    private function makeKey($requestParam, $scope, ?string $procedureMethod): string
     {
-        if (is_array($requestParam) || is_object($requestParam)) {
-            $requestParam = json_encode($requestParam, JSON_THROW_ON_ERROR);
-        }
-        if (is_array($scope) || is_object($scope)) {
-            $scope = json_encode($scope, JSON_THROW_ON_ERROR);
-        }
-        return sha1($requestParam . $scope . $procedureMethodParam);
+        $json = json_encode([$requestParam, $scope, $procedureMethod], JSON_THROW_ON_ERROR);
+
+        return sha1($json);
     }
-    
+
     /**
      * Resolves the bound instance for a Procedure method parameter.
      *
@@ -197,7 +193,7 @@ class BindingServiceProvider
             throw new BindingResolutionException('Failed to perform binding resolution.', -32003, $e);
         }
     }
-    
+
     /**
      * Finds the key used with the arrays for a specific Procedure method parameter.
      *
@@ -214,7 +210,7 @@ class BindingServiceProvider
             if ($boundProcedureMethodParam !==  $targetParam) {
                 continue;
             }
-            
+
             $maybeBoundScope = $this->scopes[$key];
             if (!is_array($maybeBoundScope)) {
                 $maybeBoundScope = [$maybeBoundScope];
@@ -227,7 +223,7 @@ class BindingServiceProvider
         }
         return false;
     }
-    
+
     /**
      * Checks if a binding target scope contains an other, typically a specific method.
      *
@@ -256,10 +252,10 @@ class BindingServiceProvider
             $container = Str::parseCallback($container);
             return $container === $contained;
         }
-        
+
         $container = static::preparescopeForComparision($container);
         $contained = static::preparescopeForComparision($contained);
-        
+
         if (false===$container || false===$contained) {
             return false;
         }
@@ -273,7 +269,7 @@ class BindingServiceProvider
         }
         return true;
     }
-    
+
     /**
      * Turns callable arrays and callable strings into arrays for comparison.
      *
@@ -299,7 +295,7 @@ class BindingServiceProvider
         $scope = preg_split('/[@\\\]/', $scope);
         return $scope;
     }
-    
+
     /**
      * Call the binding callback for the given key.
      *
