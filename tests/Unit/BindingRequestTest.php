@@ -8,6 +8,7 @@ use Closure;
 use Generator;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Testing\TestResponse;
+use Sajya\Server\Binding\BindsParameters;
 use Sajya\Server\Tests\TestCase;
 
 class BindingRequestTest extends TestCase

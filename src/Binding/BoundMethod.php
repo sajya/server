@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sajya\Server;
+namespace Sajya\Server\Binding;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Reflector;
-use Sajya\Server\Binding\HandlesRequestParameters;
 
 class BoundMethod extends \Illuminate\Container\BoundMethod
 {
@@ -53,10 +52,10 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
         }
         
         // Attempt resolution based on parameter mapping
+        $paramName = $parameter->getName();
         foreach ($dependencies as $dependency) {
             if (is_object($dependency) && $dependency instanceof BindsParameters) {
                 $parameterMap = $dependency->getBindings();
-                $paramName = $parameter->getName();
                 if (isset($parameterMap[$paramName])) {
                     $instance = $container->make(Reflector::getParameterClassName($parameter));
                     if (!$instance instanceof UrlRoutable) {
@@ -70,6 +69,22 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
                     return;
                 }
             }
+        }
+        
+        // Attempt resolution using the Global bindings
+        /** @var BindingServiceProvider $binder */
+        $binder = $container->make('sajya-rpc-binder');
+        $procedureClass = $parameter->getDeclaringClass()->name.'@'.$parameter->getDeclaringFunction()->name;
+        $requestParameters = request()->request->all();
+        
+        $maybeInstance = $binder->resolveInstance(
+            $requestParameters,
+            $paramName,
+            $procedureClass
+        );
+        if (false!==$maybeInstance) {
+            $dependencies[] = $maybeInstance;
+            return;
         }
         
         parent::addDependencyForCallParameter($container, $parameter, $parameters, $dependencies);

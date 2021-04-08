@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sajya\Server;
+namespace Sajya\Server\Binding;
 
 interface BindsParameters
 {
