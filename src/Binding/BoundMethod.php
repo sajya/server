@@ -34,7 +34,12 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
             ->map(fn ($dependency)    => $dependency->resolveParameter($parameter->getName()))
             ->filter(fn ($dependency) => $dependency !== false)
             ->each(function ($dependency) use ($parameter) {
-                throw_if(is_null($dependency) && ! $parameter->isOptional(), BindingResolutionException::class);
+                throw_if(
+                    is_null($dependency) && !$parameter->isOptional(),
+                    BindingResolutionException::class,
+                    'Custom resolution logic returned `null`, but parameter is not optional.',
+                    -32000
+                );
             })
             ->each(function ($dependency) use ($parameter, &$dependencies) {
                 if (is_null($dependency) && $parameter->isOptional()) {
