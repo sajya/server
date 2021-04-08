@@ -10,9 +10,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\App;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
+use Sajya\Server\Binding\BoundMethod;
 use Sajya\Server\Exceptions\InternalErrorException;
 use Sajya\Server\Exceptions\InvalidParams;
 use Sajya\Server\Exceptions\RuntimeRpcException;
@@ -48,7 +48,7 @@ class HandleProcedure implements ShouldQueue
     public function handle()
     {
         try {
-            return App::call($this->procedure);
+            return BoundMethod::call(app(), $this->procedure);
         } catch (HttpException | RuntimeException | Exception $exception) {
             $message = $exception->getMessage();
 

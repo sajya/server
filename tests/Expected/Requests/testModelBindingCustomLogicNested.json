@@ -1,0 +1,11 @@
+{
+    "jsonrpc": "2.0",
+    "method": "fixture@getUserNameCustomLogicNested",
+    "params": {
+        "user": {
+          "title": "Dr.",
+          "id": 3
+        }
+    },
+    "id": 1
+}

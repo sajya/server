@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Sajya\Server\Binding\BindingServiceProvider;
 use Sajya\Server\Commands\DocsCommand;
 use Sajya\Server\Commands\ProcedureMakeCommand;
 
@@ -37,11 +39,15 @@ class ServerServiceProvider extends ServiceProvider
         $this->commands($this->commands);
         $this->registerViews();
 
-        Route::macro('rpc', fn(string $uri, array $procedures = [], string $delimiter = null) => Route::post($uri, [JsonRpcController::class, '__invoke'])
+        Route::macro('rpc', fn (string $uri, array $procedures = [], string $delimiter = null) => Route::post($uri, [JsonRpcController::class, '__invoke'])
             ->setDefaults([
                 'procedures' => $procedures,
                 'delimiter'  => $delimiter,
             ]));
+
+        App::singleton('sajya-rpc-binder', function () {
+            return new BindingServiceProvider(app());
+        });
     }
 
     /**
