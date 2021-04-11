@@ -23,6 +23,7 @@ trait HandlesRequestParameters
         if (! is_array($requestParam)) {
             return $requestParameters[$requestParam] ?? null;
         }
+
         $value = $requestParameters;
         foreach ($requestParam as $param) {
             if (! isset($value[$param])) {
