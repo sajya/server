@@ -63,7 +63,7 @@ class BindingServiceProvider
      */
     public function __construct(Container $container = null)
     {
-        $this->container = $container ?: new Container;
+        $this->container = $container ?: new Container();
     }
 
     /**
@@ -99,8 +99,7 @@ class BindingServiceProvider
         $scope = '',
         $procedureMethodParam = null,
         \Closure $failureCallback = null
-    ): void
-    {
+    ): void {
         $this->bind(
             $requestParam,
             RouteBinding::forModel($this->container, $class, $failureCallback),
@@ -144,8 +143,7 @@ class BindingServiceProvider
         $binder,
         $scope = '',
         $procedureMethodParam = null
-    ): void
-    {
+    ): void {
         $key = $this->makeKey($requestParam, $scope, $procedureMethodParam);
         $this->binders[$key] = RouteBinding::forCallback($this->container, $binder);
         $this->scopes[$key] = $scope;
@@ -160,13 +158,14 @@ class BindingServiceProvider
     /**
      * Makes a key to be used with the arrays containing the bindings and related configuration.
      *
-     * @param string|array                        $requestParam         The parameter in the RPC request to bind for.
-     * @param string|callable|string[]|callable[] $scope                See the `$bind` parameter of {@see bind()}.
-     * @param string|null                         $procedureMethod      The parameter of the Procedure method to bind
-     *                                                                  for.
+     * @param string|array                        $requestParam    The parameter in the RPC request to bind for.
+     * @param string|callable|string[]|callable[] $scope           See the `$bind` parameter of {@see bind()}.
+     * @param string|null                         $procedureMethod The parameter of the Procedure method to bind
+     *                                                             for.
+     *
+     * @throws \JsonException
      *
      * @return string
-     * @throws \JsonException
      */
     private function makeKey($requestParam, $scope, ?string $procedureMethod): string
     {
@@ -182,8 +181,9 @@ class BindingServiceProvider
      * @param string          $targetParam       The name of the parameter of the Procedure method to bind for.
      * @param string|callable $targetCallable    The target Procedure method to bind for.
      *
-     * @return false|mixed False if cannot resolve, the resolved instance otherwise.
      * @throws BindingResolutionException
+     *
+     * @return false|mixed False if cannot resolve, the resolved instance otherwise.
      */
     public function resolveInstance($requestParameters, $targetParam, $targetCallable = '')
     {
@@ -200,6 +200,7 @@ class BindingServiceProvider
             if ($value === null) {
                 return false;
             }
+
             return $this->performBinding($key, $value);
         } catch (\Throwable $e) {
             throw new BindingResolutionException('Failed to perform binding resolution.', -32003, $e);
@@ -213,6 +214,7 @@ class BindingServiceProvider
      * @param string|callable $targetCallable The target Procedure method to bind for.
      *
      * @return string|null Null if cannot be found or the key otherwise.
+     *
      * @see makeKey()
      */
     public function findKey(string $targetParam, $targetCallable = ''): ?string
@@ -256,10 +258,12 @@ class BindingServiceProvider
             if (is_callable($contained)) {
                 return $container === $contained;
             }
+
             return false;
         }
         if (is_callable($contained)) {
             $container = Str::parseCallback($container);
+
             return $container === $contained;
         }
 
@@ -275,6 +279,7 @@ class BindingServiceProvider
                 return false;
             }
         }
+
         return true;
     }
 
@@ -296,11 +301,12 @@ class BindingServiceProvider
             }
             $scope = implode('@', $scope);
         }
-        if (!is_string($scope)) {
+        if (! is_string($scope)) {
             return false;
         }
         // Split into comparable bits around \ and @ characters
         $scope = preg_split('/[@\\\]/', $scope);
+
         return $scope;
     }
 

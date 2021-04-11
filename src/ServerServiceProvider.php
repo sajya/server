@@ -39,7 +39,7 @@ class ServerServiceProvider extends ServiceProvider
         $this->commands($this->commands);
         $this->registerViews();
 
-        Route::macro('rpc', fn(string $uri, array $procedures = [], string $delimiter = null) => Route::post($uri, [JsonRpcController::class, '__invoke'])
+        Route::macro('rpc', fn (string $uri, array $procedures = [], string $delimiter = null) => Route::post($uri, [JsonRpcController::class, '__invoke'])
             ->setDefaults([
                 'procedures' => $procedures,
                 'delimiter'  => $delimiter,

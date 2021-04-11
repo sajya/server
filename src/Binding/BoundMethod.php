@@ -22,28 +22,31 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
      * @param array                $parameters
      * @param array                $dependencies
      *
-     * @return void
      * @throws BindingResolutionException
+     *
+     * @return void
      */
     protected static function addDependencyForCallParameter($container, $parameter, array &$parameters, &$dependencies)
     {
         // Attempt custom binding resolution
         collect($dependencies)
             ->whereInstanceOf(BindsParameters::class)
-            ->map(fn($dependency) => $dependency->resolveParameter($parameter->getName()))
-            ->filter(fn($dependency) => $dependency !== false)
+            ->map(fn ($dependency)    => $dependency->resolveParameter($parameter->getName()))
+            ->filter(fn ($dependency) => $dependency !== false)
             ->each(function ($dependency) use ($parameter) {
-                throw_if(is_null($dependency) && !$parameter->isOptional(), BindingResolutionException::class);
+                throw_if(is_null($dependency) && ! $parameter->isOptional(), BindingResolutionException::class);
             })
             ->each(function ($dependency) use ($parameter, &$dependencies) {
                 if (is_null($dependency) && $parameter->isOptional()) {
                     $dependencies[] = $dependency;
+
                     return;
                 }
 
                 $paramType = Reflector::getParameterClassName($parameter);
                 if ($dependency instanceof $paramType) {
                     $dependencies[] = $dependency;
+
                     return;
                 }
 
@@ -61,17 +64,18 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
                 $parameterMap = $dependency->getBindings();
                 if (isset($parameterMap[$paramName])) {
                     $instance = $container->make(Reflector::getParameterClassName($parameter));
-                    if (!$instance instanceof UrlRoutable) {
+                    if (! $instance instanceof UrlRoutable) {
                         throw new BindingResolutionException([
                             'message' => 'Mapped parameter type must implement `UrlRoutable` interface.',
                             'code'    => -32002,
                         ]);
                     }
                     [$instanceValue, $instanceField] = self::getValueAndFieldByMapEntry($parameterMap[$paramName]);
-                    if (!$model = $instance->resolveRouteBinding($instanceValue, $instanceField)) {
+                    if (! $model = $instance->resolveRouteBinding($instanceValue, $instanceField)) {
                         throw (new ModelNotFoundException('', -32003))->setModel(get_class($instance), [$instanceValue]);
                     }
                     $dependencies[] = $model;
+
                     return;
                 }
             }
@@ -83,12 +87,14 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
         $procedureClass = $parameter->getDeclaringClass()->name . '@' . $parameter->getDeclaringFunction()->name;
         $requestParameters = request()->request->all();
 
-        $maybeInstance = $binder->resolveInstance($requestParameters,
+        $maybeInstance = $binder->resolveInstance(
+            $requestParameters,
             $paramName,
             $procedureClass
         );
         if (false !== $maybeInstance) {
             $dependencies[] = $maybeInstance;
+
             return;
         }
 
@@ -108,13 +114,14 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
             $last = end($requestParamMapEntry);
             $entry = explode(':', $last);
             $requestParamMapEntry[count($requestParamMapEntry) - 1] = $entry[0];
-        } else if (is_string($requestParamMapEntry)) {
+        } elseif (is_string($requestParamMapEntry)) {
             $entry = explode(':', $requestParamMapEntry);
             $requestParamMapEntry = $entry[0];
         } else {
             throw new \LogicException('$requestParamMapEntry must be an array or string.');
         }
         $value = self::resolveRequestValue(request()->request->all(), $requestParamMapEntry);
+
         return [$value, $entry[1] ?? null];
     }
 }

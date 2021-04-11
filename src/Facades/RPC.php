@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Facades;
 
-use Sajya\Server\Binding\BindingServiceProvider;
 use Illuminate\Support\Facades\Facade;
+use Sajya\Server\Binding\BindingServiceProvider;
 
 /**
  * @mixin BindingServiceProvider
