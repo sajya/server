@@ -296,7 +296,7 @@ class BindingServiceProvider
             // In php8 a "callable" array pointing at a non-static method is not
             // considered callable, but only a regular array, so we handle those
             // here
-            if (count($scope) != 2) {
+            if (count($scope) !== 2) {
                 return false;
             }
             $scope = implode('@', $scope);

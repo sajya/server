@@ -60,25 +60,30 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
         // Attempt resolution based on parameter mapping
         $paramName = $parameter->getName();
         foreach ($dependencies as $dependency) {
-            if (is_object($dependency) && $dependency instanceof BindsParameters) {
-                $parameterMap = $dependency->getBindings();
-                if (isset($parameterMap[$paramName])) {
-                    $instance = $container->make(Reflector::getParameterClassName($parameter));
-                    if (! $instance instanceof UrlRoutable) {
-                        throw new BindingResolutionException([
-                            'message' => 'Mapped parameter type must implement `UrlRoutable` interface.',
-                            'code'    => -32002,
-                        ]);
-                    }
-                    [$instanceValue, $instanceField] = self::getValueAndFieldByMapEntry($parameterMap[$paramName]);
-                    if (! $model = $instance->resolveRouteBinding($instanceValue, $instanceField)) {
-                        throw (new ModelNotFoundException('', -32003))->setModel(get_class($instance), [$instanceValue]);
-                    }
-                    $dependencies[] = $model;
-
-                    return;
-                }
+            if (!is_object($dependency) || !$dependency instanceof BindsParameters) {
+                continue;
             }
+
+            $parameterMap = $dependency->getBindings();
+            if (!isset($parameterMap[$paramName])) {
+                continue;
+            }
+
+            $instance = $container->make(Reflector::getParameterClassName($parameter));
+            if (! $instance instanceof UrlRoutable) {
+                throw new BindingResolutionException([
+                    'message' => 'Mapped parameter type must implement `UrlRoutable` interface.',
+                    'code'    => -32002,
+                ]);
+            }
+
+            [$instanceValue, $instanceField] = self::getValueAndFieldByMapEntry($parameterMap[$paramName]);
+            if (! $model = $instance->resolveRouteBinding($instanceValue, $instanceField)) {
+                throw (new ModelNotFoundException('', -32003))->setModel(get_class($instance), [$instanceValue]);
+            }
+            $dependencies[] = $model;
+
+            return;
         }
 
         // Attempt resolution using the Global bindings
