@@ -60,12 +60,12 @@ class BoundMethod extends \Illuminate\Container\BoundMethod
         // Attempt resolution based on parameter mapping
         $paramName = $parameter->getName();
         foreach ($dependencies as $dependency) {
-            if (!is_object($dependency) || !$dependency instanceof BindsParameters) {
+            if (! is_object($dependency) || ! $dependency instanceof BindsParameters) {
                 continue;
             }
 
             $parameterMap = $dependency->getBindings();
-            if (!isset($parameterMap[$paramName])) {
+            if (! isset($parameterMap[$paramName])) {
                 continue;
             }
 
