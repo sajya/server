@@ -76,7 +76,7 @@ class Binding
         $possibleBindings = Arr::dot($request->getParams());
 
         return collect($possibleBindings)
-            ->map(fn($value, string $key) => with($value, $this->binders[$key] ?? null))
+            ->map(fn ($value, string $key) => with($value, $this->binders[$key] ?? null))
             ->mapWithKeys(function ($value, string $key) {
                 $nameForArgument = (string)Str::of($key)->replace('.', '_')->camel();
 
@@ -84,5 +84,4 @@ class Binding
             })
             ->toArray();
     }
-
 }
