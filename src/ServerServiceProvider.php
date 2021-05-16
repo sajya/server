@@ -42,6 +42,8 @@ class ServerServiceProvider extends ServiceProvider
                 'procedures' => $procedures,
                 'delimiter'  => $delimiter,
             ]));
+
+        $this->app->singleton(Binding::class, fn($container) => new Binding($container));
     }
 
     /**

@@ -1,0 +1,9 @@
+{
+    "jsonrpc": "2.0",
+    "method": "binding@subtract",
+    "params": {
+        "a": 4,
+        "b": 2
+    },
+    "id": 1
+}

@@ -8,6 +8,8 @@ use Closure;
 use Generator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
+use Sajya\Server\Facades\RPC;
+use Sajya\Server\Tests\FixtureBind;
 use Sajya\Server\Tests\TestCase;
 
 class ExpectedTest extends TestCase
@@ -79,6 +81,19 @@ class ExpectedTest extends TestCase
         yield ['testInternalError'];
         yield ['testCallCloseMethod'];
         yield ['testRuntimeError'];
+
+        // Binding
+        yield ['testBindDeepValue',];
+        yield ['testBindSubtract',];
+        yield ['testBindSubtractRewriteBind', static function () {
+            RPC::bind('a', function () {
+                return 100;
+            });
+        }];
+
+        yield ['testBindModel', static function () {
+            RPC::model('fixtureModel', FixtureBind::class);
+        }];
     }
 
     /**

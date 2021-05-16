@@ -56,7 +56,10 @@
         "laravel": {
             "providers": [
                 "Sajya\\Server\\ServerServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "RPC": "Sajya\\Server\\Facades\\RPC"
+            }
         }
     }
 }

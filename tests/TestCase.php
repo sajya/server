@@ -16,6 +16,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     public array $mapProcedures = [
         FixtureProcedure::class,
+        FixtureBindProcedure::class,
     ];
 
     /**
