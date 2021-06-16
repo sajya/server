@@ -1,0 +1,12 @@
+{
+    "jsonrpc": "2.0",
+    "method": "binding@deepValue",
+    "params": {
+        "name": {
+            "deep": {
+                "value": "Alexandr"
+            }
+        }
+    },
+    "id": 1
+}

@@ -16,14 +16,13 @@ use RuntimeException;
 use Sajya\Server\Exceptions\InternalErrorException;
 use Sajya\Server\Exceptions\InvalidParams;
 use Sajya\Server\Exceptions\RuntimeRpcException;
+use Sajya\Server\Facades\RPC;
+use Sajya\Server\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleProcedure implements ShouldQueue
 {
-    use Dispatchable;
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * @var string
@@ -31,13 +30,20 @@ class HandleProcedure implements ShouldQueue
     protected string $procedure;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * Create a new job instance.
      *
-     * @param string $procedure
+     * @param string  $procedure
+     * @param Request $request
      */
-    public function __construct(string $procedure)
+    public function __construct(string $procedure, Request $request)
     {
         $this->procedure = $procedure;
+        $this->request = $request;
     }
 
     /**
@@ -48,7 +54,7 @@ class HandleProcedure implements ShouldQueue
     public function handle()
     {
         try {
-            return App::call($this->procedure);
+            return App::call($this->procedure, RPC::bindResolve($this->request));
         } catch (HttpException | RuntimeException | Exception $exception) {
             $message = $exception->getMessage();
 
