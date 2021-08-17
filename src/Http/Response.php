@@ -170,4 +170,12 @@ class Response implements JsonSerializable
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isNotification(): bool
+    {
+        return empty($this->getId()) && $this->getError() === null;
+    }
 }

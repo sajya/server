@@ -1,10 +1,5 @@
 [
     {
-        "id": null,
-        "result": null,
-        "jsonrpc": "2.0"
-    },
-    {
         "id": "1",
         "result": 4,
         "jsonrpc": "2.0"
