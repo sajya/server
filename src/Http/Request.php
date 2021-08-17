@@ -190,4 +190,12 @@ class Request implements JsonSerializable
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isNotification(): bool
+    {
+        return empty($this->getId());
+    }
 }

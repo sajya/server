@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
 use Illuminate\Http\Request;
 use Sajya\Server\Procedure;
 
-class DummyClass extends Procedure
+class {{ class }} extends Procedure
 {
     /**
      * The name of the procedure that will be
@@ -15,7 +15,7 @@ class DummyClass extends Procedure
      *
      * @var string
      */
-    public static string $name = 'DummyClass';
+    public static string $name = '{{ class }}';
 
     /**
      * Execute the procedure.

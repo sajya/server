@@ -116,6 +116,8 @@ class Parser
     }
 
     /**
+     * Does the request contain at least one notification message
+     *
      * @return bool
      */
     public function isNotification(): bool

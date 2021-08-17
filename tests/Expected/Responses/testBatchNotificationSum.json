@@ -6,7 +6,7 @@
     },
     {
         "id": "1",
-        "result": null,
+        "result": 4,
         "jsonrpc": "2.0"
     }
 ]
