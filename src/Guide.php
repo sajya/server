@@ -59,11 +59,11 @@ class Guide
 
         $result = collect($parser->makeRequests())
             ->map(
-                fn($request) => $request instanceof Request
+                fn ($request) => $request instanceof Request
                     ? $this->handleProcedure($request, $request->isNotification())
                     : $this->makeResponse($request)
             )
-            ->reject(fn(Response $response) => $response->isNotification())
+            ->reject(fn (Response $response) => $response->isNotification())
             ->values();
 
         return $parser->isBatch()
