@@ -138,7 +138,7 @@ class Docs
         ini_set("highlight.keyword", "#998;");
         ini_set("highlight.string", "#d14");
 
-        $json = json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        $json = json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         $code = highlight_string('<?php ' . $json, true);
 
         $docs = Str::of($code)
