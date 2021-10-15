@@ -70,6 +70,10 @@ class HandleProcedure implements ShouldQueue
                 return new InternalErrorException();
             }
 
+            if (!is_int($code)) {
+                $code = -1;
+            }
+
             return new RuntimeRpcException($message, $code);
         }
     }
