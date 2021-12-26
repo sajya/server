@@ -64,7 +64,7 @@ class Guide
                     ? $this->handleProcedure($request, $request->isNotification())
                     : $this->makeResponse($request)
             )
-            ->reject(fn(Response $response) => $response->isNotification())
+            ->reject(fn (Response $response) => $response->isNotification())
             ->values();
 
         return $parser->isBatch()
@@ -79,7 +79,7 @@ class Guide
      */
     public function terminate(string $content = '')
     {
-        return tap($this->handle($content), fn() => Application::getInstance()->terminate());
+        return tap($this->handle($content), fn () => Application::getInstance()->terminate());
     }
 
     /**
