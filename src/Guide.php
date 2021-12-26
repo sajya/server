@@ -12,6 +12,7 @@ use Sajya\Server\Exceptions\MethodNotFound;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
+use Illuminate\Container\Container;
 
 class Guide
 {
@@ -51,7 +52,7 @@ class Guide
     /**
      * @param string $content
      *
-     * @return Response[]|Response
+     * @return Response[]|Response|null
      */
     public function handle(string $content = '')
     {
@@ -63,12 +64,26 @@ class Guide
                     ? $this->handleProcedure($request, $request->isNotification())
                     : $this->makeResponse($request)
             )
-            ->reject(fn (Response $response) => $response->isNotification())
+            ->reject(fn(Response $response) => $response->isNotification())
             ->values();
 
         return $parser->isBatch()
             ? $result->all()
             : $result->first();
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return Response[]|Response|null
+     */
+    public function terminate(string $content = '')
+    {
+        $response = $this->handle($content);
+
+        Container::getInstance()->terminate();
+
+        return $response;
     }
 
     /**
