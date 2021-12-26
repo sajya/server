@@ -20,6 +20,20 @@ class TestCase extends \Orchestra\Testbench\TestCase
     ];
 
     /**
+     * Some tests use log files for verification.
+     * To prevent past results from affecting, clear all logs
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        collect(glob(storage_path('logs/*.log')))
+            ->each(fn(string $path) => unlink($path));
+    }
+
+    /**
      * @param Application $app
      *
      * @return string[]
