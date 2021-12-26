@@ -30,7 +30,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         collect(glob(storage_path('logs/*.log')))
-            ->each(fn(string $path) => unlink($path));
+            ->each(fn (string $path) => unlink($path));
     }
 
     /**

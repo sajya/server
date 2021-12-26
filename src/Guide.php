@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
+use Illuminate\Container\Container;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -12,7 +13,6 @@ use Sajya\Server\Exceptions\MethodNotFound;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
-use Illuminate\Container\Container;
 
 class Guide
 {
@@ -64,7 +64,7 @@ class Guide
                     ? $this->handleProcedure($request, $request->isNotification())
                     : $this->makeResponse($request)
             )
-            ->reject(fn(Response $response) => $response->isNotification())
+            ->reject(fn (Response $response) => $response->isNotification())
             ->values();
 
         return $parser->isBatch()
