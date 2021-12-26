@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
-use Illuminate\Container\Container;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -64,7 +64,7 @@ class Guide
                     ? $this->handleProcedure($request, $request->isNotification())
                     : $this->makeResponse($request)
             )
-            ->reject(fn (Response $response) => $response->isNotification())
+            ->reject(fn(Response $response) => $response->isNotification())
             ->values();
 
         return $parser->isBatch()
@@ -79,11 +79,7 @@ class Guide
      */
     public function terminate(string $content = '')
     {
-        $response = $this->handle($content);
-
-        Container::getInstance()->terminate();
-
-        return $response;
+        return tap($this->handle($content), fn() => Application::getInstance()->terminate());
     }
 
     /**
@@ -99,8 +95,8 @@ class Guide
         return tap(
             new Response(),
             fn (Response $response) => $response->setId($request->getId())
-            ->setVersion($request->getVersion())
-            ->setResult($result)
+                ->setVersion($request->getVersion())
+                ->setResult($result)
         );
     }
 
