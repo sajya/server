@@ -54,7 +54,7 @@ class Parser
             $decode = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
             $this->decode = collect($decode);
-            $this->batching = !$this->decode->isEmpty() && !$this->isAssociative($this->decode->toArray());
+            $this->batching = $this->decode->isNotEmpty() && Arr::isList($this->decode->toArray());
 
             $emptyIdRequest = $this->decode
                 ->when(! $this->batching, fn ($request) => collect([$request]))
@@ -132,7 +132,7 @@ class Parser
             return new ParseErrorException();
         }
 
-        if (! is_array($options) || ! $this->isAssociative($options)) {
+        if (! is_array($options) || Arr::isList($options)) {
             return new InvalidRequestException();
         }
 
@@ -141,16 +141,6 @@ class Parser
         return $validation->fails()
             ? new InvalidParams($validation->errors()->toArray())
             : $options;
-    }
-
-    /**
-     * @param array $array
-     *
-     * @return bool
-     */
-    private function isAssociative(array $array): bool
-    {
-        return Arr::isAssoc($array);
     }
 
     /**
