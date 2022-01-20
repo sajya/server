@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sajya\Server\Http;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Sajya\Server\Exceptions\InvalidParams;
@@ -53,12 +54,7 @@ class Parser
             $decode = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
             $this->decode = collect($decode);
-            $this->batching = $this->decode
-                ->keys()
-                ->filter(fn ($value) => is_string($value))
-                ->isEmpty();
-
-            $this->batching = $this->decode->isEmpty() ? false : $this->batching;
+            $this->batching = $this->decode->isNotEmpty() && Arr::isList($this->decode->toArray());
 
             $emptyIdRequest = $this->decode
                 ->when(! $this->batching, fn ($request) => collect([$request]))
@@ -136,7 +132,7 @@ class Parser
             return new ParseErrorException();
         }
 
-        if (! is_array($options) || ! $this->isAssociative($options)) {
+        if (! is_array($options) || Arr::isList($options)) {
             return new InvalidRequestException();
         }
 
@@ -145,19 +141,6 @@ class Parser
         return $validation->fails()
             ? new InvalidParams($validation->errors()->toArray())
             : $options;
-    }
-
-    /**
-     * @param array $array
-     *
-     * @return bool
-     */
-    private function isAssociative(array $array): bool
-    {
-        return collect($array)
-            ->keys()
-            ->filter(fn ($key) => is_string($key))
-            ->isNotEmpty();
     }
 
     /**
