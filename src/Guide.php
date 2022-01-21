@@ -83,15 +83,13 @@ class Guide
     }
 
     /**
-     * @param mixed        $result
+     * @param mixed|null   $result
      * @param Request|null $request
      *
      * @return Response
      */
     public function makeResponse($result = null, Request $request = null): Response
     {
-        $request ??= new Request();
-
         return Response::makeFromResult($result, $request);
     }
 
@@ -129,9 +127,9 @@ class Guide
         $method = Str::afterLast($request->getMethod(), $this->delimiter);
 
         return $this->map
-            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
-            ->map(fn (string $procedure)    => Str::finish($procedure, '@'.$method))
+            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn(string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER . $method))
             ->first();
     }
 
