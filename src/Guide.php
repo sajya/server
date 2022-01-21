@@ -92,12 +92,7 @@ class Guide
     {
         $request ??= new Request();
 
-        return tap(
-            new Response(),
-            fn (Response $response) => $response->setId($request->getId())
-                ->setVersion($request->getVersion())
-                ->setResult($result)
-        );
+        return Response::makeFromResult($result, $request);
     }
 
     /**

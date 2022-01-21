@@ -38,6 +38,24 @@ class Response implements JsonSerializable
     protected ?string $version;
 
     /**
+     * Make Response instance based on result and request.
+     *
+     * @param mixed   $result
+     * @param Request $request
+     *
+     * @return self
+     */
+    public static function makeFromResult($result, Request $request): self
+    {
+        return tap(
+            new self(),
+            fn (Response $response) => $response->setId($request->getId())
+                ->setVersion($request->getVersion())
+                ->setResult($result)
+        );
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
