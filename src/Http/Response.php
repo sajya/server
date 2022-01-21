@@ -51,7 +51,7 @@ class Response implements JsonSerializable
 
         return tap(
             new self(),
-            fn(Response $response) => $response->setId($request->getId())
+            fn (Response $response) => $response->setId($request->getId())
                 ->setVersion($request->getVersion())
                 ->setResult($result)
         );

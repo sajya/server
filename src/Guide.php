@@ -127,9 +127,9 @@ class Guide
         $method = Str::afterLast($request->getMethod(), $this->delimiter);
 
         return $this->map
-            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
-            ->map(fn(string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER . $method))
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn (string $procedure)    => Str::finish($procedure, self::DEFAULT_DELIMITER . $method))
             ->first();
     }
 
