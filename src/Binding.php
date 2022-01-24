@@ -70,9 +70,8 @@ class Binding
      * @param string                         $procedure
      * @param \Illuminate\Support\Collection $params
      *
-     * @throws \ReflectionException
-     *
      * @return array
+     * @throws \ReflectionException
      */
     public function bindResolve(string $procedure, Collection $params): array
     {
@@ -80,18 +79,14 @@ class Binding
         $method = $class->getMethod(Str::after($procedure, '@'));
 
         return collect($method->getParameters())
-            ->map(function (\ReflectionParameter $parameter) {
-                return $parameter->getName();
-            })
+            ->map(fn(\ReflectionParameter $parameter) => $parameter->getName())
             ->mapWithKeys(function (string $key) use ($params) {
                 $value = Arr::get($params, $key);
                 $valueDot = Arr::get($params, Str::snake($key, '.'));
 
                 return [$key => $value ?? $valueDot];
             })
-            ->map(function ($value, string $key) {
-                return with($value, $this->binders[$key] ?? null);
-            })
+            ->map(fn($value, string $key) => with($value, $this->binders[$key] ?? null))
             ->filter()
             ->toArray();
     }
