@@ -8,8 +8,8 @@ use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Routing\RouteBinding;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Sajya\Server\Http\Request;
 
 class Binding
 {
@@ -67,21 +67,31 @@ class Binding
     }
 
     /**
-     * @param Request $request
+     * @param string                         $procedure
+     * @param \Illuminate\Support\Collection $params
      *
      * @return array
+     * @throws \ReflectionException
      */
-    public function bindResolve(Request $request): array
+    public function bindResolve(string $procedure, Collection $params): array
     {
-        $possibleBindings = Arr::dot($request->getParams());
+        $class = new \ReflectionClass(Str::before($procedure, '@'));
+        $method = $class->getMethod(Str::after($procedure, '@'));
 
-        return collect($possibleBindings)
-            ->map(fn ($value, string $key) => with($value, $this->binders[$key] ?? null))
-            ->mapWithKeys(function ($value, string $key) {
-                $nameForArgument = (string)Str::of($key)->replace('.', '_')->camel();
-
-                return [$nameForArgument => $value];
+        return collect($method->getParameters())
+            ->map(function (\ReflectionParameter $parameter) {
+                return $parameter->getName();
             })
+            ->mapWithKeys(function (string $key) use ($params) {
+                $value = Arr::get($params, $key);
+                $valueDot = Arr::get($params, Str::snake($key, '.'));
+
+                return [$key => $value ?? $valueDot];
+            })
+            ->map(function ($value, string $key) {
+                return with($value, $this->binders[$key] ?? null);
+            })
+            ->filter()
             ->toArray();
     }
 }

@@ -54,7 +54,9 @@ class HandleProcedure implements ShouldQueue
     public function handle()
     {
         try {
-            return App::call($this->procedure, RPC::bindResolve($this->request));
+            $parameters = RPC::bindResolve($this->procedure, $this->request->getParams());
+
+            return App::call($this->procedure, $parameters);
         } catch (HttpException | RuntimeException | Exception $exception) {
             $message = $exception->getMessage();
 

@@ -132,11 +132,18 @@ class Parser
             return new ParseErrorException();
         }
 
-        if (! is_array($options) || Arr::isList($options)) {
+        if (!is_array($options) || Arr::isList($options)) {
             return new InvalidRequestException();
         }
 
-        $validation = Validator::make($options, self::rules());
+        $data = $options;
+
+        // skip deep parameters for validator
+        if (isset($options['params']) && is_array($options['params'])) {
+            $data['params'] = [];
+        }
+
+        $validation = Validator::make($data, self::rules());
 
         return $validation->fails()
             ? new InvalidParams($validation->errors()->toArray())

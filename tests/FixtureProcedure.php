@@ -111,4 +111,14 @@ class FixtureProcedure extends Procedure
     {
         throw new RuntimeRpcException();
     }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return int
+     */
+    public function payload(Request $request)
+    {
+        return count($request->all());
+    }
 }
