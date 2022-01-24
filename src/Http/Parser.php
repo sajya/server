@@ -132,7 +132,7 @@ class Parser
             return new ParseErrorException();
         }
 
-        if (!is_array($options) || Arr::isList($options)) {
+        if (! is_array($options) || Arr::isList($options)) {
             return new InvalidRequestException();
         }
 
