@@ -52,6 +52,7 @@
     "suggest": {
         "ext-zlib": "Required to compress the response into gzip"
     },
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
         "laravel": {
