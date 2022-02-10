@@ -15,7 +15,6 @@
         }
     ],
     "require": {
-        "php": "^8.0",
         "ext-json": "*",
         "doctrine/annotations": "^1.12",
         "laravel/framework": "^9.0",
@@ -29,8 +28,7 @@
         "vimeo/psalm": "^4.6"
     },
     "conflict": {
-        "mockery/mockery": "<1.4.2",
-        "laravel/framework": "<8.76.0"
+        "mockery/mockery": "<1.4.2"
     },
     "autoload": {
         "psr-4": {
@@ -52,7 +50,6 @@
     "suggest": {
         "ext-zlib": "Required to compress the response into gzip"
     },
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
         "laravel": {
