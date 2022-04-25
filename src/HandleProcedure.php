@@ -59,7 +59,6 @@ class HandleProcedure implements ShouldQueue
 
             return App::call($this->procedure, $parameters);
         } catch (HttpException | RuntimeException | Exception $exception) {
-
             if ($exception instanceof RpcException) {
                 return $exception;
             }

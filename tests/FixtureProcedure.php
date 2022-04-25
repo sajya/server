@@ -117,7 +117,7 @@ class FixtureProcedure extends Procedure
     {
         throw new  InvalidRequestException([
             'foo' => 'bar',
-            'baz' => 'qux'
+            'baz' => 'qux',
         ]);
     }
 
