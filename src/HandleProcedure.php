@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 use RuntimeException;
 use Sajya\Server\Exceptions\InternalErrorException;
 use Sajya\Server\Exceptions\InvalidParams;
+use Sajya\Server\Exceptions\RpcException;
 use Sajya\Server\Exceptions\RuntimeRpcException;
 use Sajya\Server\Facades\RPC;
 use Sajya\Server\Http\Request;
@@ -58,6 +59,11 @@ class HandleProcedure implements ShouldQueue
 
             return App::call($this->procedure, $parameters);
         } catch (HttpException | RuntimeException | Exception $exception) {
+
+            if ($exception instanceof RpcException) {
+                return $exception;
+            }
+
             $message = $exception->getMessage();
 
             $code = method_exists($exception, 'getStatusCode')

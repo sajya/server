@@ -7,6 +7,7 @@ namespace Sajya\Server\Tests;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Sajya\Server\Exceptions\InvalidRequestException;
 use Sajya\Server\Exceptions\RuntimeRpcException;
 use Sajya\Server\Procedure;
 
@@ -110,6 +111,14 @@ class FixtureProcedure extends Procedure
     public function runtimeError()
     {
         throw new RuntimeRpcException();
+    }
+
+    public function invalidRequestException()
+    {
+        throw new  InvalidRequestException([
+            'foo' => 'bar',
+            'baz' => 'qux'
+        ]);
     }
 
     /**
