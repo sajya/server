@@ -13,7 +13,7 @@
 
 ## Introduction
 
-Sajya is an open-source project aiming to implement the JSON-RPC 2.0 server specification for the Laravel quickly.
+Sajya is an open-source project that aims to quickly implement the JSON-RPC 2.0 server specification for Laravel.
 
 #### Some features:
 
