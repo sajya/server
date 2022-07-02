@@ -24,7 +24,7 @@ jobs:
           - laravel: 9.*
             testbench: 7.*
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
+    name: P${{ matrix.php }} - ${{ matrix.os }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
     steps:
       - name: Checkout code
@@ -40,14 +40,14 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, zlib
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, zlib, fileinfo
           coverage: xdebug
           tools: composer:v2
 
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
       - name: Execute tests
         run: vendor/bin/phpunit
