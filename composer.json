@@ -28,6 +28,7 @@
         "vimeo/psalm": "^4.6"
     },
     "conflict": {
+        "league/flysystem": "<3.0.16",
         "mockery/mockery": "<1.4.2"
     },
     "autoload": {
