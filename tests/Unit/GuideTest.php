@@ -6,10 +6,12 @@ namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Log;
 use Sajya\Server\Guide;
+use Sajya\Server\HandleProcedure;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Procedure;
 use Sajya\Server\Tests\FixtureProcedure;
 use Sajya\Server\Tests\TestCase;
+use Illuminate\Support\Facades\Bus;
 
 class GuideTest extends TestCase
 {
@@ -70,5 +72,35 @@ class GuideTest extends TestCase
         });
 
         $this->assertNull($this->getGuide()->findProcedure($request));
+    }
+
+    public function testNotJobDispatched(): void
+    {
+        Bus::fake();
+
+        $guide = new Guide([
+            FixtureProcedure::class,
+        ]);
+
+        /** @var \Sajya\Server\Http\Response $response */
+        $response = $guide->handle('{"jsonrpc": "2.0", "method": "fixture@ok", "id": 1}');
+
+        $this->assertEquals('Ok', $response->getResult());
+        Bus::assertNothingDispatched();
+    }
+
+    public function testNotificationRequestJobDispatched(): void
+    {
+        Bus::fake();
+
+        $guide = new Guide([
+            FixtureProcedure::class,
+        ]);
+
+        $response = $guide->handle('{"jsonrpc": "2.0", "method": "fixture@ok"}');
+
+        $this->assertNull($response);
+
+        Bus::assertDispatchedAfterResponse(HandleProcedure::class);
     }
 }
