@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Sajya\Server\Guide;
 use Sajya\Server\HandleProcedure;
@@ -11,7 +12,6 @@ use Sajya\Server\Http\Request;
 use Sajya\Server\Procedure;
 use Sajya\Server\Tests\FixtureProcedure;
 use Sajya\Server\Tests\TestCase;
-use Illuminate\Support\Facades\Bus;
 
 class GuideTest extends TestCase
 {
