@@ -111,7 +111,7 @@ class Guide
 
         $result = $notification
             ? HandleProcedure::dispatchAfterResponse($procedure, $request)
-            : HandleProcedure::dispatchNow($procedure, $request);
+            : (new HandleProcedure($procedure, $request))->handle();
 
         return $this->makeResponse($result, $request);
     }
