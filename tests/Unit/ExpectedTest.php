@@ -82,6 +82,7 @@ class ExpectedTest extends TestCase
         yield ['testCallCloseMethod'];
         yield ['testRuntimeError'];
         yield ['testInvalidRequestException'];
+        yield ['testCallNoExistMethod'];
 
         // Binding
         yield ['testBindDeepValue',];

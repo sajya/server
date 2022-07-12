@@ -128,6 +128,7 @@ class Guide
 
         return $this->map
             ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => method_exists($procedure, $method))
             ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
             ->map(fn (string $procedure)    => Str::finish($procedure, self::DEFAULT_DELIMITER . $method))
             ->first();
