@@ -51,13 +51,26 @@ trait ProceduralRequests
     public function callProcedure(string $method, array $content = [], $id = 1): TestResponse
     {
         return $this
-            ->json('POST', $this->rpcEndpoint, [
-                'jsonrpc' => '2.0',
-                'id'      => $id,
-                'method'  => $method,
-                'params'  => $content,
-            ])
+            ->callHttpProcedure($method, $content, $id)
             ->assertOk()
             ->assertHeader('content-type', 'application/json');
+    }
+
+
+    /**
+     * @param string          $method
+     * @param array           $content
+     * @param string|int|null $id
+     *
+     * @return \Illuminate\Testing\TestResponse
+     */
+    public function callHttpProcedure(string $method, array $content = [], $id = 1): TestResponse
+    {
+        return $this->json('POST', $this->rpcEndpoint, [
+            'jsonrpc' => '2.0',
+            'id'      => $id,
+            'method'  => $method,
+            'params'  => $content,
+        ]);
     }
 }
