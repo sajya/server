@@ -56,7 +56,6 @@ trait ProceduralRequests
             ->assertHeader('content-type', 'application/json');
     }
 
-
     /**
      * @param string          $method
      * @param array           $content
