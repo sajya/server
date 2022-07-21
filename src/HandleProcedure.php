@@ -6,6 +6,7 @@ namespace Sajya\Server;
 
 use Exception;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -59,6 +60,8 @@ class HandleProcedure implements ShouldQueue
 
             return App::call($this->procedure, $parameters);
         } catch (HttpException | RuntimeException | Exception $exception) {
+            app()->get(ExceptionHandler::class)->report($exception);
+
             if ($exception instanceof RpcException) {
                 return $exception;
             }
