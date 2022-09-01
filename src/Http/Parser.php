@@ -92,9 +92,9 @@ class Parser
 
         if ($this->isBatch()) {
             return $content
-                ->map(fn ($options)                     => $this->checkValidation($options))
+                ->map(fn ($options) => $this->checkValidation($options))
                 ->whenEmpty(fn (Collection $collection) => $collection->push($this->checkValidation()))
-                ->map(fn ($options)                     => $options instanceof Exception ? $options : Request::loadArray($options))
+                ->map(fn ($options) => $options instanceof Exception ? $options : Request::loadArray($options))
                 ->toArray();
         }
 
