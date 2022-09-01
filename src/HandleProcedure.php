@@ -72,7 +72,7 @@ class HandleProcedure implements ShouldQueue
     {
         report($exception);
 
-        if ($exception && method_exists($exception, 'render')) {
+        if (method_exists($exception, 'render')) {
             return $this->renderException($exception);
         }
 
@@ -100,13 +100,15 @@ class HandleProcedure implements ShouldQueue
     }
 
     /**
+     * @psalm-suppress UndefinedInterfaceMethod
+     *
      * @param \Throwable $exception
      *
-     * @return \Illuminate\Http\Response|\Sajya\Server\Exceptions\RpcException|\Sajya\Server\Exceptions\RuntimeRpcException
+     * @return \Illuminate\Http\Response|\Sajya\Server\Exceptions\RpcException
      */
     protected function renderException(Throwable $exception)
     {
-        /** @var \Illuminate\Http\Response $response */
+        /** @var \Illuminate\Http\Response|RpcException $response */
         $response = $exception->render(\request());
 
         if ($response instanceof RpcException) {
