@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Sajya\Server\Exceptions\InvalidRequestException;
 use Sajya\Server\Exceptions\RuntimeRpcException;
 use Sajya\Server\Procedure;
+use Sajya\Server\Tests\Fixture\ReportException;
 
 class FixtureProcedure extends Procedure
 {
@@ -69,6 +70,16 @@ class FixtureProcedure extends Procedure
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return float|int
+     */
+    public function division(Request $request): float|int
+    {
+        return $request->get('a') / $request->get('b');
+    }
+
+    /**
      * @param Request $request
      *
      * @return int
@@ -82,7 +93,7 @@ class FixtureProcedure extends Procedure
 
         $result = $request->get('a') + $request->get('b');
 
-        Log::info('Result procedure: '.$result);
+        Log::info('Result procedure: ' . $result);
 
         return $result;
     }
@@ -108,17 +119,32 @@ class FixtureProcedure extends Procedure
         return 'Ok';
     }
 
+    /**
+     * @return mixed
+     */
     public function runtimeError()
     {
         throw new RuntimeRpcException();
     }
 
+    /**
+     * @return mixed
+     */
     public function invalidRequestException()
     {
-        throw new  InvalidRequestException([
+        throw new InvalidRequestException([
             'foo' => 'bar',
             'baz' => 'qux',
         ]);
+    }
+
+    /**
+     * @return mixed
+     * @throws ReportException
+     */
+    public function reportException()
+    {
+        throw new ReportException('Report exception');
     }
 
     /**

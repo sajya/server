@@ -34,4 +34,14 @@ class MethodNotFound extends RpcException
     {
         return 'Method not found';
     }
+
+    /**
+     * Report the exception.
+     *
+     * @return bool|null
+     */
+    public function report(): ?bool
+    {
+        return true;
+    }
 }

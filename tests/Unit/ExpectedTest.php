@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
 use Sajya\Server\Facades\RPC;
 use Sajya\Server\Tests\FixtureBind;
+use Sajya\Server\Tests\ReportException;
 use Sajya\Server\Tests\TestCase;
 
 class ExpectedTest extends TestCase
@@ -83,6 +84,14 @@ class ExpectedTest extends TestCase
         yield ['testRuntimeError'];
         yield ['testInvalidRequestException'];
         yield ['testCallNoExistMethod'];
+
+        // Exception
+        yield ['testDivisionException'];
+        yield ['testReportException', function () {
+            $this->assertNull(config('render-response-exception'));
+        }, function () {
+            $this->assertStringContainsString('Enabled', config('render-response-exception'));
+        }];
 
         // Binding
         yield ['testBindDeepValue',];

@@ -1,0 +1,8 @@
+{
+    "id": "1",
+    "error": {
+        "code": 0,
+        "message": "Division by zero"
+    },
+    "jsonrpc": "2.0"
+}
