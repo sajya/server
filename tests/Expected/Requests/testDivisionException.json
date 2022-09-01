@@ -1,0 +1,9 @@
+{
+    "jsonrpc": "2.0",
+    "method": "fixture@division",
+    "params": {
+        "a": 4,
+        "b": 0
+    },
+    "id": 1
+}

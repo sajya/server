@@ -34,4 +34,14 @@ class InvalidParams extends RpcException
     {
         return 'Invalid params';
     }
+
+    /**
+     * Report the exception.
+     *
+     * @return bool|null
+     */
+    public function report(): ?bool
+    {
+        return true;
+    }
 }

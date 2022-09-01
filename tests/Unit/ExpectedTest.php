@@ -84,6 +84,14 @@ class ExpectedTest extends TestCase
         yield ['testInvalidRequestException'];
         yield ['testCallNoExistMethod'];
 
+        // Exception
+        yield ['testDivisionException'];
+        yield ['testReportException', function () {
+            $this->assertNull(config('render-response-exception'));
+        }, function () {
+            $this->assertStringContainsString('Enabled', config('render-response-exception'));
+        }];
+
         // Binding
         yield ['testBindDeepValue',];
         yield ['testBindSubtract',];

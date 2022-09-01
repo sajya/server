@@ -35,4 +35,14 @@ class ParseErrorException extends RpcException
     {
         return 'Parse error';
     }
+
+    /**
+     * Report the exception.
+     *
+     * @return bool|null
+     */
+    public function report(): ?bool
+    {
+        return true;
+    }
 }
