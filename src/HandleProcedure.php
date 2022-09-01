@@ -68,9 +68,13 @@ class HandleProcedure implements ShouldQueue
      *
      * @return string|RpcException|\Illuminate\Http\Response
      */
-    protected function handleException($exception)
+    protected function handleException(Throwable $exception)
     {
         report($exception);
+
+        if ($exception && method_exists($exception, 'render')) {
+            return $this->renderException($exception);
+        }
 
         if ($exception instanceof ValidationException) {
             return new InvalidParams($exception->validator->errors()->toArray());
@@ -88,10 +92,30 @@ class HandleProcedure implements ShouldQueue
             return new InternalErrorException();
         }
 
-        if (! is_int($code)) {
+        if (!is_int($code)) {
             $code = -1;
         }
 
         return new RuntimeRpcException($exception->getMessage(), $code);
+    }
+
+    /**
+     * @param \Throwable $exception
+     *
+     * @return \Illuminate\Http\Response|\Sajya\Server\Exceptions\RpcException|\Sajya\Server\Exceptions\RuntimeRpcException
+     */
+    protected function renderException(Throwable $exception)
+    {
+        /** @var \Illuminate\Http\Response $response */
+        $response = $exception->render(\request());
+
+        if ($response instanceof RpcException) {
+            return $response;
+        }
+
+        $exceptionFromResponse = new RuntimeRpcException($exception->getMessage(), $exception->getCode());
+        $exceptionFromResponse->setData($response->getOriginalContent());
+
+        return $exceptionFromResponse;
     }
 }

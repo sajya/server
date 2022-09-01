@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Sajya\Server\Exceptions\InvalidRequestException;
 use Sajya\Server\Exceptions\RuntimeRpcException;
 use Sajya\Server\Procedure;
+use Sajya\Server\Tests\Fixture\RenderResponseException;
 use Sajya\Server\Tests\Fixture\ReportException;
 
 class FixtureProcedure extends Procedure
@@ -139,13 +140,21 @@ class FixtureProcedure extends Procedure
     }
 
     /**
-     * @throws ReportException
-     *
      * @return mixed
+     * @throws \Sajya\Server\Tests\Fixture\ReportException
      */
-    public function reportException()
+    public function reportException(): mixed
     {
         throw new ReportException('Report exception');
+    }
+
+    /**
+     * @return mixed
+     * @throws \Sajya\Server\Tests\Fixture\RenderResponseException
+     */
+    public function renderException(): mixed
+    {
+        throw new RenderResponseException();
     }
 
     /**
