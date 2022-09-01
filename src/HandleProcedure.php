@@ -92,7 +92,7 @@ class HandleProcedure implements ShouldQueue
             return new InternalErrorException();
         }
 
-        if (!is_int($code)) {
+        if (! is_int($code)) {
             $code = -1;
         }
 
