@@ -13,7 +13,7 @@ class ArtisanTest extends TestCase
     public function testArtisanMakeProcedure(): void
     {
         $this->artisan('make:procedure', ['name' => 'Test' . time()])
-            ->expectsOutput('Procedure created successfully.')
+            ->expectsOutputToContain('Procedure created successfully.')
             ->assertExitCode(0);
     }
 
@@ -22,7 +22,7 @@ class ArtisanTest extends TestCase
         $this->artisan('sajya:docs', [
             'route' => 'rpc.docs',
         ])
-            ->expectsOutput('Documentation was generated successfully.')
+            ->expectsOutputToContain('Documentation was generated successfully.')
             ->assertExitCode(0);
     }
 
@@ -33,7 +33,7 @@ class ArtisanTest extends TestCase
         $this->artisan('sajya:docs', [
             'route' => $routeName,
         ])
-            ->expectsOutput("Route '$routeName' not found")
+            ->expectsOutputToContain("Route '$routeName' not found")
             ->assertExitCode(1);
     }
 
@@ -44,7 +44,7 @@ class ArtisanTest extends TestCase
             '--path' => '/api/2.0/',
             '--name' => 'rpc.html',
         ])
-            ->expectsOutput('Documentation was generated successfully.')
+            ->expectsOutputToContain('Documentation was generated successfully.')
             ->assertExitCode(0);
 
         $this->assertTrue(Storage::disk()->exists('/api/2.0/rpc.html'));
