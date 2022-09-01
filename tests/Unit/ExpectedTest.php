@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
 use Sajya\Server\Facades\RPC;
 use Sajya\Server\Tests\FixtureBind;
-use Sajya\Server\Tests\ReportException;
 use Sajya\Server\Tests\TestCase;
 
 class ExpectedTest extends TestCase

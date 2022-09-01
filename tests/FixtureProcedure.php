@@ -139,8 +139,9 @@ class FixtureProcedure extends Procedure
     }
 
     /**
-     * @return mixed
      * @throws ReportException
+     *
+     * @return mixed
      */
     public function reportException()
     {
