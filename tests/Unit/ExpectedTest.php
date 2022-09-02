@@ -86,7 +86,6 @@ class ExpectedTest extends TestCase
 
         // Exception
         yield ['testDivisionException'];
-        yield ['testRenderException'];
         yield ['testReportException', function () {
             $this->assertNull(config('render-response-exception'));
         }, function () {

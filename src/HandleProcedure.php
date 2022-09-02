@@ -72,10 +72,6 @@ class HandleProcedure implements ShouldQueue
     {
         report($exception);
 
-        if (method_exists($exception, 'render')) {
-            return $this->renderException($exception);
-        }
-
         if ($exception instanceof ValidationException) {
             return new InvalidParams($exception->validator->errors()->toArray());
         }
@@ -97,27 +93,5 @@ class HandleProcedure implements ShouldQueue
         }
 
         return new RuntimeRpcException($exception->getMessage(), $code);
-    }
-
-    /**
-     * @psalm-suppress UndefinedInterfaceMethod
-     *
-     * @param \Throwable $exception
-     *
-     * @return \Illuminate\Http\Response|\Sajya\Server\Exceptions\RpcException
-     */
-    protected function renderException(Throwable $exception)
-    {
-        /** @var \Illuminate\Http\Response|RpcException $response */
-        $response = $exception->render(\request());
-
-        if ($response instanceof RpcException) {
-            return $response;
-        }
-
-        $exceptionFromResponse = new RuntimeRpcException($exception->getMessage(), $exception->getCode());
-        $exceptionFromResponse->setData($response->getOriginalContent());
-
-        return $exceptionFromResponse;
     }
 }
