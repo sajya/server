@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 5.2.0 - 2022-09-02
+
+### Changed
+
+- Catching exceptions instead of forcibly suppressing them [#38](https://github.com/sajya/server/issues/38), [#39](https://github.com/sajya/server/issues/39)
+
 ## 5.1.0 - 2022-07-19
 
 ### Added
