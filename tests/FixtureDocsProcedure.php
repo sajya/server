@@ -23,7 +23,6 @@ class FixtureDocsProcedure extends Procedure
      *
      * @Param(name="key", value="required")
      * @Param(name="array.", value="max:5")
-     *
      * @Result(name="key", value="string")
      * @Result(name="array.", value="max:4")
      *
