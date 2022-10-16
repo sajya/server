@@ -12,9 +12,13 @@ class ArtisanTest extends TestCase
 {
     public function testArtisanMakeProcedure(): void
     {
-        $this->artisan('make:procedure', ['name' => 'Test' . time()])
-            ->expectsOutputToContain('Procedure created successfully.')
-            ->assertExitCode(0);
+        $name = 'Test' . time();
+
+        $this->artisan('make:procedure', ['name' => $name])
+            ->expectsOutputToContain($name)
+            ->assertOk();
+
+        $this->assertFileExists(app_path("Http/Procedures/$name.php"));
     }
 
     public function testArtisanMakeDocs(): void
