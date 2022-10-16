@@ -113,6 +113,7 @@ class ExpectedTest extends TestCase
      * @param string       $route
      *
      * @throws \JsonException
+     *
      * @dataProvider exampleCalls
      *
      */
