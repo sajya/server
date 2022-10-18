@@ -82,7 +82,7 @@ class Binding
         $method = $class->getMethod(Str::after($procedure, '@'));
 
         return collect($method->getParameters())
-            ->map(fn(ReflectionParameter $parameter) => $parameter->getName())
+            ->map(fn (ReflectionParameter $parameter) => $parameter->getName())
             ->mapWithKeys(function (string $key) use ($params) {
                 $value = Arr::get($params, $key);
                 $valueDot = Arr::get($params, Str::snake($key, '.'));
