@@ -160,7 +160,7 @@ class Request implements JsonSerializable
      *
      * @return Request
      */
-    public function setParams(array $params)
+    public function setParams(array $params): self
     {
         $this->params = $this->params->merge($params);
 

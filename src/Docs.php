@@ -162,15 +162,15 @@ class Docs
      *
      * @return array
      */
-    private function arrayKeysMulti(array $array)
+    private function arrayKeysMulti(array $array): array
     {
         $keys = [];
 
         foreach ($array as $key => $value) {
             $keys[] = $key;
 
-            if (is_array($array[$key])) {
-                $keys = array_merge($keys, $this->arrayKeysMulti($array[$key]));
+            if (is_array($value)) {
+                $keys = array_merge($keys, $this->arrayKeysMulti($value));
             }
         }
 

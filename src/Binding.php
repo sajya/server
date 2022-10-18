@@ -10,6 +10,8 @@ use Illuminate\Routing\RouteBinding;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use ReflectionClass;
+use ReflectionParameter;
 
 class Binding
 {
@@ -46,7 +48,7 @@ class Binding
      *
      * @return void
      */
-    public function model(string $key, string $class, Closure $callback = null)
+    public function model(string $key, string $class, Closure $callback = null): void
     {
         $this->bind($key, RouteBinding::forModel($this->container, $class, $callback));
     }
@@ -59,7 +61,7 @@ class Binding
      *
      * @return void
      */
-    public function bind(string $key, $binder)
+    public function bind(string $key, $binder): void
     {
         $this->binders[$key] = RouteBinding::forCallback(
             $this->container, $binder
@@ -76,11 +78,11 @@ class Binding
      */
     public function bindResolve(string $procedure, Collection $params): array
     {
-        $class = new \ReflectionClass(Str::before($procedure, '@'));
+        $class = new ReflectionClass(Str::before($procedure, '@'));
         $method = $class->getMethod(Str::after($procedure, '@'));
 
         return collect($method->getParameters())
-            ->map(fn (\ReflectionParameter $parameter) => $parameter->getName())
+            ->map(fn(ReflectionParameter $parameter) => $parameter->getName())
             ->mapWithKeys(function (string $key) use ($params) {
                 $value = Arr::get($params, $key);
                 $valueDot = Arr::get($params, Str::snake($key, '.'));

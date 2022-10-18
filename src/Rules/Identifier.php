@@ -16,7 +16,7 @@ class Identifier implements Rule
      *
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         return is_numeric($value) || is_string($value) || $value === null;
     }
@@ -26,7 +26,7 @@ class Identifier implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'The :attribute must be a string or integer.';
     }

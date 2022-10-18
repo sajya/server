@@ -40,8 +40,8 @@ class Response implements JsonSerializable
     /**
      * Make Response instance based on result and request.
      *
-     * @param mixed   $result
-     * @param Request $request
+     * @param mixed        $result
+     * @param Request|null $request
      *
      * @return self
      */

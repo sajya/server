@@ -29,7 +29,7 @@ class RuntimeRpcException extends RpcException
      *
      * @return bool|null
      */
-    public function report()
+    public function report(): ?bool
     {
         return true;
     }
