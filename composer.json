@@ -51,7 +51,8 @@
         "sort-packages": true
     },
     "suggest": {
-        "ext-zlib": "Required to compress the response into gzip"
+        "ext-zlib": "Required to compress the response into gzip",
+        "sajya/client": "HTTP(S) client for JSON-RPC 2.0"
     },
     "prefer-stable": true,
     "extra": {
