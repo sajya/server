@@ -52,18 +52,17 @@ class Docs
                 return collect($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC))
                     ->map(function (ReflectionMethod $method) use ($name) {
                         $request = [
-                            "jsonrpc" => "2.0",
-                            "id"      => 1,
-                            "method"  => $name . $this->delimiter . $method->getName(),
+                            'jsonrpc' => '2.0',
+                            'id'      => 1,
+                            'method'  => $name.$this->delimiter.$method->getName(),
                             'params'  => $this->getMethodAnnotations($method, Param::class),
                         ];
 
                         $response = [
-                            "jsonrpc" => "2.0",
-                            "id"      => 1,
+                            'jsonrpc' => '2.0',
+                            'id'      => 1,
                             'result'  => $this->getMethodAnnotations($method, Result::class),
                         ];
-
 
                         $factory = DocBlockFactory::createInstance();
                         $comment = $method->getDocComment();
@@ -101,9 +100,9 @@ class Docs
             $key = Str::of($key);
 
             if ($key->endsWith('.')) {
-                $repository->push((string)$key->replaceLast('.', ''), $param);
+                $repository->push((string) $key->replaceLast('.', ''), $param);
             } else {
-                $repository->set((string)$key, $param);
+                $repository->set((string) $key, $param);
             }
         }
 
@@ -132,14 +131,14 @@ class Docs
      */
     private function highlight(array $value): Stringable
     {
-        ini_set("highlight.comment", "#008000");
-        ini_set("highlight.default", "#000000");
-        ini_set("highlight.html", "#808080");
-        ini_set("highlight.keyword", "#998;");
-        ini_set("highlight.string", "#d14");
+        ini_set('highlight.comment', '#008000');
+        ini_set('highlight.default', '#000000');
+        ini_set('highlight.html', '#808080');
+        ini_set('highlight.keyword', '#998;');
+        ini_set('highlight.string', '#d14');
 
         $json = json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        $code = highlight_string('<?php ' . $json, true);
+        $code = highlight_string('<?php '.$json, true);
 
         $docs = Str::of($code)
             ->replaceFirst('&lt;?php&nbsp;', '')
@@ -149,8 +148,8 @@ class Docs
 
         foreach ($keys as $item) {
             $docs = $docs->replace(
-                '<span style="color: #d14">"' . $item . '"</span>',
-                '<span style="color: #333">"' . $item . '"</span>'
+                '<span style="color: #d14">"'.$item.'"</span>',
+                '<span style="color: #333">"'.$item.'"</span>'
             );
         }
 

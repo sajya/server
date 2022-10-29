@@ -33,7 +33,7 @@ class FixtureBind implements UrlRoutable, \Stringable
 
     public function resolveRouteBinding($value, $field = null)
     {
-        return new FixtureBind('bind-' . $value);
+        return new FixtureBind('bind-'.$value);
     }
 
     public function resolveChildRouteBinding($childType, $value, $field)

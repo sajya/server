@@ -50,11 +50,11 @@ class DocsCommand extends Command
 
         $html = view('sajya::docs', [
             'title'      => config('app.name'),
-            'uri'        => config('app.url') . $route->uri(),
+            'uri'        => config('app.url').$route->uri(),
             'procedures' => $docs->getAnnotations(),
         ]);
 
-        Storage::disk()->put($this->option('path') . $this->option('name'), $html->render());
+        Storage::disk()->put($this->option('path').$this->option('name'), $html->render());
         $this->info('Documentation was generated successfully.');
 
         return 0;

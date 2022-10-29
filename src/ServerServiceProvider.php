@@ -53,7 +53,7 @@ class ServerServiceProvider extends ServiceProvider
      */
     public function registerViews(): self
     {
-        $path = __DIR__ . '/../views';
+        $path = __DIR__.'/../views';
 
         $this->loadViewsFrom($path, 'sajya');
 

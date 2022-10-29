@@ -12,7 +12,7 @@ class ArtisanTest extends TestCase
 {
     public function testArtisanMakeProcedure(): void
     {
-        $name = 'Test' . time();
+        $name = 'Test'.time();
 
         $this->artisan('make:procedure', ['name' => $name])
             ->expectsOutputToContain($name)
