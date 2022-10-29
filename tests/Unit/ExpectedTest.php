@@ -93,8 +93,8 @@ class ExpectedTest extends TestCase
         }];
 
         // Binding
-        yield ['testBindDeepValue',];
-        yield ['testBindSubtract',];
+        yield ['testBindDeepValue'];
+        yield ['testBindSubtract'];
         yield ['testBindSubtractRewriteBind', static function () {
             RPC::bind('a', function () {
                 return 100;
@@ -115,7 +115,6 @@ class ExpectedTest extends TestCase
      * @throws \JsonException
      *
      * @dataProvider exampleCalls
-     *
      */
     public function testHasCorrectRequestResponse(
         string $file,

@@ -46,6 +46,6 @@ class FixtureBindProcedure extends Procedure
      */
     public function getModel(FixtureBind $fixtureModel): string
     {
-        return (string)$fixtureModel;
+        return (string) $fixtureModel;
     }
 }

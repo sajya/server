@@ -22,7 +22,6 @@ class DocsTest extends TestCase
         $ping = $annotations->first();
         $empty = $annotations->last();
 
-
         $this->assertEquals('docs', $ping['name']);
         $this->assertEquals('docs', $empty['name']);
 
@@ -35,13 +34,12 @@ class DocsTest extends TestCase
         $this->assertEquals('ping', $ping['method']);
         $this->assertEquals('empty', $empty['method']);
 
+        $this->assertStringContainsString('required', (string) $ping['request']);
+        $this->assertStringContainsString('max:5', (string) $ping['request']);
+        $this->assertStringContainsString('key', (string) $ping['request']);
+        $this->assertStringContainsString('array', (string) $ping['request']);
 
-        $this->assertStringContainsString('required', (string)$ping['request']);
-        $this->assertStringContainsString('max:5', (string)$ping['request']);
-        $this->assertStringContainsString('key', (string)$ping['request']);
-        $this->assertStringContainsString('array', (string)$ping['request']);
-
-        $this->assertNotEmpty((string)$empty['request']);
-        $this->assertNotEmpty((string)$empty['response']);
+        $this->assertNotEmpty((string) $empty['request']);
+        $this->assertNotEmpty((string) $empty['response']);
     }
 }
