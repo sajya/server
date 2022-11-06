@@ -1,5 +1,5 @@
 {
     "jsonrpc": "2.0",
-    "method": "fixture@foobar",
+    "method": "foobar",
     "id": "1"
 }

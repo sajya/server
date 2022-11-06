@@ -1,0 +1,12 @@
+{
+    "id": "1",
+    "result": {
+        "firstname": "Vere",
+        "lastname": "Bonilla",
+        "city": "Padang",
+        "country": "Jordan",
+        "countryCode": "BE",
+        "group": "default"
+    },
+    "jsonrpc": "2.0"
+}
