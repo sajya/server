@@ -27,6 +27,6 @@ class FixtureProxyProcedure extends Procedure implements Proxy
      */
     public function __invoke(Request $request): mixed
     {
-        return $request->getMethod();
+        return $request->getParams();
     }
 }
