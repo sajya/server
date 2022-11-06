@@ -104,7 +104,7 @@ class Guide
     public function handleProcedure(Request $request, bool $notification): Response
     {
         request()->replace($request->getParams()->toArray());
-        app()->bind(Request::class, fn() => $request);
+        app()->bind(Request::class, fn () => $request);
 
         $procedure = $this->findProcedure($request);
 
@@ -132,10 +132,10 @@ class Guide
         $method = Str::afterLast($request->getMethod(), $this->delimiter);
 
         return $this->map
-            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
-            ->map(fn(string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER . $method))
-            ->whenEmpty(fn(Collection $collection) => $collection->push($this->findProxy($class)))
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.$method))
+            ->whenEmpty(fn (Collection $collection) => $collection->push($this->findProxy($class)))
             ->first();
     }
 
@@ -149,9 +149,9 @@ class Guide
     public function findProxy(string $class): ?string
     {
         return $this->map
-            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn(string $procedure) => is_subclass_of($procedure, Proxy::class))
-            ->map(fn(string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER . '__invoke'))
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => is_subclass_of($procedure, Proxy::class))
+            ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.'__invoke'))
             ->first();
     }
 
