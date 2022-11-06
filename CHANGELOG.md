@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 5.3.0 - 2022-11-06
+
+### Added
+
+- Proxy procedure [#47](https://github.com/sajya/server/pull/47)
+- Usage Laravel Pint for code style [#46](https://github.com/sajya/server/pull/46)
+- Suggest client
+
+### Changed
+
+- Improve typing
+- Update Bootstrap version for docs
+
 ## 5.2.0 - 2022-09-02
 
 ### Changed
