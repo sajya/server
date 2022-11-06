@@ -19,12 +19,14 @@ class FixtureProxyProcedure extends Procedure implements Proxy
     public static string $name = 'proxy';
 
     /**
+     * The method that will be called if there is no match.
+     *
      * @param \Sajya\Server\Http\Request $request
      *
      * @return mixed
      */
     public function __invoke(Request $request): mixed
     {
-        return $request->getParams()->toArray();
+        return $request->getMethod();
     }
 }
