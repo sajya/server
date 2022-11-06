@@ -63,6 +63,7 @@ class ExpectedTest extends TestCase
         yield ['testBatchSum'];
         yield ['testDelimiter', null, null, 'rpc.delimiter'];
         yield ['testDependencyInjection'];
+        yield ['testFindMethod'];
         yield ['testFindProcedure'];
         yield ['testInvalidParams'];
         yield ['testNotificationSum', static function () {
@@ -104,6 +105,9 @@ class ExpectedTest extends TestCase
         yield ['testBindModel', static function () {
             RPC::model('fixtureModel', FixtureBind::class);
         }];
+
+        // Proxy
+        yield ['testProxyMethod'];
     }
 
     /**

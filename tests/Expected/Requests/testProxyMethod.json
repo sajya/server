@@ -1,0 +1,13 @@
+{
+    "jsonrpc": "2.0",
+    "method": "proxy@any",
+    "params": {
+        "firstname": "Vere",
+        "lastname": "Bonilla",
+        "city": "Padang",
+        "country": "Jordan",
+        "countryCode": "BE",
+        "group": "default"
+    },
+    "id": "1"
+}

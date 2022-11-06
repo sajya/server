@@ -94,6 +94,8 @@ class Guide
     }
 
     /**
+     * Search for a procedure and execute it.
+     *
      * @param Request $request
      * @param bool    $notification
      *
@@ -101,7 +103,8 @@ class Guide
      */
     public function handleProcedure(Request $request, bool $notification): Response
     {
-        \request()->replace($request->getParams()->toArray());
+        request()->replace($request->getParams()->toArray());
+        app()->bind(Request::class, fn () => $request);
 
         $procedure = $this->findProcedure($request);
 
@@ -117,6 +120,8 @@ class Guide
     }
 
     /**
+     * Find procedure by request.
+     *
      * @param Request $request
      *
      * @return null|string
@@ -128,9 +133,25 @@ class Guide
 
         return $this->map
             ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn (string $procedure) => method_exists($procedure, $method))
             ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
             ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.$method))
+            ->whenEmpty(fn (Collection $collection) => $collection->push($this->findProxy($class)))
+            ->first();
+    }
+
+    /**
+     * Fallback to the first procedure that implements the Proxy interface.
+     *
+     * @param string $class
+     *
+     * @return null|string
+     */
+    public function findProxy(string $class): ?string
+    {
+        return $this->map
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => is_subclass_of($procedure, Proxy::class))
+            ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.'__invoke'))
             ->first();
     }
 
@@ -142,7 +163,7 @@ class Guide
      */
     private function checkExistPublicMethod(string $procedure, string $method): bool
     {
-        return (new ReflectionMethod($procedure, $method))->isPublic();
+        return method_exists($procedure, $method) && (new ReflectionMethod($procedure, $method))->isPublic();
     }
 
     /**
