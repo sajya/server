@@ -16,10 +16,13 @@ Sajya is an open-source project that makes it easy to implement the JSON-RPC 2.0
 
 #### Key features:
 
-- Easy-to-use routes: Sajya allows you to quickly and easily define routes and binding for your JSON-RPC server.
-- Validation of parameters: Sajya automatically validates incoming requests to ensure they meet your specifications. You can also customize the error messages that are returned if the validation fails.
-- Support for batch and notification requests: Sajya supports both batch requests, where multiple requests are combined into a single HTTP request, and notification requests, where the server does not generate a response.
-- Well-documented code and examples, to help you get started quickly and easily.
+- Easy to use: Sajya is designed to be simple to install and use, so you can get your server up and running quickly.
+- Customizable: You can customize many aspects of your server, including the routes, parameter validation, and error messages.
+- Well-documented: The project comes with complete documentation that includes detailed instructions and a reference guide for all of its features.
+- Route Model Binding: You can quickly and easily define routes parameters for your models.
+- Validation of parameters: The project automatically validates incoming requests to ensure they meet your specifications. You can also customize the error messages that are returned if the validation fails.
+- Support for batch and notification requests: The project supports both batch requests, where multiple requests are combined into a single HTTP request, and notification requests, where the server does not generate a response.
+
 
 ## Official Documentation
 
