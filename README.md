@@ -10,34 +10,33 @@
 <a href="https://packagist.org/packages/sajya/server"><img src="https://img.shields.io/packagist/dt/sajya/server.svg" alt="Total Downloads"></a>
 </p>
 
-
 ## Introduction
 
-Sajya is an open-source project that aims to quickly implement the JSON-RPC 2.0 server specification for Laravel.
+Sajya is an open-source project that makes it easy to implement the JSON-RPC 2.0 server specification for Laravel. With Sajya, you can quickly and easily set up a JSON-RPC server that supports all of the features of the JSON-RPC 2.0 specification, including validation of parameters, support for batch and notification requests, and more.
 
-#### Some features:
+#### Key features:
 
-- Quick and straightforward route adding
-- Validation of parameters and custom messages
-- Support batch requests
-- Support notification requests
+- Easy-to-use routes: Sajya allows you to quickly and easily define routes and binding for your JSON-RPC server.
+- Validation of parameters: Sajya automatically validates incoming requests to ensure they meet your specifications. You can also customize the error messages that are returned if the validation fails.
+- Support for batch and notification requests: Sajya supports both batch requests, where multiple requests are combined into a single HTTP request, and notification requests, where the server does not generate a response.
+- Well-documented code and examples, to help you get started quickly and easily.
 
 ## Official Documentation
 
-Documentation for Sajya can be found on its [website](https://sajya.github.io/).
+You can find the complete documentation for Sajya on its [website](https://sajya.github.io/). The documentation includes detailed instructions on how to install and use Sajya, as well as a reference guide for all of its features.
 
 ### Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+To learn about the latest updates and changes to Sajya, please see the [CHANGELOG](CHANGELOG.md). The changelog includes a list of all the changes made to Sajya in each release, along with the corresponding version number.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+We welcome contributions to Sajya. If you are interested in contributing, please see [CONTRIBUTING](CONTRIBUTING.md) for details on how to get started. Contributions can include bug fixes, new features, and improvements to the documentation.
 
 ## Maintainers
 
-Sajya is developed and maintained by [Alexandr Chernyaev](https://github.com/tabuna).
+Sajya is developed and maintained by [Alexandr Chernyaev](https://github.com/tabuna). Alexandr is the main author and maintainer of Sajya, and is responsible for coordinating the development and release of new versions.
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+Sajya is released under the MIT License. Please see the [License File](LICENSE.md) for more information. The MIT License is a permissive license that allows you to use and modify Sajya for any purpose, as long as you include the original copyright and license notice in your copies.
