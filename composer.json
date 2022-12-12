@@ -26,7 +26,7 @@
         "phpunit/php-code-coverage": "^9.2",
         "phpunit/phpunit": "^9.4",
         "symfony/var-dumper": "^6.0",
-        "vimeo/psalm": "^4.6"
+        "vimeo/psalm": "^5.1"
     },
     "conflict": {
         "league/flysystem": "<3.0.16",
