@@ -61,7 +61,7 @@ class Parser
                 ->first(fn ($value) => ! isset($value['id']));
 
             $this->notification = $emptyIdRequest !== null;
-        } catch (Exception | TypeError $e) {
+        } catch (Exception|TypeError $e) {
             $this->decode = collect();
             $this->isParseError = true;
         }
