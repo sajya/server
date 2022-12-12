@@ -28,7 +28,7 @@ Sajya is an open-source project that makes it easy to implement the JSON-RPC 2.0
 
 You can find the complete documentation for Sajya on its [website](https://sajya.github.io/). The documentation includes detailed instructions on how to install and use Sajya, as well as a reference guide for all of its features.
 
-### Changelog
+## Changelog
 
 To learn about the latest updates and changes to Sajya, please see the [CHANGELOG](CHANGELOG.md). The changelog includes a list of all the changes made to Sajya in each release, along with the corresponding version number.
 
