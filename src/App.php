@@ -44,10 +44,10 @@ class App
     public function __construct(array $procedures = [], ?string $delimiter = self::DEFAULT_DELIMITER)
     {
         $this->map = collect($procedures)
-            ->each(fn(string $class) => abort_unless(
+            ->each(fn (string $class) => abort_unless(
                 is_subclass_of($class, Procedure::class),
                 500,
-                "Class '$class' must extends " . Procedure::class
+                "Class '$class' must extends ".Procedure::class
             ));
         $this->delimiter = $delimiter ?? self::DEFAULT_DELIMITER;
     }
@@ -59,7 +59,7 @@ class App
      */
     public function terminate(string $content = '')
     {
-        return tap($this->handle($content), fn() => Application::getInstance()->terminate());
+        return tap($this->handle($content), fn () => Application::getInstance()->terminate());
     }
 
     /**
@@ -73,11 +73,11 @@ class App
 
         $result = collect($parser->makeRequests())
             ->map(
-                fn($request) => $request instanceof Request
+                fn ($request) => $request instanceof Request
                     ? $this->handleProcedure($request, $request->isNotification())
                     : $this->makeResponse($request)
             )
-            ->reject(fn(Response $response) => $response->isNotification())
+            ->reject(fn (Response $response) => $response->isNotification())
             ->values();
 
         return $parser->isBatch()
@@ -96,7 +96,7 @@ class App
     public function handleProcedure(Request $request, bool $notification): Response
     {
         request()->replace($request->getParams()->toArray());
-        app()->bind(Request::class, fn() => $request);
+        app()->bind(Request::class, fn () => $request);
 
         $procedure = $this->findProcedure($request);
 
@@ -124,10 +124,10 @@ class App
         $method = Str::afterLast($request->getMethod(), $this->delimiter);
 
         return $this->map
-            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn(string $procedure) => $this->checkExistPublicMethod($procedure, $method))
-            ->map(fn(string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER . $method))
-            ->whenEmpty(fn(Collection $collection) => $collection->push($this->findProxy($class)))
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
+            ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.$method))
+            ->whenEmpty(fn (Collection $collection) => $collection->push($this->findProxy($class)))
             ->first();
     }
 
@@ -162,9 +162,9 @@ class App
     public function findProxy(string $class): ?string
     {
         return $this->map
-            ->filter(fn(string $procedure) => $this->getProcedureName($procedure) === $class)
-            ->filter(fn(string $procedure) => is_subclass_of($procedure, Proxy::class))
-            ->map(fn(string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER . '__invoke'))
+            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => is_subclass_of($procedure, Proxy::class))
+            ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.'__invoke'))
             ->first();
     }
 

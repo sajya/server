@@ -9,5 +9,4 @@ namespace Sajya\Server;
  */
 class Guide extends App
 {
-
 }
