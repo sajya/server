@@ -6,18 +6,18 @@ namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Sajya\Server\Guide;
+use Sajya\Server\App;
 use Sajya\Server\HandleProcedure;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Procedure;
 use Sajya\Server\Tests\FixtureProcedure;
 use Sajya\Server\Tests\TestCase;
 
-class GuideTest extends TestCase
+class AppTest extends TestCase
 {
     public function testBaseUsage(): void
     {
-        $guide = new Guide([
+        $guide = new App([
             FixtureProcedure::class,
         ]);
 
@@ -29,7 +29,7 @@ class GuideTest extends TestCase
 
     public function testTerminateUsage(): void
     {
-        $guide = new Guide([
+        $guide = new App([
             FixtureProcedure::class,
         ]);
 
@@ -44,9 +44,9 @@ class GuideTest extends TestCase
     {
         $this->expectErrorMessage("Class 'Sajya\Server\Tests\Unit\GuideTest' must extends ".Procedure::class);
 
-        new Guide([
+        new App([
             FixtureProcedure::class,
-            GuideTest::class,
+            AppTest::class,
         ]);
     }
 
@@ -78,7 +78,7 @@ class GuideTest extends TestCase
     {
         Bus::fake();
 
-        $guide = new Guide([
+        $guide = new App([
             FixtureProcedure::class,
         ]);
 
@@ -93,7 +93,7 @@ class GuideTest extends TestCase
     {
         Bus::fake();
 
-        $guide = new Guide([
+        $guide = new App([
             FixtureProcedure::class,
         ]);
 

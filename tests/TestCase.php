@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Sajya\Server\Tests;
 
 use Illuminate\Foundation\Application;
-use Sajya\Server\Guide;
+use Sajya\Server\App;
 use Sajya\Server\Middleware\GzipCompress;
 use Sajya\Server\ServerServiceProvider;
 
@@ -59,10 +59,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @return Guide
+     * @return App
      */
-    public function getGuide(): Guide
+    public function getGuide(): App
     {
-        return new Guide($this->mapProcedures);
+        return new App($this->mapProcedures);
     }
 }

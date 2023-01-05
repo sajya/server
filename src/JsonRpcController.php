@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 class JsonRpcController
 {
     /**
-     * @var Guide|null
+     * @var App|null
      */
-    protected ?Guide $guide;
+    protected ?App $guide;
 
     /**
      * Invoke the controller method.
@@ -25,7 +25,7 @@ class JsonRpcController
      */
     public function __invoke(Request $request, array $procedures, string $delimiter = null): JsonResponse
     {
-        $guide = new Guide($procedures, $delimiter);
+        $guide = new App($procedures, $delimiter);
 
         $response = $guide->handle($request->getContent());
 
