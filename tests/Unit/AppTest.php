@@ -42,7 +42,7 @@ class AppTest extends TestCase
 
     public function testExtendsProcedure(): void
     {
-        $this->expectErrorMessage("Class 'Sajya\Server\Tests\Unit\AppTest' must extends " . Procedure::class);
+        $this->expectErrorMessage("Class 'Sajya\Server\Tests\Unit\AppTest' must extends ".Procedure::class);
 
         new App([
             FixtureProcedure::class,
