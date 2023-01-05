@@ -16,7 +16,7 @@
     ],
     "require": {
         "ext-json": "*",
-        "doctrine/annotations": "^1.12",
+        "doctrine/annotations": "^2.0",
         "laravel/framework": "^9.2",
         "phpdocumentor/reflection-docblock": "^5.2"
     },
