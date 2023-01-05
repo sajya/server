@@ -57,6 +57,6 @@ class DocsCommand extends Command
         Storage::disk()->put($this->option('path').$this->option('name'), $html->render());
         $this->info('Documentation was generated successfully.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
