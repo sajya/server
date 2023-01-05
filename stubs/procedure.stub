@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace {{ namespace }};
+namespace {
+    {
+
+        namespace }}
 
 use Illuminate\Http\Request;
-use Sajya\Server\Procedure;
 
 class {{ class }} extends Procedure
 {
     /**
-     * The name of the procedure that will be
-     * displayed and taken into account in the search
+     * The name of the procedure that is used for referencing.
      *
      * @var string
      */

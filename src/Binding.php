@@ -69,12 +69,14 @@ class Binding
     }
 
     /**
+     * Binds the values of the given parameters to their corresponding type.
+     *
      * @param string                         $procedure
      * @param \Illuminate\Support\Collection $params
      *
+     * @return array
      * @throws \ReflectionException
      *
-     * @return array
      */
     public function bindResolve(string $procedure, Collection $params): array
     {

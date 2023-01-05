@@ -24,11 +24,15 @@ class HandleProcedure implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Name of the procedure.
+     *
      * @var string
      */
     protected string $procedure;
 
     /**
+     * Request instance.
+     *
      * @var Request
      */
     protected $request;

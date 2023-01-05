@@ -29,6 +29,8 @@ class GzipCompress
     }
 
     /**
+     * Compresses the content of the given response using gzip compression.
+     *
      * @param JsonResponse $response
      * @param int          $compress
      *

@@ -36,10 +36,10 @@ class App
     protected string $delimiter;
 
     /**
-     * Guide constructor.
+     * App constructor.
      *
-     * @param string[]    $procedures
-     * @param null|string $delimiter
+     * @param string[]    $procedures An array of procedures to register with the App.
+     * @param null|string $delimiter  The delimiter to use for separating procedure names from method names.
      */
     public function __construct(array $procedures = [], ?string $delimiter = self::DEFAULT_DELIMITER)
     {
@@ -53,6 +53,8 @@ class App
     }
 
     /**
+     * Terminate the application and return the JSON-RPC response.
+     *
      * @param string $content
      *
      * @return Response[]|Response|null
@@ -63,6 +65,8 @@ class App
     }
 
     /**
+     * Handles a JSON-RPC request or batch of requests.
+     *
      * @param string $content
      *
      * @return Response[]|Response|null
@@ -132,6 +136,8 @@ class App
     }
 
     /**
+     * Get the name of the procedure for the given class.
+     *
      * @param string $procedure
      *
      * @return string
@@ -142,6 +148,8 @@ class App
     }
 
     /**
+     * Check if the given procedure has a public method with the given name.
+     *
      * @param string $procedure
      * @param string $method
      *
@@ -169,6 +177,8 @@ class App
     }
 
     /**
+     * Create a Response object from the given result and Request object.
+     *
      * @param mixed|null   $result
      * @param Request|null $request
      *

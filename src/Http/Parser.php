@@ -32,17 +32,21 @@ class Parser
     protected Collection $decode;
 
     /**
+     * Indicates whether the content is a batch request.
+     *
      * @var bool
      */
     protected bool $batching = false;
 
     /**
+     * Indicates whether the content is a notification request.
+     *
      * @var bool
      */
     protected bool $notification = false;
 
     /**
-     * ContentValidation constructor.
+     * Parser constructor.
      *
      * @param string $content
      */
@@ -68,6 +72,8 @@ class Parser
     }
 
     /**
+     * Check if the response is an error.
+     *
      * @return bool
      */
     public function isError(): bool
@@ -104,6 +110,8 @@ class Parser
     }
 
     /**
+     * Determine whether the current request is a batch request.
+     *
      * @return bool
      */
     public function isBatch(): bool
@@ -112,7 +120,7 @@ class Parser
     }
 
     /**
-     * Does the request contain at least one notification message
+     * Determine whether the current request is a notification request.
      *
      * @return bool
      */
@@ -151,6 +159,8 @@ class Parser
     }
 
     /**
+     * Defines the rules for validating a JSON-RPC 2.0 request.
+     *
      * @return array
      */
     public static function rules(): array
