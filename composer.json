@@ -17,16 +17,16 @@
     "require": {
         "ext-json": "*",
         "doctrine/annotations": "^2.0",
-        "laravel/framework": "^9.2",
-        "phpdocumentor/reflection-docblock": "^5.2"
+        "laravel/framework": "^10.0",
+        "phpdocumentor/reflection-docblock": "^5.3"
     },
     "require-dev": {
-        "laravel/pint": "^1.2",
-        "orchestra/testbench": "^7.0",
+        "laravel/pint": "^1.4",
+        "orchestra/testbench": "^8.0",
         "phpunit/php-code-coverage": "^9.2",
-        "phpunit/phpunit": "^9.4",
+        "phpunit/phpunit": "^9.5.10",
         "symfony/var-dumper": "^6.0",
-        "vimeo/psalm": "^5.1"
+        "vimeo/psalm": "^5.6"
     },
     "conflict": {
         "league/flysystem": "<3.0.16",
