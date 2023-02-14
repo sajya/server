@@ -13,6 +13,8 @@ class FixtureDocsProcedure extends Procedure
     /**
      * The name of the procedure that will be
      * displayed and taken into account in the search.
+     *
+     * @var string
      */
     public static string $name = 'docs';
 
@@ -24,6 +26,8 @@ class FixtureDocsProcedure extends Procedure
      *
      * @Result(name="key", value="string")
      * @Result(name="array.", value="max:4")
+     *
+     * @return string
      */
     public function ping(): string
     {

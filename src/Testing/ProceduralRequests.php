@@ -10,10 +10,14 @@ trait ProceduralRequests
 {
     /**
      * URL to which procedure requests will be sent
+     *
+     * @var string|null
      */
     protected ?string $rpcEndpoint;
 
     /**
+     * @param string $name
+     *
      * @return $this
      */
     public function setRpcRoute(string $name)
@@ -24,6 +28,8 @@ trait ProceduralRequests
     }
 
     /**
+     * @param string $url
+     *
      * @return $this
      */
     public function setRpcUrl(string $url)
@@ -36,7 +42,11 @@ trait ProceduralRequests
     /**
      * Call the given method procedure and return the Response.
      *
+     * @param string          $method
+     * @param array           $content
      * @param string|int|null $id
+     *
+     * @return \Illuminate\Testing\TestResponse
      */
     public function callProcedure(string $method, array $content = [], $id = 1): TestResponse
     {
@@ -47,7 +57,11 @@ trait ProceduralRequests
     }
 
     /**
+     * @param string          $method
+     * @param array           $content
      * @param string|int|null $id
+     *
+     * @return \Illuminate\Testing\TestResponse
      */
     public function callHttpProcedure(string $method, array $content = [], $id = 1): TestResponse
     {

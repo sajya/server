@@ -37,6 +37,8 @@ class MethodNotFound extends RpcException
 
     /**
      * Report the exception.
+     *
+     * @return bool|null
      */
     public function report(): ?bool
     {

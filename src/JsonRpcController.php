@@ -9,12 +9,19 @@ use Illuminate\Http\Request;
 
 class JsonRpcController
 {
+    /**
+     * @var App|null
+     */
     protected ?App $guide;
 
     /**
      * Invoke the controller method.
      *
-     * @param string[] $procedures
+     * @param Request     $request
+     * @param string[]    $procedures
+     * @param null|string $delimiter
+     *
+     * @return JsonResponse
      */
     public function __invoke(Request $request, array $procedures, string $delimiter = null): JsonResponse
     {

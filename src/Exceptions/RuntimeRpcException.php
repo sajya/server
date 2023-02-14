@@ -8,11 +8,17 @@ namespace Sajya\Server\Exceptions;
 
 class RuntimeRpcException extends RpcException
 {
+    /**
+     * @return string
+     */
     protected function getDefaultMessage(): string
     {
         return 'Unknown';
     }
 
+    /**
+     * @return int
+     */
     protected function getDefaultCode(): int
     {
         return -1;
@@ -20,6 +26,8 @@ class RuntimeRpcException extends RpcException
 
     /**
      * Report the exception.
+     *
+     * @return bool|null
      */
     public function report(): ?bool
     {
