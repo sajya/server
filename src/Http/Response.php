@@ -32,18 +32,13 @@ class Response implements JsonSerializable
 
     /**
      * JSON-RPC version.
-     *
-     * @var null|string
      */
     protected ?string $version;
 
     /**
      * Make Response instance based on result and request.
      *
-     * @param mixed        $result
-     * @param Request|null $request
-     *
-     * @return self
+     * @param mixed $result
      */
     public static function makeFromResult($result, Request $request = null): self
     {
@@ -57,9 +52,6 @@ class Response implements JsonSerializable
         );
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         $response = ['id' => $this->getId()];
@@ -91,8 +83,6 @@ class Response implements JsonSerializable
      * Set request ID.
      *
      * @param string|int|null $name
-     *
-     * @return self
      */
     public function setId($name): self
     {
@@ -103,8 +93,6 @@ class Response implements JsonSerializable
 
     /**
      * Is the response an error?
-     *
-     * @return bool
      */
     public function isError(): bool
     {
@@ -113,8 +101,6 @@ class Response implements JsonSerializable
 
     /**
      * Get response error.
-     *
-     * @return null|Exception
      */
     public function getError(): ?Exception
     {
@@ -135,8 +121,6 @@ class Response implements JsonSerializable
      * Set result.
      *
      * @param mixed $value
-     *
-     * @return self
      */
     public function setResult($value): self
     {
@@ -153,8 +137,6 @@ class Response implements JsonSerializable
 
     /**
      * Retrieve JSON-RPC version.
-     *
-     * @return null|string
      */
     public function getVersion(): ?string
     {
@@ -163,10 +145,6 @@ class Response implements JsonSerializable
 
     /**
      * Set JSON-RPC version.
-     *
-     * @param string $version
-     *
-     * @return self
      */
     public function setVersion(string $version): self
     {
@@ -179,10 +157,6 @@ class Response implements JsonSerializable
      * Set result error.
      *
      * RPC error, if response results in fault.
-     *
-     * @param Exception|null $error
-     *
-     * @return Response
      */
     public function setError(Exception $error = null): Response
     {
@@ -191,9 +165,6 @@ class Response implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isNotification(): bool
     {
         return empty($this->getId()) && $this->getError() === null;

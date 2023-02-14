@@ -11,8 +11,6 @@ abstract class Procedure
      * displayed and taken into account in the search.
      *
      * Must be unique.
-     *
-     * @var string
      */
     public static string $name;
 }

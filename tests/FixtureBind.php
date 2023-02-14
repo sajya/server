@@ -8,14 +8,8 @@ use Illuminate\Contracts\Routing\UrlRoutable;
 
 class FixtureBind implements UrlRoutable, \Stringable
 {
-    /**
-     * @var string
-     */
     protected string $resolveBind;
 
-    /**
-     * @param string $resolveBind
-     */
     public function __construct(string $resolveBind = '')
     {
         $this->resolveBind = $resolveBind;
@@ -41,9 +35,6 @@ class FixtureBind implements UrlRoutable, \Stringable
         // TODO: Implement resolveChildRouteBinding() method.
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->resolveBind;

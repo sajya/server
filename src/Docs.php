@@ -30,8 +30,6 @@ class Docs
 
     /**
      * Docs constructor.
-     *
-     * @param Route $route
      */
     public function __construct(Route $route)
     {
@@ -39,9 +37,6 @@ class Docs
         $this->delimiter = $route->defaults['delimiter'] ?? '@';
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function getAnnotations(): Collection
     {
         return collect($this->procedures)
@@ -82,12 +77,6 @@ class Docs
             ->flatten(1);
     }
 
-    /**
-     * @param ReflectionMethod $method
-     * @param string           $class
-     *
-     * @return array
-     */
     private function getMethodAnnotations(ReflectionMethod $method, string $class): array
     {
         $repository = new Repository();
@@ -109,12 +98,6 @@ class Docs
         return $repository->all();
     }
 
-    /**
-     * @param ReflectionMethod $method
-     * @param string           $class
-     *
-     * @return Collection
-     */
     private function getAnnotationsFrom(ReflectionMethod $method, string $class): Collection
     {
         $annotations = (new AnnotationReader())->getMethodAnnotations($method);
@@ -123,11 +106,7 @@ class Docs
     }
 
     /**
-     * @param array $value
-     *
      * @throws \JsonException
-     *
-     * @return \Illuminate\Support\Stringable
      */
     private function highlight(array $value): Stringable
     {
@@ -156,11 +135,6 @@ class Docs
         return $docs;
     }
 
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
     private function arrayKeysMulti(array $array): array
     {
         $keys = [];

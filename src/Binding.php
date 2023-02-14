@@ -31,8 +31,6 @@ class Binding
 
     /**
      * Application constructor.
-     *
-     * @param Container $container
      */
     public function __construct(Container $container)
     {
@@ -41,12 +39,6 @@ class Binding
 
     /**
      * Register a model binder for a wildcard.
-     *
-     * @param string        $key
-     * @param string        $class
-     * @param \Closure|null $callback
-     *
-     * @return void
      */
     public function model(string $key, string $class, Closure $callback = null): void
     {
@@ -56,10 +48,7 @@ class Binding
     /**
      * Add a new route parameter binder.
      *
-     * @param string         $key
      * @param Closure|string $binder
-     *
-     * @return void
      */
     public function bind(string $key, $binder): void
     {
@@ -71,12 +60,8 @@ class Binding
     /**
      * Binds the values of the given parameters to their corresponding type.
      *
-     * @param string                         $procedure
-     * @param \Illuminate\Support\Collection $params
      *
      * @throws \ReflectionException
-     *
-     * @return array
      */
     public function bindResolve(string $procedure, Collection $params): array
     {

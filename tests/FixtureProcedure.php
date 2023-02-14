@@ -18,20 +18,13 @@ class FixtureProcedure extends Procedure
     /**
      * The name of the procedure that will be
      * displayed and taken into account in the search.
-     *
-     * @var string
      */
     public static string $name = 'fixture';
 
-    /**
-     * @var Repository
-     */
     private Repository $config;
 
     /**
      * DependencyInjectionProcedure constructor.
-     *
-     * @param Repository $repository
      */
     public function __construct(Repository $repository)
     {
@@ -43,16 +36,11 @@ class FixtureProcedure extends Procedure
         abort(404, 'Abort helper');
     }
 
-    /**
-     * @return void
-     */
     public function alwaysResult(): void
     {
     }
 
     /**
-     * @param Request $request
-     *
      * @return mixed
      */
     public function dependencyInjection(Request $request)
@@ -60,31 +48,16 @@ class FixtureProcedure extends Procedure
         return $this->config->get($request->get('0'));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return int
-     */
     public function subtract(Request $request): int
     {
         return (int) $request->get('0') - (int) $request->get('1');
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return float|int
-     */
     public function division(Request $request): float|int
     {
         return $request->get('a') / $request->get('b');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return int
-     */
     public function validationMethod(Request $request): int
     {
         $request->validate([
@@ -104,17 +77,11 @@ class FixtureProcedure extends Procedure
         abort(500);
     }
 
-    /**
-     * @return string
-     */
     protected function closeMethod(): string
     {
         return 'Dont Ok';
     }
 
-    /**
-     * @return string
-     */
     public function ok(): string
     {
         return 'Ok';
@@ -141,8 +108,6 @@ class FixtureProcedure extends Procedure
 
     /**
      * @throws \Sajya\Server\Tests\Fixture\ReportException
-     *
-     * @return mixed
      */
     public function reportException(): mixed
     {
@@ -151,8 +116,6 @@ class FixtureProcedure extends Procedure
 
     /**
      * @throws \Sajya\Server\Tests\Fixture\RenderResponseException
-     *
-     * @return mixed
      */
     public function renderException(): mixed
     {
@@ -160,8 +123,6 @@ class FixtureProcedure extends Procedure
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return int
      */
     public function payload(Request $request)

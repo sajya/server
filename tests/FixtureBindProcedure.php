@@ -12,28 +12,17 @@ class FixtureBindProcedure extends Procedure
     /**
      * The name of the procedure that will be
      * displayed and taken into account in the search.
-     *
-     * @var string
      */
     public static string $name = 'binding';
 
     /**
-     * @param Request $request
-     * @param string  $nameForBindValue
-     *
-     * @return string
+     * @param string $nameForBindValue
      */
     public function deepValue(Request $request, string $nameDeepValue): string
     {
         return $request->getMethod().' '.$nameDeepValue;
     }
 
-    /**
-     * @param int $a
-     * @param int $b
-     *
-     * @return int
-     */
     public function subtract(int $a, int $b): int
     {
         return $a - $b;
@@ -41,8 +30,6 @@ class FixtureBindProcedure extends Procedure
 
     /**
      * @param string $bind
-     *
-     * @return string
      */
     public function getModel(FixtureBind $fixtureModel): string
     {

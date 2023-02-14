@@ -13,9 +13,6 @@ class GzipCompress
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
-     * @param int     $compress
      *
      * @return mixed
      */
@@ -32,7 +29,6 @@ class GzipCompress
      * Compresses the content of the given response using gzip compression.
      *
      * @param JsonResponse $response
-     * @param int          $compress
      *
      * @return \Illuminate\Http\JsonResponse
      */
