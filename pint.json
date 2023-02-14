@@ -44,6 +44,10 @@
         "method_argument_space": {
             "on_multiline": "ignore"
         },
+        "no_superfluous_phpdoc_tags": {
+            "allow_mixed": false,
+            "allow_unused_params": false
+        },
         "trim_array_spaces": true,
         "single_trait_insert_per_statement": false
     }
