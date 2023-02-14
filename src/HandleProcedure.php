@@ -25,8 +25,6 @@ class HandleProcedure implements ShouldQueue
 
     /**
      * Name of the procedure.
-     *
-     * @var string
      */
     protected string $procedure;
 
@@ -39,9 +37,6 @@ class HandleProcedure implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @param string  $procedure
-     * @param Request $request
      */
     public function __construct(string $procedure, Request $request)
     {
@@ -68,7 +63,6 @@ class HandleProcedure implements ShouldQueue
     /**
      * Handle the exception into JSON-RPC.
      *
-     * @param Throwable $exception
      *
      * @return string|RpcException|\Illuminate\Http\Response
      */

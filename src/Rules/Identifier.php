@@ -13,8 +13,6 @@ class Identifier implements Rule
      *
      * @param string $attribute
      * @param mixed  $value
-     *
-     * @return bool
      */
     public function passes($attribute, $value): bool
     {
@@ -23,8 +21,6 @@ class Identifier implements Rule
 
     /**
      * Get the validation error message.
-     *
-     * @return string
      */
     public function message(): string
     {
