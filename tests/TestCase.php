@@ -23,6 +23,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Some tests use log files for verification.
      * To prevent past results from affecting, clear all logs
+     *
+     * @return void
      */
     protected function setUp(): void
     {
@@ -56,6 +58,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['router']->rpc('docs', [FixtureDocsProcedure::class])->name('rpc.docs');
     }
 
+    /**
+     * @return App
+     */
     public function getGuide(): App
     {
         return new App($this->mapProcedures);

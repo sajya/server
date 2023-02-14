@@ -10,6 +10,10 @@ interface Proxy
 {
     /**
      * The method used by request handlers.
+     *
+     * @param \Sajya\Server\Http\Request $request
+     *
+     * @return mixed
      */
     public function __invoke(Request $request): mixed;
 }

@@ -31,6 +31,8 @@ class DocsCommand extends Command
      * Execute the console command.
      *
      * @throws \Throwable
+     *
+     * @return int
      */
     public function handle(): int
     {

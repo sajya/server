@@ -9,6 +9,9 @@ namespace Sajya\Server\Annotations;
  */
 final class Result
 {
+    /**
+     * @var string
+     */
     public string $name;
 
     /**

@@ -23,11 +23,15 @@ class App
 
     /**
      * Stores all available RPC commands.
+     *
+     * @var Collection
      */
     protected Collection $map;
 
     /**
      * Stores delimiter
+     *
+     * @var string
      */
     protected string $delimiter;
 
@@ -51,6 +55,7 @@ class App
     /**
      * Terminate the application and return the JSON-RPC response.
      *
+     * @param string $content
      *
      * @return Response[]|Response|null
      */
@@ -62,6 +67,7 @@ class App
     /**
      * Handles a JSON-RPC request or batch of requests.
      *
+     * @param string $content
      *
      * @return Response[]|Response|null
      */
@@ -85,6 +91,11 @@ class App
 
     /**
      * Search for a procedure and execute it.
+     *
+     * @param Request $request
+     * @param bool    $notification
+     *
+     * @return Response
      */
     public function handleProcedure(Request $request, bool $notification): Response
     {
@@ -106,6 +117,10 @@ class App
 
     /**
      * Find procedure by request.
+     *
+     * @param Request $request
+     *
+     * @return null|string
      */
     public function findProcedure(Request $request): ?string
     {
@@ -122,6 +137,10 @@ class App
 
     /**
      * Get the name of the procedure for the given class.
+     *
+     * @param string $procedure
+     *
+     * @return string
      */
     private function getProcedureName(string $procedure): string
     {
@@ -130,6 +149,11 @@ class App
 
     /**
      * Check if the given procedure has a public method with the given name.
+     *
+     * @param string $procedure
+     * @param string $method
+     *
+     * @return bool
      */
     private function checkExistPublicMethod(string $procedure, string $method): bool
     {
@@ -138,6 +162,10 @@ class App
 
     /**
      * Fallback to the first procedure that implements the Proxy interface.
+     *
+     * @param string $class
+     *
+     * @return null|string
      */
     public function findProxy(string $class): ?string
     {
@@ -151,7 +179,10 @@ class App
     /**
      * Create a Response object from the given result and Request object.
      *
-     * @param mixed|null $result
+     * @param mixed|null   $result
+     * @param Request|null $request
+     *
+     * @return Response
      */
     public function makeResponse($result = null, Request $request = null): Response
     {
