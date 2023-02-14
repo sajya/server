@@ -17,22 +17,16 @@ class Request implements JsonSerializable
 
     /**
      * Requested method.
-     *
-     * @var string|null
      */
     protected ?string $method;
 
     /**
      * Request parameters.
-     *
-     * @var Collection
      */
     protected Collection $params;
 
     /**
      * JSON-RPC version of request.
-     *
-     * @var string
      */
     protected string $version = '2.0';
 
@@ -46,10 +40,6 @@ class Request implements JsonSerializable
 
     /**
      * Set request state based on array.
-     *
-     * @param array $collection
-     *
-     * @return Request
      */
     public static function loadArray(array $collection): Request
     {
@@ -72,9 +62,6 @@ class Request implements JsonSerializable
         return $request;
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         $jsonArray = [
@@ -95,8 +82,6 @@ class Request implements JsonSerializable
 
     /**
      * Retrieve JSON-RPC version.
-     *
-     * @return string
      */
     public function getVersion(): string
     {
@@ -105,10 +90,6 @@ class Request implements JsonSerializable
 
     /**
      * Set JSON-RPC version.
-     *
-     * @param string $version
-     *
-     * @return Request
      */
     public function setVersion(string $version = '2.0'): Request
     {
@@ -119,8 +100,6 @@ class Request implements JsonSerializable
 
     /**
      * Get request method name.
-     *
-     * @return string|null
      */
     public function getMethod(): ?string
     {
@@ -129,10 +108,6 @@ class Request implements JsonSerializable
 
     /**
      * Set request method.
-     *
-     * @param string $name
-     *
-     * @return Request
      */
     public function setMethod(string $name): Request
     {
@@ -143,8 +118,6 @@ class Request implements JsonSerializable
 
     /**
      * Retrieve parameters.
-     *
-     * @return Collection
      */
     public function getParams(): Collection
     {
@@ -153,10 +126,6 @@ class Request implements JsonSerializable
 
     /**
      * Overwrite params.
-     *
-     * @param array $params
-     *
-     * @return Request
      */
     public function setParams(array $params): self
     {
@@ -179,8 +148,6 @@ class Request implements JsonSerializable
      * Set request identifier.
      *
      * @param int|string $name
-     *
-     * @return Request
      */
     public function setId($name): Request
     {
@@ -189,9 +156,6 @@ class Request implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isNotification(): bool
     {
         return empty($this->getId());

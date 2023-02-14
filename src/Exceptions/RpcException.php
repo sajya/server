@@ -17,10 +17,6 @@ abstract class RpcException extends RuntimeException implements JsonSerializable
 
     /**
      * RpcException constructor.
-     *
-     * @param string|null           $message
-     * @param int|null              $code
-     * @param RuntimeException|null $previous
      */
     public function __construct(string $message = null, int $code = null, RuntimeException $previous = null)
     {
@@ -34,16 +30,12 @@ abstract class RpcException extends RuntimeException implements JsonSerializable
     /**
      * A String providing a short description of the error.
      * The message SHOULD be limited to a concise single sentence.
-     *
-     * @return string
      */
     abstract protected function getDefaultMessage(): string;
 
     /**
      * A Number that indicates the error type that occurred.
      * This MUST be an integer.
-     *
-     * @return int
      */
     abstract protected function getDefaultCode(): int;
 

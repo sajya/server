@@ -14,9 +14,6 @@ use Sajya\Server\Tests\TestCase;
 
 class ExpectedTest extends TestCase
 {
-    /**
-     * @return Generator
-     */
     public function exampleCalls(): Generator
     {
         yield ['testAbort', function () {
@@ -111,11 +108,6 @@ class ExpectedTest extends TestCase
     }
 
     /**
-     * @param string       $file
-     * @param Closure|null $before
-     * @param Closure|null $after
-     * @param string       $route
-     *
      * @throws \JsonException
      *
      * @dataProvider exampleCalls
@@ -138,12 +130,7 @@ class ExpectedTest extends TestCase
     }
 
     /**
-     * @param string $path
-     * @param string $route
-     *
      * @throws \JsonException
-     *
-     * @return TestResponse
      */
     private function callRPC(string $path, string $route): TestResponse
     {
