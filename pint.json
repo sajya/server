@@ -45,8 +45,8 @@
             "on_multiline": "ignore"
         },
         "no_superfluous_phpdoc_tags": {
-            "allow_mixed": false,
-            "allow_unused_params": false
+            "allow_mixed": true,
+            "allow_unused_params": true
         },
         "trim_array_spaces": true,
         "single_trait_insert_per_statement": false
