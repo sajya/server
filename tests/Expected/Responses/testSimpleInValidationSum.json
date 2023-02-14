@@ -5,10 +5,10 @@
         "message": "Invalid params",
         "data": {
             "a": [
-                "The a must be an integer."
+                "The a field must be an integer."
             ],
             "b": [
-                "The b must be an integer."
+                "The b field must be an integer."
             ]
         }
     },

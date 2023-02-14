@@ -5,10 +5,10 @@
         "message": "Invalid params",
         "data": {
             "method": [
-                "The method must be a string."
+                "The method field must be a string."
             ],
             "params": [
-                "The params must be an array."
+                "The params field must be an array."
             ]
         }
     },
