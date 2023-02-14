@@ -12,8 +12,6 @@ abstract class RpcException extends RuntimeException implements JsonSerializable
     /**
      * The value of this member is defined by the Server
      * (e.g. detailed error information, nested errors etc.).
-     *
-     * @var mixed
      */
     protected $data;
 
@@ -44,8 +42,6 @@ abstract class RpcException extends RuntimeException implements JsonSerializable
     /**
      * A Primitive or Structured value that contains additional information about the error.
      * This may be omitted.
-     *
-     * @return mixed
      */
     public function getData()
     {

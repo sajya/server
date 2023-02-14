@@ -12,8 +12,6 @@ class Request implements JsonSerializable
 {
     /**
      * Request ID.
-     *
-     * @var mixed
      */
     protected $id;
 

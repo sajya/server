@@ -25,8 +25,6 @@ class Response implements JsonSerializable
 
     /**
      * Result.
-     *
-     * @var mixed
      */
     protected $result;
 
@@ -37,8 +35,6 @@ class Response implements JsonSerializable
 
     /**
      * Make Response instance based on result and request.
-     *
-     * @param mixed $result
      */
     public static function makeFromResult($result, Request $request = null): self
     {
@@ -109,8 +105,6 @@ class Response implements JsonSerializable
 
     /**
      * Get result.
-     *
-     * @return mixed
      */
     public function getResult()
     {
@@ -119,8 +113,6 @@ class Response implements JsonSerializable
 
     /**
      * Set result.
-     *
-     * @param mixed $value
      */
     public function setResult($value): self
     {

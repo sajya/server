@@ -46,8 +46,6 @@ class HandleProcedure implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return mixed
      */
     public function handle()
     {

@@ -12,9 +12,6 @@ class GzipCompress
 {
     /**
      * Handle an incoming request.
-     *
-     *
-     * @return mixed
      */
     public function handle(Request $request, Closure $next, int $compress = 6)
     {

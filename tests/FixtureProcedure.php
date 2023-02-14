@@ -40,9 +40,6 @@ class FixtureProcedure extends Procedure
     {
     }
 
-    /**
-     * @return mixed
-     */
     public function dependencyInjection(Request $request)
     {
         return $this->config->get($request->get('0'));
@@ -87,17 +84,11 @@ class FixtureProcedure extends Procedure
         return 'Ok';
     }
 
-    /**
-     * @return mixed
-     */
     public function runtimeError()
     {
         throw new RuntimeRpcException();
     }
 
-    /**
-     * @return mixed
-     */
     public function invalidRequestException()
     {
         throw new InvalidRequestException([
