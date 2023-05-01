@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://sajya.github.io/assets/img/laravel-sajya.svg" height="64px;" alt="Laravel JSON RPC">
+    <img src="https://sajya.github.io/img/laravel-sajya.svg" height="64px;" alt="Laravel JSON RPC">
 </p>
 
 
