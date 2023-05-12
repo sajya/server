@@ -47,4 +47,8 @@ Sajya is developed and maintained by [Alexandr Chernyaev](https://github.com/tab
 
 ## License
 
-Sajya is released under the MIT License. Please see the [License File](LICENSE.md) for more information. The MIT License is a permissive license that allows you to use and modify Sajya for any purpose, as long as you include the original copyright and license notice in your copies.
+Sajya is released under the MIT License. Please see the [License File](LICENSE.md) for more information. 
+
+<!--
+The MIT License is a permissive license that allows you to use and modify Sajya for any purpose, as long as you include the original copyright and license notice in your copies.
+-->
