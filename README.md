@@ -35,7 +35,11 @@ To learn about the latest updates and changes to Sajya, please see the [CHANGELO
 
 ## Contributing
 
+We welcome contributions to Sajya. Contributions can include bug fixes, new features, and improvements to the documentation.
+
+<!--
 We welcome contributions to Sajya. If you are interested in contributing, please see [CONTRIBUTING](CONTRIBUTING.md) for details on how to get started. Contributions can include bug fixes, new features, and improvements to the documentation.
+-->
 
 ## Maintainers
 
