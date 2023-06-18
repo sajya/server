@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace {
-    {
+namespace {{ namespace }};
 
-        namespace }}
-
+use Sajya\Server\Procedure;
 use Illuminate\Http\Request;
 
 class {{ class }} extends Procedure
