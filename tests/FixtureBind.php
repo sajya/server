@@ -6,7 +6,7 @@ namespace Sajya\Server\Tests;
 
 use Illuminate\Contracts\Routing\UrlRoutable;
 
-class FixtureBind implements UrlRoutable, \Stringable
+class FixtureBind implements \Stringable, UrlRoutable
 {
     /**
      * @var string
