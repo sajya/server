@@ -122,8 +122,8 @@ class ExpectedTest extends TestCase
      */
     public function testHasCorrectRequestResponse(
         string $file,
-        Closure $before = null,
-        Closure $after = null,
+        ?Closure $before = null,
+        ?Closure $after = null,
         string $route = 'rpc.point'
     ): void {
         if ($before !== null) {

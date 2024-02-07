@@ -184,7 +184,7 @@ class App
      *
      * @return Response
      */
-    public function makeResponse($result = null, Request $request = null): Response
+    public function makeResponse($result = null, ?Request $request = null): Response
     {
         return Response::makeFromResult($result, $request);
     }

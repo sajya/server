@@ -48,7 +48,7 @@ class Binding
      *
      * @return void
      */
-    public function model(string $key, string $class, Closure $callback = null): void
+    public function model(string $key, string $class, ?Closure $callback = null): void
     {
         $this->bind($key, RouteBinding::forModel($this->container, $class, $callback));
     }

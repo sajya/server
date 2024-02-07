@@ -23,7 +23,7 @@ class JsonRpcController
      *
      * @return JsonResponse
      */
-    public function __invoke(Request $request, array $procedures, string $delimiter = null): JsonResponse
+    public function __invoke(Request $request, array $procedures, ?string $delimiter = null): JsonResponse
     {
         $guide = new App($procedures, $delimiter);
 
