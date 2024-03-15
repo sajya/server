@@ -9,3 +9,7 @@
 /.scrutinizer.yml   export-ignore
 /tests              export-ignore
 /.editorconfig      export-ignore
+/CHANGELOG.md       export-ignore
+/pint.json          export-ignore
+/psalm.xml          export-ignore
+/.github            export-ignore
