@@ -12,8 +12,8 @@ use Sajya\Server\Binding;
 /**
  * Class RPC
  *
- * @method static void bind(string $key, string|callable $binder)
- * @method static void model(string $key, string $class, Closure|null $callback = null)
+ * @method static void  bind(string $key, string|callable $binder)
+ * @method static void  model(string $key, string $class, Closure|null $callback = null)
  * @method static array bindResolve(string $procedure, Collection $params)
  *
  * @see \Sajya\Server\Binding
