@@ -89,4 +89,14 @@ abstract class RpcException extends RuntimeException implements JsonSerializable
 
         return $message;
     }
+
+    /**
+     * Report the exception.
+     *
+     * @return bool|null
+     */
+    public function report(): ?bool
+    {
+        return true;
+    }
 }

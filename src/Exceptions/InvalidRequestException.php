@@ -34,14 +34,4 @@ class InvalidRequestException extends RpcException
     {
         return 'Invalid Request';
     }
-
-    /**
-     * Report the exception.
-     *
-     * @return bool|null
-     */
-    public function report(): ?bool
-    {
-        return true;
-    }
 }

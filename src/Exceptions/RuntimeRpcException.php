@@ -23,14 +23,4 @@ class RuntimeRpcException extends RpcException
     {
         return -1;
     }
-
-    /**
-     * Report the exception.
-     *
-     * @return bool|null
-     */
-    public function report(): ?bool
-    {
-        return true;
-    }
 }
