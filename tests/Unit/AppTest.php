@@ -110,7 +110,7 @@ class AppTest extends TestCase
             FixtureProcedure::class,
         ]);
 
-        $content = collect(range(1, 51))->map(function (){
+        $content = collect(range(1, 51))->map(function () {
             return '{"jsonrpc": "2.0", "method": "fixture@ok"}';
         })->implode(',');
 

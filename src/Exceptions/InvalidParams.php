@@ -34,5 +34,4 @@ class InvalidParams extends RpcException
     {
         return 'Invalid params';
     }
-
 }

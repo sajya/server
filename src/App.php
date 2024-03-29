@@ -207,5 +207,4 @@ class App
 
         return $currentRequests > $maxBatchSize;
     }
-
 }

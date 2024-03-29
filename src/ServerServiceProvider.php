@@ -30,7 +30,6 @@ class ServerServiceProvider extends ServiceProvider
             __DIR__.'/../config/sajya.php' => config_path('sajya.php'),
         ]);
 
-
         $this->registerViews();
     }
 
