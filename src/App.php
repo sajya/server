@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
+use Sajya\Server\Exceptions\MaxBatchSizeExceededException;
 use Sajya\Server\Exceptions\MethodNotFound;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
@@ -41,7 +42,7 @@ class App
      * @param string[]    $procedures An array of procedures to register with the App.
      * @param null|string $delimiter  The delimiter to use for separating procedure names from method names.
      */
-    public function __construct(array $procedures = [], ?string $delimiter = self::DEFAULT_DELIMITER)
+    public function __construct(array $procedures = [], ?string $delimiter = null)
     {
         $this->map = collect($procedures)
             ->each(fn (string $class) => abort_unless(
@@ -49,7 +50,7 @@ class App
                 500,
                 "Class '$class' must extends ".Procedure::class
             ));
-        $this->delimiter = $delimiter ?? self::DEFAULT_DELIMITER;
+        $this->delimiter = $delimiter ?? config('sajya.delimiter', self::DEFAULT_DELIMITER);
     }
 
     /**
@@ -74,6 +75,10 @@ class App
     public function handle(string $content = '')
     {
         $parser = new Parser($content);
+
+        if ($this->checkBatchSizeWithinLimit($parser->countBatchingRequests())) {
+            return $this->makeResponse(new MaxBatchSizeExceededException());
+        }
 
         $result = collect($parser->makeRequests())
             ->map(
@@ -188,4 +193,19 @@ class App
     {
         return Response::makeFromResult($result, $request);
     }
+
+    /**
+     * Checks if the number of requests in the batch exceeds the maximum allowed size.
+     *
+     * @param int $currentRequests
+     *
+     * @return bool
+     */
+    public function checkBatchSizeWithinLimit(int $currentRequests): bool
+    {
+        $maxBatchSize = config('sajya.max_batch_size', 50);
+
+        return $currentRequests > $maxBatchSize;
+    }
+
 }

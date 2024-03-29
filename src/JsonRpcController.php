@@ -25,10 +25,10 @@ class JsonRpcController
      */
     public function __invoke(Request $request, array $procedures, ?string $delimiter = null): JsonResponse
     {
-        $guide = new App($procedures, $delimiter);
+        $application = new App($procedures, $delimiter);
 
-        $response = $guide->handle($request->getContent());
+        $response = $application->handle($request->getContent());
 
-        return response()->json($response);
+        return response()->json($response, 200, [], config('sajya.encode_options', 0));
     }
 }

@@ -103,4 +103,20 @@ class AppTest extends TestCase
 
         Bus::assertDispatchedAfterResponse(HandleProcedure::class);
     }
+
+    public function testEnsureBatchSizeWithinLimit(): void
+    {
+        $guide = new App([
+            FixtureProcedure::class,
+        ]);
+
+        $content = collect(range(1, 51))->map(function (){
+            return '{"jsonrpc": "2.0", "method": "fixture@ok"}';
+        })->implode(',');
+
+        /** @var \Sajya\Server\Http\Response $response */
+        $response = $guide->handle('['.$content.']');
+
+        $this->assertEquals('Maximum batch size exceeded.', $response->getError()->getMessage());
+    }
 }

@@ -26,6 +26,11 @@ class ServerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->publishes([
+            __DIR__.'/../config/sajya.php' => config_path('sajya.php'),
+        ]);
+
+
         $this->registerViews();
     }
 
@@ -35,7 +40,10 @@ class ServerServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->commands($this->commands);
-        $this->registerViews();
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/sajya.php', 'sajya'
+        );
 
         Route::macro('rpc', fn (string $uri, array $procedures = [], ?string $delimiter = null) => Route::post($uri, [JsonRpcController::class, '__invoke'])
             ->setDefaults([

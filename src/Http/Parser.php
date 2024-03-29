@@ -130,6 +130,16 @@ class Parser
     }
 
     /**
+     * Count the number of requests in a batch request.
+     *
+     * @return int
+     */
+    public function countBatchingRequests(): int
+    {
+        return $this->getContent()->count();
+    }
+
+    /**
      * @param bool|string|array|int $options
      *
      * @return InvalidParams|ParseErrorException|InvalidRequestException|array
