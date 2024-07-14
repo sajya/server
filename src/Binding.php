@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionParameter;
+use Illuminate\Support\Facades\Route;
 
 class Binding
 {
@@ -91,7 +92,19 @@ class Binding
 
                 return [$key => $value ?? $valueDot];
             })
-            ->map(fn ($value, string $key) => with($value, $this->binders[$key] ?? null))
+            ->map(function ($value, string $key) {
+
+                $closure = $this->binders[$key] ?? null;
+
+                if (is_callable($closure)) {
+                    return app()->call($closure, [
+                        'value' => $value,
+                        'route' => Route::current()
+                    ]);
+                }
+
+                return $value;
+            })
             ->filter()
             ->toArray();
     }
