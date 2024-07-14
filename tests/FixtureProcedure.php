@@ -36,9 +36,7 @@ class FixtureProcedure extends Procedure
         abort(404, 'Abort helper');
     }
 
-    public function alwaysResult(): void
-    {
-    }
+    public function alwaysResult(): void {}
 
     public function dependencyInjection(Request $request)
     {

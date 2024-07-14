@@ -9,10 +9,10 @@ use Illuminate\Container\Container;
 use Illuminate\Routing\RouteBinding;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionParameter;
-use Illuminate\Support\Facades\Route;
 
 class Binding
 {
@@ -99,7 +99,7 @@ class Binding
                 if (is_callable($closure)) {
                     return app()->call($closure, [
                         'value' => $value,
-                        'route' => Route::current()
+                        'route' => Route::current(),
                     ]);
                 }
 

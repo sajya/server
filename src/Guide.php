@@ -7,6 +7,4 @@ namespace Sajya\Server;
  *             Will be removed in 7.0.0
  * @see        \Sajya\Server\App
  */
-class Guide extends App
-{
-}
+class Guide extends App {}
