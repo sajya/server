@@ -147,11 +147,11 @@ class Parser
     public function checkValidation($options = [])
     {
         if ($this->isError()) {
-            return new ParseErrorException();
+            return new ParseErrorException;
         }
 
         if (! is_array($options) || Arr::isList($options)) {
-            return new InvalidRequestException();
+            return new InvalidRequestException;
         }
 
         $data = $options;
@@ -179,7 +179,7 @@ class Parser
             'jsonrpc' => 'required|in:"2.0"',
             'method'  => 'required|string',
             'params'  => 'array',
-            'id'      => new Identifier(),
+            'id'      => new Identifier,
         ];
     }
 }

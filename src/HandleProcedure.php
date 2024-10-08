@@ -87,7 +87,7 @@ class HandleProcedure implements ShouldQueue
             : $exception->getCode();
 
         if ($code === 500) {
-            return new InternalErrorException();
+            return new InternalErrorException;
         }
 
         if (! is_int($code)) {

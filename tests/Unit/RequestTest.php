@@ -11,7 +11,7 @@ class RequestTest extends TestCase
 {
     public function testFillableRequest(): void
     {
-        $request = tap(new Request(), static function (Request $request) {
+        $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
             $request->setMethod('subtract');
             $request->setParams([42, 23]);
@@ -26,7 +26,7 @@ class RequestTest extends TestCase
 
     public function testRevertRequest(): void
     {
-        $request = tap(new Request(), static function (Request $request) {
+        $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
             $request->setMethod('subtract');
             $request->setParams([42, 23]);

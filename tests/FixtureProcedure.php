@@ -84,7 +84,7 @@ class FixtureProcedure extends Procedure
 
     public function runtimeError()
     {
-        throw new RuntimeRpcException();
+        throw new RuntimeRpcException;
     }
 
     public function invalidRequestException()
@@ -108,7 +108,7 @@ class FixtureProcedure extends Procedure
      */
     public function renderException(): mixed
     {
-        throw new RenderResponseException();
+        throw new RenderResponseException;
     }
 
     /**

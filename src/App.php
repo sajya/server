@@ -77,7 +77,7 @@ class App
         $parser = new Parser($content);
 
         if ($this->checkBatchSizeWithinLimit($parser->countBatchingRequests())) {
-            return $this->makeResponse(new MaxBatchSizeExceededException());
+            return $this->makeResponse(new MaxBatchSizeExceededException);
         }
 
         $result = collect($parser->makeRequests())
@@ -110,7 +110,7 @@ class App
         $procedure = $this->findProcedure($request);
 
         if ($procedure === null) {
-            return $this->makeResponse(new MethodNotFound(), $request);
+            return $this->makeResponse(new MethodNotFound, $request);
         }
 
         $result = $notification

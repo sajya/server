@@ -90,7 +90,7 @@ class Docs
      */
     private function getMethodAnnotations(ReflectionMethod $method, string $class): array
     {
-        $repository = new Repository();
+        $repository = new Repository;
 
         $values = $this
             ->getAnnotationsFrom($method, $class)
@@ -117,7 +117,7 @@ class Docs
      */
     private function getAnnotationsFrom(ReflectionMethod $method, string $class): Collection
     {
-        $annotations = (new AnnotationReader())->getMethodAnnotations($method);
+        $annotations = (new AnnotationReader)->getMethodAnnotations($method);
 
         return collect($annotations)->filter(fn ($annotation) => is_a($annotation, $class));
     }

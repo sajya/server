@@ -53,7 +53,7 @@ class Request implements JsonSerializable
      */
     public static function loadArray(array $collection): Request
     {
-        $request = new static();
+        $request = new static;
         $methods = get_class_methods($request);
 
         collect($collection)

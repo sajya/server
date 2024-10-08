@@ -38,10 +38,10 @@ class Response implements JsonSerializable
      */
     public static function makeFromResult($result, ?Request $request = null): self
     {
-        $request ??= new Request();
+        $request ??= new Request;
 
         return tap(
-            new self(),
+            new self,
             fn (Response $response) => $response->setId($request->getId())
                 ->setVersion($request->getVersion())
                 ->setResult($result)

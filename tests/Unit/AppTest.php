@@ -52,7 +52,7 @@ class AppTest extends TestCase
 
     public function testFindMethodProcedure(): void
     {
-        $request = tap(new Request(), static function (Request $request) {
+        $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
             $request->setMethod('fixture@subtract');
             $request->setParams([42, 23]);
@@ -64,7 +64,7 @@ class AppTest extends TestCase
 
     public function testNotFoundMethodProcedure(): void
     {
-        $request = tap(new Request(), static function (Request $request) {
+        $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
             $request->setMethod('notFoundMethod');
             $request->setParams([42, 23]);
