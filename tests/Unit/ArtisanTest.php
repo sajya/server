@@ -10,7 +10,7 @@ use Sajya\Server\Tests\TestCase;
 
 class ArtisanTest extends TestCase
 {
-    public function testArtisanMakeProcedure(): void
+    public function test_artisan_make_procedure(): void
     {
         $name = 'Test'.time();
 
@@ -21,7 +21,7 @@ class ArtisanTest extends TestCase
         $this->assertFileExists(app_path("Http/Procedures/$name.php"));
     }
 
-    public function testArtisanMakeDocs(): void
+    public function test_artisan_make_docs(): void
     {
         $this->artisan('sajya:docs', [
             'route' => 'rpc.docs',
@@ -30,7 +30,7 @@ class ArtisanTest extends TestCase
             ->assertExitCode(0);
     }
 
-    public function testArtisanMakeDocsForUnknownRoute(): void
+    public function test_artisan_make_docs_for_unknown_route(): void
     {
         $routeName = Str::random();
 
@@ -41,7 +41,7 @@ class ArtisanTest extends TestCase
             ->assertExitCode(1);
     }
 
-    public function testArtisanMakeDocsForCustomPathName(): void
+    public function test_artisan_make_docs_for_custom_path_name(): void
     {
         $this->artisan('sajya:docs', [
             'route'  => 'rpc.docs',

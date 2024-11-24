@@ -120,7 +120,7 @@ class ExpectedTest extends TestCase
      *
      * @dataProvider exampleCalls
      */
-    public function testHasCorrectRequestResponse(
+    public function test_has_correct_request_response(
         string $file,
         ?Closure $before = null,
         ?Closure $after = null,

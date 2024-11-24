@@ -10,7 +10,7 @@ use Sajya\Server\Tests\TestCase;
 
 class DocsTest extends TestCase
 {
-    public function testDocs(): void
+    public function test_docs(): void
     {
         $route = Route::getRoutes()->getByName('rpc.docs');
 

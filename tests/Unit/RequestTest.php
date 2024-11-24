@@ -9,7 +9,7 @@ use Sajya\Server\Tests\TestCase;
 
 class RequestTest extends TestCase
 {
-    public function testFillableRequest(): void
+    public function test_fillable_request(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
@@ -24,7 +24,7 @@ class RequestTest extends TestCase
         $this->assertEquals([42, 23], $request->getParams()->toArray());
     }
 
-    public function testRevertRequest(): void
+    public function test_revert_request(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);

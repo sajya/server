@@ -15,7 +15,7 @@ use Sajya\Server\Tests\TestCase;
 
 class AppTest extends TestCase
 {
-    public function testBaseUsage(): void
+    public function test_base_usage(): void
     {
         $guide = new App([
             FixtureProcedure::class,
@@ -27,7 +27,7 @@ class AppTest extends TestCase
         $this->assertEquals('Ok', $response->getResult());
     }
 
-    public function testTerminateUsage(): void
+    public function test_terminate_usage(): void
     {
         $guide = new App([
             FixtureProcedure::class,
@@ -40,7 +40,7 @@ class AppTest extends TestCase
         $this->assertNull($response);
     }
 
-    public function testExtendsProcedure(): void
+    public function test_extends_procedure(): void
     {
         $this->expectExceptionMessage("Class 'Sajya\Server\Tests\Unit\AppTest' must extends ".Procedure::class);
 
@@ -50,7 +50,7 @@ class AppTest extends TestCase
         ]);
     }
 
-    public function testFindMethodProcedure(): void
+    public function test_find_method_procedure(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
@@ -62,7 +62,7 @@ class AppTest extends TestCase
         $this->assertEquals(FixtureProcedure::class.'@subtract', $this->getGuide()->findProcedure($request));
     }
 
-    public function testNotFoundMethodProcedure(): void
+    public function test_not_found_method_procedure(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
@@ -74,7 +74,7 @@ class AppTest extends TestCase
         $this->assertNull($this->getGuide()->findProcedure($request));
     }
 
-    public function testNotJobDispatched(): void
+    public function test_not_job_dispatched(): void
     {
         Bus::fake();
 
@@ -89,7 +89,7 @@ class AppTest extends TestCase
         Bus::assertNothingDispatched();
     }
 
-    public function testNotificationRequestJobDispatched(): void
+    public function test_notification_request_job_dispatched(): void
     {
         Bus::fake();
 
@@ -104,7 +104,7 @@ class AppTest extends TestCase
         Bus::assertDispatchedAfterResponse(HandleProcedure::class);
     }
 
-    public function testEnsureBatchSizeWithinLimit(): void
+    public function test_ensure_batch_size_within_limit(): void
     {
         $guide = new App([
             FixtureProcedure::class,

@@ -11,7 +11,7 @@ class HelpersTraitTest extends TestCase
 {
     use ProceduralRequests;
 
-    public function testHelperRouteOk(): void
+    public function test_helper_route_ok(): void
     {
         $this
             ->setRpcRoute('rpc.point')
@@ -21,7 +21,7 @@ class HelpersTraitTest extends TestCase
             ]);
     }
 
-    public function testHelperUrlOk(): void
+    public function test_helper_url_ok(): void
     {
         $this
             ->setRpcUrl(route('rpc.point'))
