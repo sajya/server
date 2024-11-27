@@ -11,7 +11,7 @@ class CompressGzipTest extends TestCase
 {
     use ProceduralRequests;
 
-    public function test_send_accept_compress_response(): void
+    public function testSendAcceptCompressResponse(): void
     {
         $response = $this->json('POST', route('rpc.compress'), [
             'jsonrpc' => '2.0',
@@ -30,7 +30,7 @@ class CompressGzipTest extends TestCase
         $this->assertStringContainsString('"result":"Ok"', $content);
     }
 
-    public function test_send_without_compress_response(): void
+    public function testSendWithoutCompressResponse(): void
     {
         $this
             ->setRpcRoute('rpc.compress')

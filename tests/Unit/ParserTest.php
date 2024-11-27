@@ -10,7 +10,7 @@ use Sajya\Server\Tests\TestCase;
 
 class ParserTest extends TestCase
 {
-    public function test_valid_json(): void
+    public function testValidJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}';
 
@@ -19,7 +19,7 @@ class ParserTest extends TestCase
         $this->assertFalse($content->isError());
     }
 
-    public function test_invalid_json(): void
+    public function testInvalidJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], id: 1';
 
@@ -28,7 +28,7 @@ class ParserTest extends TestCase
         $this->assertTrue($content->isError());
     }
 
-    public function test_batch_json(): void
+    public function testBatchJson(): void
     {
         $json = '[{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}]';
 
@@ -37,7 +37,7 @@ class ParserTest extends TestCase
         $this->assertTrue($content->isBatch());
     }
 
-    public function test_not_batch_json(): void
+    public function testNotBatchJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}';
 
@@ -46,7 +46,7 @@ class ParserTest extends TestCase
         $this->assertFalse($content->isBatch());
     }
 
-    public function test_parser_make_request(): void
+    public function testParserMakeRequest(): void
     {
         $json = '[{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}]';
 
@@ -63,7 +63,7 @@ class ParserTest extends TestCase
         $this->assertEquals([42, 23], $request->getParams()->toArray());
     }
 
-    public function test_notification_json(): void
+    public function testNotificationJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23]}';
 
@@ -72,7 +72,7 @@ class ParserTest extends TestCase
         $this->assertTrue($content->isNotification());
     }
 
-    public function test_bath_notification_json(): void
+    public function testBathNotificationJson(): void
     {
         $json = '[
             {"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1},
