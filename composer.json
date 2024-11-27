@@ -30,7 +30,7 @@
     "conflict": {
         "league/flysystem": "<3.0.16",
         "mockery/mockery": "<1.4.2",
-        "laravel/framework": "<10.48.25"
+        "laravel/framework": "<10.48.25 || >=11.34.0"
     },
     "autoload": {
         "psr-4": {
