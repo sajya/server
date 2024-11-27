@@ -46,6 +46,9 @@
         },
         "no_superfluous_phpdoc_tags": false,
         "trim_array_spaces": true,
-        "single_trait_insert_per_statement": false
+        "single_trait_insert_per_statement": false,
+        "php_unit_method_casing": {
+            "case": "camel_case"
+        }
     }
 }
