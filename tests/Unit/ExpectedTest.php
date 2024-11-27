@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
-use Closure;
-use Generator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
 use Sajya\Server\Facades\RPC;
@@ -14,138 +12,223 @@ use Sajya\Server\Tests\TestCase;
 
 class ExpectedTest extends TestCase
 {
-    /**
-     * @return Generator
-     */
-    public function exampleCalls(): Generator
+    public function testAbortWithDebugEnabled(): void
     {
-        yield ['testAbort', function () {
-            config()->set('app.debug', true);
-        }, function (TestResponse $response) {
-            $response->assertJsonStructure([
-                'id',
-                'error' => [
-                    'code',
-                    'message',
-                    'data',
-                    'file',
-                    'line',
-                    'trace',
-                ],
-                'jsonrpc',
-            ]);
-        }];
+        config()->set('app.debug', true);
 
-        yield ['testAbort', function () {
-            config()->set('app.debug', false);
-        }, function (TestResponse $response) {
-            $json = $response->getContent();
-            $result = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        $response = $this->callRPC('testAbort');
+        $response->assertJsonStructure([
+            'id',
+            'error' => [
+                'code',
+                'message',
+                'data',
+                'file',
+                'line',
+                'trace',
+            ],
+            'jsonrpc',
+        ]);
+    }
 
-            $this->assertFalse(isset(
-                $result['file'],
-                $result['line'],
-                $result['trace'],
-            ));
+    public function testAbortWithDebugDisabled(): void
+    {
+        config()->set('app.debug', false);
 
-            config()->set('app.debug', true);
-        }];
-        yield ['testUuidOk'];
-        yield ['testValidationId'];
-        yield ['testBatchInvalid'];
-        yield ['testBatchNotificationSum', static function () {
-            Log::shouldReceive('info')
-                ->twice()
-                ->with('Result procedure: 3')
-                ->with('Result procedure: 4');
-        }];
-        yield ['testBatchOneError'];
-        yield ['testBatchSum'];
-        yield ['testDelimiter', null, null, 'rpc.delimiter'];
-        yield ['testDependencyInjection'];
-        yield ['testFindMethod'];
-        yield ['testFindProcedure'];
-        yield ['testInvalidParams'];
-        yield ['testNotificationSum', static function () {
-            Log::shouldReceive('info')
-                ->once()
-                ->with('Result procedure: 3');
-        }];
-        yield ['testNullResult'];
-        yield ['testParseError'];
-        yield ['testSimpleInValidationSum'];
-        yield ['testSimpleValidationSum'];
-        yield ['testWithAnEmptyArray'];
-        yield ['testWithAnInvalidBatchButNotEmpty'];
-        yield ['testWithInvalidBatch'];
-        yield ['testUnknownVersion'];
-        yield ['testInternalError'];
-        yield ['testCallCloseMethod'];
-        yield ['testRuntimeError'];
-        yield ['testInvalidRequestException'];
-        yield ['testCallNoExistMethod'];
+        $response = $this->callRPC('testAbort');
+        $result = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        // Exception
-        yield ['testDivisionException'];
-        yield ['testReportException', function () {
-            $this->assertNull(config('render-response-exception'));
-        }, function () {
-            $this->assertStringContainsString('Enabled', config('render-response-exception'));
-        }];
+        $this->assertFalse(isset(
+            $result['file'],
+            $result['line'],
+            $result['trace']
+        ));
+    }
 
-        // Binding
-        yield ['testBindDeepValue'];
-        yield ['testBindSubtract'];
-        yield ['testBindSubtractRewriteBind', static function () {
-            RPC::bind('a', function () {
-                return 100;
-            });
-        }];
+    public function testUuidOk(): void
+    {
+        $this->callRPC('testUuidOk');
+    }
 
-        yield ['testBindModel', static function () {
-            RPC::model('fixtureModel', FixtureBind::class);
-        }];
+    public function testValidationId(): void
+    {
+        $this->callRPC('testValidationId');
+    }
 
-        // Proxy
-        yield ['testProxyMethod'];
+    public function testBatchInvalid(): void
+    {
+        $this->callRPC('testBatchInvalid');
+    }
+
+    public function testBatchNotificationSum(): void
+    {
+        Log::shouldReceive('info')
+            ->twice()
+            ->with('Result procedure: 3')
+            ->with('Result procedure: 4');
+
+        $this->callRPC('testBatchNotificationSum');
+    }
+
+    public function testBatchOneError(): void
+    {
+        $this->callRPC('testBatchOneError');
+    }
+
+    public function testBatchSum(): void
+    {
+        $this->callRPC('testBatchSum');
+    }
+
+    public function testDelimiter(): void
+    {
+        $this->callRPC('testDelimiter', 'rpc.delimiter');
+    }
+
+    public function testDependencyInjection(): void
+    {
+        $this->callRPC('testDependencyInjection');
+    }
+
+    public function testFindMethod(): void
+    {
+        $this->callRPC('testFindMethod');
+    }
+
+    public function testFindProcedure(): void
+    {
+        $this->callRPC('testFindProcedure');
+    }
+
+    public function testInvalidParams(): void
+    {
+        $this->callRPC('testInvalidParams');
+    }
+
+    public function testNotificationSum(): void
+    {
+        Log::shouldReceive('info')
+            ->once()
+            ->with('Result procedure: 3');
+
+        $this->callRPC('testNotificationSum');
+    }
+
+    public function testNullResult(): void
+    {
+        $this->callRPC('testNullResult');
+    }
+
+    public function testParseError(): void
+    {
+        $this->callRPC('testParseError');
+    }
+
+    public function testSimpleInValidationSum(): void
+    {
+        $this->callRPC('testSimpleInValidationSum');
+    }
+
+    public function testSimpleValidationSum(): void
+    {
+        $this->callRPC('testSimpleValidationSum');
+    }
+
+    public function testWithAnEmptyArray(): void
+    {
+        $this->callRPC('testWithAnEmptyArray');
+    }
+
+    public function testWithAnInvalidBatchButNotEmpty(): void
+    {
+        $this->callRPC('testWithAnInvalidBatchButNotEmpty');
+    }
+
+    public function testWithInvalidBatch(): void
+    {
+        $this->callRPC('testWithInvalidBatch');
+    }
+
+    public function testUnknownVersion(): void
+    {
+        $this->callRPC('testUnknownVersion');
+    }
+
+    public function testInternalError(): void
+    {
+        $this->callRPC('testInternalError');
+    }
+
+    public function testCallCloseMethod(): void
+    {
+        $this->callRPC('testCallCloseMethod');
+    }
+
+    public function testRuntimeError(): void
+    {
+        $this->callRPC('testRuntimeError');
+    }
+
+    public function testInvalidRequestException(): void
+    {
+        $this->callRPC('testInvalidRequestException');
+    }
+
+    public function testCallNoExistMethod(): void
+    {
+        $this->callRPC('testCallNoExistMethod');
+    }
+
+    public function testDivisionException(): void
+    {
+        $this->callRPC('testDivisionException');
+    }
+
+    public function testReportException(): void
+    {
+        $this->assertNull(config('render-response-exception'));
+
+        $this->callRPC('testReportException');
+
+        $this->assertStringContainsString('Enabled', config('render-response-exception'));
+    }
+
+    public function testBindDeepValue(): void
+    {
+        $this->callRPC('testBindDeepValue');
+    }
+
+    public function testBindSubtract(): void
+    {
+        $this->callRPC('testBindSubtract');
+    }
+
+    public function testBindSubtractRewriteBind(): void
+    {
+        RPC::bind('a', fn () => 100);
+        $this->callRPC('testBindSubtractRewriteBind');
+    }
+
+    public function testBindModel(): void
+    {
+        RPC::model('fixtureModel', FixtureBind::class);
+        $this->callRPC('testBindModel');
+    }
+
+    public function testProxyMethod(): void
+    {
+        $this->callRPC('testProxyMethod');
     }
 
     /**
-     * @param string       $file
-     * @param Closure|null $before
-     * @param Closure|null $after
-     * @param string       $route
+     * Выполняет RPC-запрос.
      *
-     * @throws \JsonException
-     *
-     * @dataProvider exampleCalls
-     */
-    public function test_has_correct_request_response(
-        string $file,
-        ?Closure $before = null,
-        ?Closure $after = null,
-        string $route = 'rpc.point'
-    ): void {
-        if ($before !== null) {
-            $before();
-        }
-
-        $response = $this->callRPC($file, $route);
-
-        if ($after !== null) {
-            $after($response);
-        }
-    }
-
-    /**
      * @param string $path
      * @param string $route
      *
-     * @throws \JsonException
-     *
      * @return TestResponse
      */
-    private function callRPC(string $path, string $route): TestResponse
+    private function callRPC(string $path, string $route = 'rpc.point'): TestResponse
     {
         $request = file_get_contents("./tests/Expected/Requests/$path.json");
         $response = file_get_contents("./tests/Expected/Responses/$path.json");
