@@ -21,7 +21,7 @@ class {{ class }} extends Procedure
      *
      * @param Request $request
      *
-     * @return array|string|integer
+     * @return mixed
      */
     public function handle(Request $request)
     {

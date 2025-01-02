@@ -36,6 +36,7 @@
         "phpdoc_order": true,
         "phpdoc_single_line_var_spacing": true,
         "phpdoc_var_without_name": true,
+        "no_superfluous_phpdoc_tags": false,
         "class_attributes_separation": {
             "elements": {
                 "method": "one"
@@ -44,9 +45,9 @@
         "method_argument_space": {
             "on_multiline": "ignore"
         },
-        "no_superfluous_phpdoc_tags": false,
         "trim_array_spaces": true,
         "single_trait_insert_per_statement": false,
+        "new_with_parentheses": false,
         "php_unit_method_casing": {
             "case": "camel_case"
         }

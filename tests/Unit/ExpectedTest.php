@@ -6,60 +6,52 @@ namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Attributes\TestWith;
 use Sajya\Server\Facades\RPC;
 use Sajya\Server\Tests\FixtureBind;
 use Sajya\Server\Tests\TestCase;
 
 class ExpectedTest extends TestCase
 {
-    public function testAbortWithDebugEnabled(): void
+    private const REQUESTS_PATH = './tests/Expected/Requests/';
+    private const RESPONSES_PATH = './tests/Expected/Responses/';
+
+    /**
+     * Test with debug true and response structure validation
+     */
+    public function testAbortWithDebugTrue(): void
     {
         config()->set('app.debug', true);
 
-        $response = $this->callRPC('testAbort');
+        $response = $this->testHasCorrectRequestResponse('testAbort');
+
         $response->assertJsonStructure([
             'id',
-            'error' => [
-                'code',
-                'message',
-                'data',
-                'file',
-                'line',
-                'trace',
-            ],
+            'error' => ['code', 'message', 'data', 'file', 'line', 'trace'],
             'jsonrpc',
         ]);
     }
 
-    public function testAbortWithDebugDisabled(): void
+    /**
+     * Test with debug false and absence of error details
+     */
+    public function testAbortWithDebugFalse(): void
     {
         config()->set('app.debug', false);
 
-        $response = $this->callRPC('testAbort');
+        $response = $this->testHasCorrectRequestResponse('testAbort');
         $result = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        $this->assertFalse(isset(
-            $result['file'],
-            $result['line'],
-            $result['trace']
-        ));
+        $this->assertArrayNotHasKey('file', $result);
+        $this->assertArrayNotHasKey('line', $result);
+        $this->assertArrayNotHasKey('trace', $result);
+
+        config()->set('app.debug', true);
     }
 
-    public function testUuidOk(): void
-    {
-        $this->callRPC('testUuidOk');
-    }
-
-    public function testValidationId(): void
-    {
-        $this->callRPC('testValidationId');
-    }
-
-    public function testBatchInvalid(): void
-    {
-        $this->callRPC('testBatchInvalid');
-    }
-
+    /**
+     * Test logging for batch notification sum
+     */
     public function testBatchNotificationSum(): void
     {
         Log::shouldReceive('info')
@@ -67,178 +59,102 @@ class ExpectedTest extends TestCase
             ->with('Result procedure: 3')
             ->with('Result procedure: 4');
 
-        $this->callRPC('testBatchNotificationSum');
+        Log::shouldReceive('error')
+            ->never();
+
+        $this->testHasCorrectRequestResponse('testBatchNotificationSum');
     }
 
-    public function testBatchOneError(): void
-    {
-        $this->callRPC('testBatchOneError');
-    }
-
-    public function testBatchSum(): void
-    {
-        $this->callRPC('testBatchSum');
-    }
-
-    public function testDelimiter(): void
-    {
-        $this->callRPC('testDelimiter', 'rpc.delimiter');
-    }
-
-    public function testDependencyInjection(): void
-    {
-        $this->callRPC('testDependencyInjection');
-    }
-
-    public function testFindMethod(): void
-    {
-        $this->callRPC('testFindMethod');
-    }
-
-    public function testFindProcedure(): void
-    {
-        $this->callRPC('testFindProcedure');
-    }
-
-    public function testInvalidParams(): void
-    {
-        $this->callRPC('testInvalidParams');
-    }
-
+    /**
+     * Test logging for single notification sum
+     */
     public function testNotificationSum(): void
     {
         Log::shouldReceive('info')
             ->once()
             ->with('Result procedure: 3');
 
-        $this->callRPC('testNotificationSum');
+        Log::shouldReceive('error')
+            ->never();
+
+        $this->testHasCorrectRequestResponse('testNotificationSum');
     }
 
-    public function testNullResult(): void
-    {
-        $this->callRPC('testNullResult');
-    }
-
-    public function testParseError(): void
-    {
-        $this->callRPC('testParseError');
-    }
-
-    public function testSimpleInValidationSum(): void
-    {
-        $this->callRPC('testSimpleInValidationSum');
-    }
-
-    public function testSimpleValidationSum(): void
-    {
-        $this->callRPC('testSimpleValidationSum');
-    }
-
-    public function testWithAnEmptyArray(): void
-    {
-        $this->callRPC('testWithAnEmptyArray');
-    }
-
-    public function testWithAnInvalidBatchButNotEmpty(): void
-    {
-        $this->callRPC('testWithAnInvalidBatchButNotEmpty');
-    }
-
-    public function testWithInvalidBatch(): void
-    {
-        $this->callRPC('testWithInvalidBatch');
-    }
-
-    public function testUnknownVersion(): void
-    {
-        $this->callRPC('testUnknownVersion');
-    }
-
-    public function testInternalError(): void
-    {
-        $this->callRPC('testInternalError');
-    }
-
-    public function testCallCloseMethod(): void
-    {
-        $this->callRPC('testCallCloseMethod');
-    }
-
-    public function testRuntimeError(): void
-    {
-        $this->callRPC('testRuntimeError');
-    }
-
-    public function testInvalidRequestException(): void
-    {
-        $this->callRPC('testInvalidRequestException');
-    }
-
-    public function testCallNoExistMethod(): void
-    {
-        $this->callRPC('testCallNoExistMethod');
-    }
-
-    public function testDivisionException(): void
-    {
-        $this->callRPC('testDivisionException');
-    }
-
+    /**
+     * Test provider with exception response validation
+     */
     public function testReportException(): void
     {
         $this->assertNull(config('render-response-exception'));
 
-        $this->callRPC('testReportException');
+        $this->testHasCorrectRequestResponse('testReportException');
 
         $this->assertStringContainsString('Enabled', config('render-response-exception'));
     }
 
-    public function testBindDeepValue(): void
-    {
-        $this->callRPC('testBindDeepValue');
-    }
-
-    public function testBindSubtract(): void
-    {
-        $this->callRPC('testBindSubtract');
-    }
-
+    /**
+     * Test with rewritten binding for subtraction
+     */
     public function testBindSubtractRewriteBind(): void
     {
-        RPC::bind('a', fn () => 100);
-        $this->callRPC('testBindSubtractRewriteBind');
-    }
+        RPC::bind('a', fn() => 100);
 
-    public function testBindModel(): void
-    {
-        RPC::model('fixtureModel', FixtureBind::class);
-        $this->callRPC('testBindModel');
-    }
-
-    public function testProxyMethod(): void
-    {
-        $this->callRPC('testProxyMethod');
+        $this->testHasCorrectRequestResponse('testBindSubtractRewriteBind');
     }
 
     /**
-     * Выполняет RPC-запрос.
+     * Test model binding for fixture
+     */
+    public function testBindModel(): void
+    {
+        RPC::model('fixtureModel', FixtureBind::class);
+
+        $this->testHasCorrectRequestResponse('testBindModel');
+    }
+
+    /**
+     * Helper for making requests and validating responses
      *
      * @param string $path
      * @param string $route
-     *
      * @return TestResponse
      */
-    private function callRPC(string $path, string $route = 'rpc.point'): TestResponse
+    #[TestWith(['testUuidOk'])]
+    #[TestWith(['testValidationId'])]
+    #[TestWith(['testBatchInvalid'])]
+    #[TestWith(['testBatchOneError'])]
+    #[TestWith(['testBatchSum'])]
+    #[TestWith(['testDelimiter', 'rpc.delimiter'])]
+    #[TestWith(['testDependencyInjection'])]
+    #[TestWith(['testFindMethod'])]
+    #[TestWith(['testFindProcedure'])]
+    #[TestWith(['testInvalidParams'])]
+    #[TestWith(['testNullResult'])]
+    #[TestWith(['testParseError'])]
+    #[TestWith(['testSimpleInValidationSum'])]
+    #[TestWith(['testSimpleValidationSum'])]
+    #[TestWith(['testWithAnEmptyArray'])]
+    #[TestWith(['testWithAnInvalidBatchButNotEmpty'])]
+    #[TestWith(['testWithInvalidBatch'])]
+    #[TestWith(['testUnknownVersion'])]
+    #[TestWith(['testInternalError'])]
+    #[TestWith(['testCallCloseMethod'])]
+    #[TestWith(['testRuntimeError'])]
+    #[TestWith(['testInvalidRequestException'])]
+    #[TestWith(['testCallNoExistMethod'])]
+    #[TestWith(['testDivisionException'])]
+    #[TestWith(['testBindDeepValue'])]
+    #[TestWith(['testBindSubtract'])]
+    #[TestWith(['testProxyMethod'])]
+    public function testHasCorrectRequestResponse(string $path, string $route = 'rpc.point'): TestResponse
     {
-        $request = file_get_contents("./tests/Expected/Requests/$path.json");
-        $response = file_get_contents("./tests/Expected/Responses/$path.json");
+        $request = file_get_contents(self::REQUESTS_PATH . "$path.json");
+        $response = file_get_contents(self::RESPONSES_PATH . "$path.json");
 
         return $this
             ->call('POST', route($route), [], [], [], [], $request)
             ->assertOk()
             ->assertHeader('content-type', 'application/json')
-            ->assertJson(
-                json_decode($response, true, 512, JSON_THROW_ON_ERROR)
-            );
+            ->assertJson(json_decode($response, true, 512, JSON_THROW_ON_ERROR));
     }
 }
