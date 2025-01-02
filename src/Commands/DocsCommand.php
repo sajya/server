@@ -50,7 +50,7 @@ class DocsCommand extends Command
 
         $html = view('sajya::docs', [
             'title'      => config('app.name'),
-            'uri'        => config('app.url').$route->uri(),
+            'uri'        => route($routeName),
             'procedures' => $docs->getAnnotations(),
         ]);
 

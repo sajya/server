@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests;
 
-use Sajya\Server\Annotations\Param;
-use Sajya\Server\Annotations\Result;
+use Sajya\Server\Attributes\RpcMethod;
 use Sajya\Server\Procedure;
 
 class FixtureDocsProcedure extends Procedure
@@ -18,17 +17,12 @@ class FixtureDocsProcedure extends Procedure
      */
     public static string $name = 'docs';
 
-    /**
-     * Execute the procedure.
-     *
-     * @Param(name="key", value="required")
-     * @Param(name="array.", value="max:5")
-     *
-     * @Result(name="key", value="string")
-     * @Result(name="array.", value="max:4")
-     *
-     * @return string
-     */
+    #[
+        RpcMethod(
+            description: 'Execute the procedure.',
+            params: ['key' => 'required', 'array' => 'max:5'],
+            result: ['key' => 'string', 'array' => 'max:4'])
+    ]
     public function ping(): string
     {
         return 'pong';
