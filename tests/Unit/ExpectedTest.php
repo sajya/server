@@ -6,6 +6,7 @@ namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Attributes\TestWith;
 use Sajya\Server\Facades\RPC;
 use Sajya\Server\Tests\FixtureBind;
 use Sajya\Server\Tests\TestCase;
@@ -14,42 +15,6 @@ class ExpectedTest extends TestCase
 {
     private const REQUESTS_PATH = './tests/Expected/Requests/';
     private const RESPONSES_PATH = './tests/Expected/Responses/';
-
-    /**
-     * Data provider for test cases
-     */
-    public static function exampleCalls(): array
-    {
-        return [
-            ['testUuidOk'],
-            ['testValidationId'],
-            ['testBatchInvalid'],
-            ['testBatchOneError'],
-            ['testBatchSum'],
-            ['testDelimiter', 'rpc.delimiter'],
-            ['testDependencyInjection'],
-            ['testFindMethod'],
-            ['testFindProcedure'],
-            ['testInvalidParams'],
-            ['testNullResult'],
-            ['testParseError'],
-            ['testSimpleInValidationSum'],
-            ['testSimpleValidationSum'],
-            ['testWithAnEmptyArray'],
-            ['testWithAnInvalidBatchButNotEmpty'],
-            ['testWithInvalidBatch'],
-            ['testUnknownVersion'],
-            ['testInternalError'],
-            ['testCallCloseMethod'],
-            ['testRuntimeError'],
-            ['testInvalidRequestException'],
-            ['testCallNoExistMethod'],
-            ['testDivisionException'],
-            ['testBindDeepValue'],
-            ['testBindSubtract'],
-            ['testProxyMethod'],
-        ];
-    }
 
     /**
      * Test with debug true and response structure validation
@@ -94,6 +59,9 @@ class ExpectedTest extends TestCase
             ->with('Result procedure: 3')
             ->with('Result procedure: 4');
 
+        Log::shouldReceive('error')
+            ->never();
+
         $this->testHasCorrectRequestResponse('testBatchNotificationSum');
     }
 
@@ -105,6 +73,9 @@ class ExpectedTest extends TestCase
         Log::shouldReceive('info')
             ->once()
             ->with('Result procedure: 3');
+
+        Log::shouldReceive('error')
+            ->never();
 
         $this->testHasCorrectRequestResponse('testNotificationSum');
     }
@@ -147,9 +118,34 @@ class ExpectedTest extends TestCase
      * @param string $path
      * @param string $route
      * @return TestResponse
-     *
-     * @dataProvider exampleCalls
      */
+    #[TestWith(['testUuidOk'])]
+    #[TestWith(['testValidationId'])]
+    #[TestWith(['testBatchInvalid'])]
+    #[TestWith(['testBatchOneError'])]
+    #[TestWith(['testBatchSum'])]
+    #[TestWith(['testDelimiter', 'rpc.delimiter'])]
+    #[TestWith(['testDependencyInjection'])]
+    #[TestWith(['testFindMethod'])]
+    #[TestWith(['testFindProcedure'])]
+    #[TestWith(['testInvalidParams'])]
+    #[TestWith(['testNullResult'])]
+    #[TestWith(['testParseError'])]
+    #[TestWith(['testSimpleInValidationSum'])]
+    #[TestWith(['testSimpleValidationSum'])]
+    #[TestWith(['testWithAnEmptyArray'])]
+    #[TestWith(['testWithAnInvalidBatchButNotEmpty'])]
+    #[TestWith(['testWithInvalidBatch'])]
+    #[TestWith(['testUnknownVersion'])]
+    #[TestWith(['testInternalError'])]
+    #[TestWith(['testCallCloseMethod'])]
+    #[TestWith(['testRuntimeError'])]
+    #[TestWith(['testInvalidRequestException'])]
+    #[TestWith(['testCallNoExistMethod'])]
+    #[TestWith(['testDivisionException'])]
+    #[TestWith(['testBindDeepValue'])]
+    #[TestWith(['testBindSubtract'])]
+    #[TestWith(['testProxyMethod'])]
     public function testHasCorrectRequestResponse(string $path, string $route = 'rpc.point'): TestResponse
     {
         $request = file_get_contents(self::REQUESTS_PATH . "$path.json");
