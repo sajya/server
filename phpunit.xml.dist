@@ -6,7 +6,6 @@
          displayDetailsOnTestsThatTriggerErrors="false"
          displayDetailsOnTestsThatTriggerNotices="false"
          displayDetailsOnTestsThatTriggerWarnings="false"
-         displayDetailsOnPhpunitDeprecations="false"
 >
     <coverage>
         <report>
