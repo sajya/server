@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
+use Illuminate\Support\Facades\App as LaravelApplication;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Sajya\Server\App;
@@ -33,9 +34,15 @@ class AppTest extends TestCase
             FixtureProcedure::class,
         ]);
 
-        $response = $guide->terminate('{"jsonrpc": "2.0", "method": "fixture@validationMethod", "params": {"a": 100500, "b": 300}}');
+        LaravelApplication::partialMock()
+            ->shouldReceive('terminate')
+            ->once();
 
-        Log::shouldReceive('info')->with('Result procedure: 100800');
+        Log::partialMock()
+            ->shouldReceive('info')
+            ->with('Result procedure: 100800');
+
+        $response = $guide->terminate('{"jsonrpc": "2.0", "method": "fixture@validationMethod", "params": {"a": 100500, "b": 300}}');
 
         $this->assertNull($response);
     }

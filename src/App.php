@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server;
 
-use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\App as LaravelApplication;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -62,7 +62,7 @@ class App
      */
     public function terminate(string $content = '')
     {
-        return tap($this->handle($content), fn () => Application::getInstance()->terminate());
+        return tap($this->handle($content), fn () => LaravelApplication::terminate());
     }
 
     /**

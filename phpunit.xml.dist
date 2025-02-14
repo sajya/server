@@ -28,7 +28,7 @@
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
-        <server name="LOG_CHANNEL" value="single"/>
+        <server name="LOG_CHANNEL" value="null"/>
     </php>
     <logging/>
     <source>

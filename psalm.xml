@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <psalm
+    phpVersion="8.1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    errorLevel="4"
+    errorLevel="6"
     resolveFromConfigFile="true"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -12,4 +14,8 @@
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <UndefinedMagicMethod errorLevel="suppress" />
+        <ArgumentTypeCoercion errorLevel="suppress" />
+    </issueHandlers>
 </psalm>

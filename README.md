@@ -1,11 +1,11 @@
 ## Introduction
 
-<p align="left">
-    <a href="https://packagist.org/packages/sajya/server"><img src="https://img.shields.io/packagist/v/sajya/server.svg" alt="Latest Version on Packagist"></a>
-<a href="https://github.com/sajya/server/actions/workflows/run-tests.yml"><img src="https://github.com/sajya/server/actions/workflows/run-tests.yml/badge.svg" alt="GitHub Tests Action Status"></a>
-<a href="https://codecov.io/gh/sajya/server"><img src="https://codecov.io/gh/sajya/server/branch/master/graph/badge.svg" alt="codecov"></a>
-<a href="https://packagist.org/packages/sajya/server"><img src="https://img.shields.io/packagist/dt/sajya/server.svg" alt="Total Downloads"></a>
-</p>
+[![Tests](https://github.com/sajya/server/actions/workflows/phpunit.yml/badge.svg)](https://github.com/sajya/server/actions/workflows/phpunit.yml)
+[![Quality Assurance](https://github.com/sajya/server/actions/workflows/quality.yml/badge.svg)](https://github.com/sajya/server/actions/workflows/quality.yml)
+[![Coding Guidelines](https://github.com/sajya/server/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/sajya/server/actions/workflows/php-cs-fixer.yml)
+[![codecov](https://codecov.io/gh/sajya/server/branch/master/graph/badge.svg)](https://codecov.io/gh/sajya/server)
+[![Total Downloads](https://img.shields.io/packagist/dt/sajya/server.svg)](https://packagist.org/packages/sajya/server)
+
 
 Sajya is an open-source project that makes it easy to implement the JSON-RPC 2.0 server specification for Laravel. With Sajya, you can quickly and easily set up a JSON-RPC server that supports all of the features of the specification, including validation of parameters, support for batch and notification requests, and more.
 
