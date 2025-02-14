@@ -97,7 +97,7 @@ class ExpectedTest extends TestCase
      */
     public function testBindSubtractRewriteBind(): void
     {
-        RPC::bind('a', fn() => 100);
+        RPC::bind('a', fn () => 100);
 
         $this->testHasCorrectRequestResponse('testBindSubtractRewriteBind');
     }
@@ -117,6 +117,7 @@ class ExpectedTest extends TestCase
      *
      * @param string $path
      * @param string $route
+     *
      * @return TestResponse
      */
     #[TestWith(['testUuidOk'])]
@@ -148,8 +149,8 @@ class ExpectedTest extends TestCase
     #[TestWith(['testProxyMethod'])]
     public function testHasCorrectRequestResponse(string $path, string $route = 'rpc.point'): TestResponse
     {
-        $request = file_get_contents(self::REQUESTS_PATH . "$path.json");
-        $response = file_get_contents(self::RESPONSES_PATH . "$path.json");
+        $request = file_get_contents(self::REQUESTS_PATH."$path.json");
+        $response = file_get_contents(self::RESPONSES_PATH."$path.json");
 
         return $this
             ->call('POST', route($route), [], [], [], [], $request)

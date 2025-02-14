@@ -125,5 +125,4 @@ class Docs
 
             ->wrap('<pre style="color:rgba(212,212,212,0.75);">', '</pre>');
     }
-
 }

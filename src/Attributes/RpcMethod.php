@@ -10,10 +10,8 @@ use Attribute;
 class RpcMethod
 {
     public function __construct(
-        public string|null $description = null,
-        public array|null  $params = null,
-        public array|null  $result = null
-    )
-    {
-    }
+        public ?string $description = null,
+        public ?array $params = null,
+        public ?array $result = null
+    ) {}
 }
