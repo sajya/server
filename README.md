@@ -6,47 +6,33 @@
 [![codecov](https://codecov.io/gh/sajya/server/branch/master/graph/badge.svg)](https://codecov.io/gh/sajya/server)
 [![Total Downloads](https://img.shields.io/packagist/dt/sajya/server.svg)](https://packagist.org/packages/sajya/server)
 
+Sajya empowers Laravel developers to bring the full power of JSON-RPC 2.0 to life. With Sajya, you can:
 
-Sajya is an open-source project that makes it easy to implement the JSON-RPC 2.0 server specification for Laravel. With Sajya, you can quickly and easily set up a JSON-RPC server that supports all of the features of the specification, including validation of parameters, support for batch and notification requests, and more.
+* **Achieve Complete JSON-RPC 2.0 Compliance:** Seamlessly implement every feature of the specification.
+* **Ensure Robust Validation:** Automatically validate parameters to keep your interactions safe and sound.
+* **Handle Batch & Notification Requests:** Easily manage multiple requests or fire-and-forget notifications.
+* **Set Up in a Snap:** Get your JSON-RPC server up and running with minimal fuss.
 
-
-
-
-<!--
-#### Key features:
-
-- Easy to use: Sajya is designed to be simple to install and use, so you can get your server up and running quickly.
-- Customizable: You can customize many aspects of your server, including the routes, parameter validation, and error messages.
-- Well-documented: The project comes with complete documentation that includes detailed instructions and a reference guide for all of its features.
-- Route Model Binding: You can quickly and easily define routes parameters for your models.
-- Validation of parameters: The project automatically validates incoming requests to ensure they meet your specifications. You can also customize the error messages that are returned if the validation fails.
-- Support for batch and notification requests: The project supports both batch requests, where multiple requests are combined into a single HTTP request, and notification requests, where the server does not generate a response.
--->
+It’s all about making your life easier so you can focus on building amazing applications.
 
 ## Official Documentation
 
-You can find the complete documentation for Sajya on its [website](https://sajya.github.io/). The documentation includes detailed instructions on how to install and use Sajya, as well as a reference guide for all of its features.
+Discover all there is to know about Sajya on our [website](https://sajya.github.io/). You'll find everything from
+installation guides to deep dives into each feature.
 
 ## Changelog
 
-To learn about the latest updates and changes to Sajya, please see the [CHANGELOG](CHANGELOG.md). The changelog includes a list of all the changes made to Sajya in each release, along with the corresponding version number.
+Curious about what’s new? Check out our [CHANGELOG](CHANGELOG.md) to keep up with the latest updates and improvements.
 
 ## Contributing
 
-We welcome contributions to Sajya. Contributions can include bug fixes, new features, and improvements to the documentation.
-
-<!--
-We welcome contributions to Sajya. If you are interested in contributing, please see [CONTRIBUTING](CONTRIBUTING.md) for details on how to get started. Contributions can include bug fixes, new features, and improvements to the documentation.
--->
+We’re all about community! Whether you have a bug fix, a new feature idea, or an improvement for our docs, we’d love to
+hear from you.
 
 ## Maintainers
 
-Sajya is developed and maintained by [Alexandr Chernyaev](https://github.com/tabuna). Alexandr is the main author and maintainer of Sajya, and is responsible for coordinating the development and release of new versions.
+Sajya is proudly maintained by [Alexandr Chernyaev](https://github.com/tabuna). Feel free to reach out or get involved!
 
 ## License
 
-Sajya is released under the MIT License. Please see the [License File](LICENSE.md) for more information. 
-
-<!--
-The MIT License is a permissive license that allows you to use and modify Sajya for any purpose, as long as you include the original copyright and license notice in your copies.
--->
+Sajya is released under the MIT License. See the [License File](LICENSE.md) for more details.
