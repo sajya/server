@@ -15,6 +15,7 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
+        <MissingOverrideAttribute errorLevel="suppress" />
         <UndefinedMagicMethod errorLevel="suppress" />
         <ArgumentTypeCoercion errorLevel="suppress" />
     </issueHandlers>
