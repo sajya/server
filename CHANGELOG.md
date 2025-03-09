@@ -5,14 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 7.0.0 - 2025-02-15
+## 7.0.0 - 2025-03-09
 
 ### Added
 - Introduced a base configuration file.
+- Support for Laravel 12.x.
 
 ### Changed
 - Migrated from `@phpdoc` annotations to native PHP attributes for improved type safety and modern standards.
-- Updated Psalm installation process to be handled separately for better dependency management.
 - Set the default limit for batch requests to 50 items.
 
 ### Removed
