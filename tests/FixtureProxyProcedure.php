@@ -21,7 +21,7 @@ class FixtureProxyProcedure extends Procedure implements Proxy
     /**
      * The method that will be called if there is no match.
      *
-     * @param \Sajya\Server\Http\Request $request
+     * @param Request $request
      *
      * @return mixed
      */

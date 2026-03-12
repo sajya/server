@@ -19,7 +19,7 @@ class Binding
     /**
      * The IoC container instance.
      *
-     * @var \Illuminate\Container\Container
+     * @var Container
      */
     protected $container;
 
@@ -43,9 +43,9 @@ class Binding
     /**
      * Register a model binder for a wildcard.
      *
-     * @param string        $key
-     * @param string        $class
-     * @param \Closure|null $callback
+     * @param string       $key
+     * @param string       $class
+     * @param Closure|null $callback
      *
      * @return void
      */
@@ -72,8 +72,8 @@ class Binding
     /**
      * Binds the values of the given parameters to their corresponding type.
      *
-     * @param string                         $procedure
-     * @param \Illuminate\Support\Collection $params
+     * @param string     $procedure
+     * @param Collection $params
      *
      * @throws \ReflectionException
      *

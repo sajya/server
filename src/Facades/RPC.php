@@ -16,7 +16,7 @@ use Sajya\Server\Binding;
  * @method static void  model(string $key, string $class, Closure|null $callback = null)
  * @method static array bindResolve(string $procedure, Collection $params)
  *
- * @see \Sajya\Server\Binding
+ * @see Binding
  */
 class RPC extends Facade
 {

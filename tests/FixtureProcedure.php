@@ -96,7 +96,7 @@ class FixtureProcedure extends Procedure
     }
 
     /**
-     * @throws \Sajya\Server\Tests\Fixture\ReportException
+     * @throws ReportException
      */
     public function reportException(): mixed
     {
@@ -104,7 +104,7 @@ class FixtureProcedure extends Procedure
     }
 
     /**
-     * @throws \Sajya\Server\Tests\Fixture\RenderResponseException
+     * @throws RenderResponseException
      */
     public function renderException(): mixed
     {

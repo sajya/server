@@ -7,6 +7,7 @@ namespace Sajya\Server;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Response;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
@@ -68,7 +69,7 @@ class HandleProcedure implements ShouldQueue
      *
      * @param Throwable $exception
      *
-     * @return string|RpcException|\Illuminate\Http\Response
+     * @return string|RpcException|Response
      */
     protected function handleException(Throwable $exception)
     {

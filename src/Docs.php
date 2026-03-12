@@ -37,7 +37,7 @@ class Docs
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getAnnotations(): Collection
     {
@@ -100,7 +100,7 @@ class Docs
      *
      * @throws \JsonException If encoding fails.
      *
-     * @return \Illuminate\Support\Stringable The highlighted JSON as a string.
+     * @return Stringable The highlighted JSON as a string.
      */
     private function highlight(array $value): Stringable
     {

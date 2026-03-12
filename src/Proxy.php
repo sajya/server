@@ -11,7 +11,7 @@ interface Proxy
     /**
      * The method used by request handlers.
      *
-     * @param \Sajya\Server\Http\Request $request
+     * @param Request $request
      *
      * @return mixed
      */

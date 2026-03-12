@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Sajya\Server\App;
 use Sajya\Server\HandleProcedure;
 use Sajya\Server\Http\Request;
+use Sajya\Server\Http\Response;
 use Sajya\Server\Procedure;
 use Sajya\Server\Tests\FixtureProcedure;
 use Sajya\Server\Tests\TestCase;
@@ -22,7 +23,7 @@ class AppTest extends TestCase
             FixtureProcedure::class,
         ]);
 
-        /** @var \Sajya\Server\Http\Response $response */
+        /** @var Response $response */
         $response = $guide->handle('{"jsonrpc": "2.0", "method": "fixture@ok", "id": 1}');
 
         $this->assertEquals('Ok', $response->getResult());
@@ -89,7 +90,7 @@ class AppTest extends TestCase
             FixtureProcedure::class,
         ]);
 
-        /** @var \Sajya\Server\Http\Response $response */
+        /** @var Response $response */
         $response = $guide->handle('{"jsonrpc": "2.0", "method": "fixture@ok", "id": 1}');
 
         $this->assertEquals('Ok', $response->getResult());
@@ -121,7 +122,7 @@ class AppTest extends TestCase
             return '{"jsonrpc": "2.0", "method": "fixture@ok"}';
         })->implode(',');
 
-        /** @var \Sajya\Server\Http\Response $response */
+        /** @var Response $response */
         $response = $guide->handle('['.$content.']');
 
         $this->assertEquals('Maximum batch size exceeded.', $response->getError()->getMessage());

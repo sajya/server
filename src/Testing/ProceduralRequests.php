@@ -46,7 +46,7 @@ trait ProceduralRequests
      * @param array           $content
      * @param string|int|null $id
      *
-     * @return \Illuminate\Testing\TestResponse
+     * @return TestResponse
      */
     public function callProcedure(string $method, array $content = [], $id = 1): TestResponse
     {
@@ -61,7 +61,7 @@ trait ProceduralRequests
      * @param array           $content
      * @param string|int|null $id
      *
-     * @return \Illuminate\Testing\TestResponse
+     * @return TestResponse
      */
     public function callHttpProcedure(string $method, array $content = [], $id = 1): TestResponse
     {
