@@ -36,7 +36,8 @@ class DocsCommand extends Command
      */
     public function handle(): int
     {
-        $routeName = (string) $this->argument('route');
+        /** @var string $routeName */
+        $routeName = $this->argument('route');
 
         $route = Route::getRoutes()->getByName($routeName);
 
