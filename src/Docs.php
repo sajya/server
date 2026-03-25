@@ -81,7 +81,7 @@ class Docs
 
     private function getMethodAnnotations(ReflectionMethod $method): ?RpcMethod
     {
-        $attributes = $method->getAttributes(RpcMethod::class);
+        $attributes = $method->getAttributes(RpcMethod::class, \ReflectionAttribute::IS_INSTANCEOF);
 
         foreach ($attributes as $attribute) {
             /** @var RpcMethod $instance */
