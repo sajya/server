@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 use Sajya\Server\Docs;
 use Sajya\Server\Tests\TestCase;
 
 class DocsTest extends TestCase
 {
-    public function testDocs(): void
+    #[Test]
+    public function docs(): void
     {
         $route = Route::getRoutes()->getByName('rpc.docs');
 

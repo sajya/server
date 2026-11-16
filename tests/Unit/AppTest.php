@@ -7,6 +7,7 @@ namespace Sajya\Server\Tests\Unit;
 use Illuminate\Support\Facades\App as LaravelApplication;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use PHPUnit\Framework\Attributes\Test;
 use Sajya\Server\App;
 use Sajya\Server\Attributes\Procedure;
 use Sajya\Server\HandleProcedure;
@@ -17,7 +18,8 @@ use Sajya\Server\Tests\TestCase;
 
 class AppTest extends TestCase
 {
-    public function testBaseUsage(): void
+    #[Test]
+    public function baseUsage(): void
     {
         $guide = new App([
             FixtureProcedure::class,
@@ -29,7 +31,8 @@ class AppTest extends TestCase
         $this->assertEquals('Ok', $response->getResult());
     }
 
-    public function testTerminateUsage(): void
+    #[Test]
+    public function terminateUsage(): void
     {
         $guide = new App([
             FixtureProcedure::class,
@@ -48,7 +51,8 @@ class AppTest extends TestCase
         $this->assertNull($response);
     }
 
-    public function testProcedureAttributeIsRequired(): void
+    #[Test]
+    public function procedureAttributeIsRequired(): void
     {
         $this->expectExceptionMessage("Class 'Sajya\Server\Tests\Unit\AppTest' must have the ".Procedure::class.' attribute');
 
@@ -58,7 +62,8 @@ class AppTest extends TestCase
         ]);
     }
 
-    public function testFindMethodProcedure(): void
+    #[Test]
+    public function findMethodProcedure(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
@@ -70,7 +75,8 @@ class AppTest extends TestCase
         $this->assertEquals(FixtureProcedure::class.'@subtract', $this->getGuide()->findProcedure($request));
     }
 
-    public function testNotFoundMethodProcedure(): void
+    #[Test]
+    public function notFoundMethodProcedure(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
@@ -82,7 +88,8 @@ class AppTest extends TestCase
         $this->assertNull($this->getGuide()->findProcedure($request));
     }
 
-    public function testNotJobDispatched(): void
+    #[Test]
+    public function notJobDispatched(): void
     {
         Bus::fake();
 
@@ -97,7 +104,8 @@ class AppTest extends TestCase
         Bus::assertNothingDispatched();
     }
 
-    public function testNotificationRequestJobDispatched(): void
+    #[Test]
+    public function notificationRequestJobDispatched(): void
     {
         Bus::fake();
 
@@ -112,7 +120,8 @@ class AppTest extends TestCase
         Bus::assertDispatchedAfterResponse(HandleProcedure::class);
     }
 
-    public function testEnsureBatchSizeWithinLimit(): void
+    #[Test]
+    public function ensureBatchSizeWithinLimit(): void
     {
         $guide = new App([
             FixtureProcedure::class,

@@ -6,13 +6,15 @@ namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\Test;
 use Sajya\Server\App;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Tests\TestCase;
 
 class ArtisanTest extends TestCase
 {
-    public function testArtisanMakeProcedure(): void
+    #[Test]
+    public function artisanMakeProcedure(): void
     {
         $name = 'Test'.time();
 
@@ -31,7 +33,8 @@ class ArtisanTest extends TestCase
         $this->assertSame($class.'@handle', $guide->findProcedure($request));
     }
 
-    public function testArtisanMakeDocs(): void
+    #[Test]
+    public function artisanMakeDocs(): void
     {
         $this->artisan('sajya:docs', [
             'route' => 'rpc.docs',
@@ -40,7 +43,8 @@ class ArtisanTest extends TestCase
             ->assertExitCode(0);
     }
 
-    public function testArtisanMakeDocsForUnknownRoute(): void
+    #[Test]
+    public function artisanMakeDocsForUnknownRoute(): void
     {
         $routeName = Str::random();
 
@@ -51,7 +55,8 @@ class ArtisanTest extends TestCase
             ->assertExitCode(1);
     }
 
-    public function testArtisanMakeDocsForCustomPathName(): void
+    #[Test]
+    public function artisanMakeDocsForCustomPathName(): void
     {
         $this->artisan('sajya:docs', [
             'route'  => 'rpc.docs',
