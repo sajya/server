@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
-use Sajya\Server\Procedure;
 use Illuminate\Http\Request;
+use Sajya\Server\Attributes\Procedure;
 
-class {{ class }} extends Procedure
+#[Procedure('{{ class }}')]
+class {{ class }}
 {
-    /**
-     * The name of the procedure that is used for referencing.
-     *
-     * @var string
-     */
-    public static string $name = '{{ class }}';
-
     /**
      * Execute the procedure.
      *

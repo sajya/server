@@ -20,6 +20,28 @@ It’s all about making your life easier so you can focus on building amazing ap
 Discover all there is to know about Sajya on our [website](https://sajya.github.io/). You'll find everything from
 installation guides to deep dives into each feature.
 
+## Defining a procedure
+
+Use the `Procedure` attribute to give a class its RPC name:
+
+```php
+use Sajya\Server\Attributes\Procedure;
+
+#[Procedure('tennis')]
+class TennisProcedure
+{
+    public function ping(): string
+    {
+        return 'pong';
+    }
+}
+```
+
+Register `TennisProcedure::class` with your RPC route and call `tennis@ping`.
+When migrating, replace `use Sajya\Server\Procedure` with the attribute import,
+remove `extends Procedure` and `public static string $name`, and add
+`#[Procedure('your-name')]` to each procedure class.
+
 ## Changelog
 
 Curious about what’s new? Check out our [CHANGELOG](CHANGELOG.md) to keep up with the latest updates and improvements.

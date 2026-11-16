@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\App as LaravelApplication;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Sajya\Server\App;
+use Sajya\Server\Attributes\Procedure;
 use Sajya\Server\HandleProcedure;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Http\Response;
-use Sajya\Server\Procedure;
 use Sajya\Server\Tests\FixtureProcedure;
 use Sajya\Server\Tests\TestCase;
 
@@ -48,9 +48,9 @@ class AppTest extends TestCase
         $this->assertNull($response);
     }
 
-    public function testExtendsProcedure(): void
+    public function testProcedureAttributeIsRequired(): void
     {
-        $this->expectExceptionMessage("Class 'Sajya\Server\Tests\Unit\AppTest' must extends ".Procedure::class);
+        $this->expectExceptionMessage("Class 'Sajya\Server\Tests\Unit\AppTest' must have the ".Procedure::class.' attribute');
 
         new App([
             FixtureProcedure::class,
