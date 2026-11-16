@@ -90,7 +90,8 @@ Replace `setRpcRoute($name)` with `withRpcEndpoint(route($name))`, `setRpcUrl($u
 with `withRpcEndpoint($url)`, and either request method with `rpc()`.
 When replacing `callProcedure()`, add its previous checks explicitly with
 `assertOk()->assertHeader('content-type', 'application/json')`.
-The native trait deprecation warning is emitted on PHP 8.5 and later.
+Its public methods carry the native `Deprecated` attribute, which emits warnings
+on PHP 8.4 and later. The trait also has a `@deprecated` tag for IDEs.
 
 ## Changelog
 

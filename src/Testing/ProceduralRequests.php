@@ -10,7 +10,6 @@ use Illuminate\Testing\TestResponse;
 /**
  * @deprecated Use MakesRpcRequests instead.
  */
-#[Deprecated(message: 'Use MakesRpcRequests instead.')]
 trait ProceduralRequests
 {
     /**
@@ -25,6 +24,7 @@ trait ProceduralRequests
      *
      * @return $this
      */
+    #[Deprecated(message: 'Use withRpcEndpoint(route($name)) from MakesRpcRequests instead.')]
     public function setRpcRoute(string $name)
     {
         $this->rpcEndpoint = route($name);
@@ -37,6 +37,7 @@ trait ProceduralRequests
      *
      * @return $this
      */
+    #[Deprecated(message: 'Use withRpcEndpoint() from MakesRpcRequests instead.')]
     public function setRpcUrl(string $url)
     {
         $this->rpcEndpoint = $url;
@@ -53,6 +54,7 @@ trait ProceduralRequests
      *
      * @return TestResponse
      */
+    #[Deprecated(message: 'Use rpc() from MakesRpcRequests with explicit assertions instead.')]
     public function callProcedure(string $method, array $content = [], $id = 1): TestResponse
     {
         return $this
@@ -68,6 +70,7 @@ trait ProceduralRequests
      *
      * @return TestResponse
      */
+    #[Deprecated(message: 'Use rpc() from MakesRpcRequests instead.')]
     public function callHttpProcedure(string $method, array $content = [], $id = 1): TestResponse
     {
         return $this->json('POST', $this->rpcEndpoint, [
