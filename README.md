@@ -48,6 +48,7 @@ Use `MakesRpcRequests` in your test class or base `TestCase`. Configure the endp
 once in `setUp()`, then call RPC methods with `rpc()`:
 
 ```php
+use PHPUnit\Framework\Attributes\Test;
 use Sajya\Server\Testing\MakesRpcRequests;
 use Tests\TestCase;
 
@@ -62,7 +63,8 @@ class TennisTest extends TestCase
         $this->withRpcEndpoint(route('rpc.endpoint'));
     }
 
-    public function test_ping(): void
+    #[Test]
+    public function ping(): void
     {
         $this->rpc('tennis@ping')
             ->assertOk()

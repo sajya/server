@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\Test;
 use Sajya\Server\Http\Parser;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Tests\TestCase;
 
 class ParserTest extends TestCase
 {
-    public function testValidJson(): void
+    #[Test]
+    public function validJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}';
 
@@ -19,7 +21,8 @@ class ParserTest extends TestCase
         $this->assertFalse($content->isError());
     }
 
-    public function testInvalidJson(): void
+    #[Test]
+    public function invalidJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], id: 1';
 
@@ -28,7 +31,8 @@ class ParserTest extends TestCase
         $this->assertTrue($content->isError());
     }
 
-    public function testBatchJson(): void
+    #[Test]
+    public function batchJson(): void
     {
         $json = '[{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}]';
 
@@ -37,7 +41,8 @@ class ParserTest extends TestCase
         $this->assertTrue($content->isBatch());
     }
 
-    public function testNotBatchJson(): void
+    #[Test]
+    public function notBatchJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}';
 
@@ -46,7 +51,8 @@ class ParserTest extends TestCase
         $this->assertFalse($content->isBatch());
     }
 
-    public function testParserMakeRequest(): void
+    #[Test]
+    public function parserMakeRequest(): void
     {
         $json = '[{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}]';
 
@@ -63,7 +69,8 @@ class ParserTest extends TestCase
         $this->assertEquals([42, 23], $request->getParams()->toArray());
     }
 
-    public function testNotificationJson(): void
+    #[Test]
+    public function notificationJson(): void
     {
         $json = '{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23]}';
 
@@ -72,7 +79,8 @@ class ParserTest extends TestCase
         $this->assertTrue($content->isNotification());
     }
 
-    public function testBathNotificationJson(): void
+    #[Test]
+    public function bathNotificationJson(): void
     {
         $json = '[
             {"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1},

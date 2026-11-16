@@ -6,6 +6,7 @@ namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use Sajya\Server\Facades\RPC;
 use Sajya\Server\Tests\FixtureBind;
@@ -19,11 +20,12 @@ class ExpectedTest extends TestCase
     /**
      * Test with debug true and response structure validation
      */
-    public function testAbortWithDebugTrue(): void
+    #[Test]
+    public function abortWithDebugTrue(): void
     {
         config()->set('app.debug', true);
 
-        $response = $this->testHasCorrectRequestResponse('testAbort');
+        $response = $this->hasCorrectRequestResponse('testAbort');
 
         $response->assertJsonStructure([
             'id',
@@ -35,11 +37,12 @@ class ExpectedTest extends TestCase
     /**
      * Test with debug false and absence of error details
      */
-    public function testAbortWithDebugFalse(): void
+    #[Test]
+    public function abortWithDebugFalse(): void
     {
         config()->set('app.debug', false);
 
-        $response = $this->testHasCorrectRequestResponse('testAbort');
+        $response = $this->hasCorrectRequestResponse('testAbort');
         $result = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertArrayNotHasKey('file', $result);
@@ -52,7 +55,8 @@ class ExpectedTest extends TestCase
     /**
      * Test logging for batch notification sum
      */
-    public function testBatchNotificationSum(): void
+    #[Test]
+    public function batchNotificationSum(): void
     {
         Log::shouldReceive('info')
             ->twice()
@@ -62,13 +66,14 @@ class ExpectedTest extends TestCase
         Log::shouldReceive('error')
             ->never();
 
-        $this->testHasCorrectRequestResponse('testBatchNotificationSum');
+        $this->hasCorrectRequestResponse('testBatchNotificationSum');
     }
 
     /**
      * Test logging for single notification sum
      */
-    public function testNotificationSum(): void
+    #[Test]
+    public function notificationSum(): void
     {
         Log::shouldReceive('info')
             ->once()
@@ -77,17 +82,18 @@ class ExpectedTest extends TestCase
         Log::shouldReceive('error')
             ->never();
 
-        $this->testHasCorrectRequestResponse('testNotificationSum');
+        $this->hasCorrectRequestResponse('testNotificationSum');
     }
 
     /**
      * Test provider with exception response validation
      */
-    public function testReportException(): void
+    #[Test]
+    public function reportException(): void
     {
         $this->assertNull(config('render-response-exception'));
 
-        $this->testHasCorrectRequestResponse('testReportException');
+        $this->hasCorrectRequestResponse('testReportException');
 
         $this->assertStringContainsString('Enabled', config('render-response-exception'));
     }
@@ -95,21 +101,23 @@ class ExpectedTest extends TestCase
     /**
      * Test with rewritten binding for subtraction
      */
-    public function testBindSubtractRewriteBind(): void
+    #[Test]
+    public function bindSubtractRewriteBind(): void
     {
         RPC::bind('a', fn () => 100);
 
-        $this->testHasCorrectRequestResponse('testBindSubtractRewriteBind');
+        $this->hasCorrectRequestResponse('testBindSubtractRewriteBind');
     }
 
     /**
      * Test model binding for fixture
      */
-    public function testBindModel(): void
+    #[Test]
+    public function bindModel(): void
     {
         RPC::model('fixtureModel', FixtureBind::class);
 
-        $this->testHasCorrectRequestResponse('testBindModel');
+        $this->hasCorrectRequestResponse('testBindModel');
     }
 
     /**
@@ -147,7 +155,8 @@ class ExpectedTest extends TestCase
     #[TestWith(['testBindDeepValue'])]
     #[TestWith(['testBindSubtract'])]
     #[TestWith(['testProxyMethod'])]
-    public function testHasCorrectRequestResponse(string $path, string $route = 'rpc.point'): TestResponse
+    #[Test]
+    public function hasCorrectRequestResponse(string $path, string $route = 'rpc.point'): TestResponse
     {
         $request = file_get_contents(self::REQUESTS_PATH."$path.json");
         $response = file_get_contents(self::RESPONSES_PATH."$path.json");

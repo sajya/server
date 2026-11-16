@@ -7,6 +7,7 @@ namespace Sajya\Server\Tests\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use LogicException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use Sajya\Server\Testing\MakesRpcRequests;
 use Sajya\Server\Tests\TestCase;
@@ -15,7 +16,8 @@ class MakesRpcRequestsTest extends TestCase
 {
     use MakesRpcRequests;
 
-    public function testCallsAnRpcMethod(): void
+    #[Test]
+    public function callsAnRpcMethod(): void
     {
         $this->withRpcEndpoint(route('rpc.point'))
             ->rpc('fixture@ok')
@@ -24,7 +26,8 @@ class MakesRpcRequestsTest extends TestCase
             ->assertJsonMissingPath('error');
     }
 
-    public function testPassesNamedParameters(): void
+    #[Test]
+    public function passesNamedParameters(): void
     {
         $this->withRpcEndpoint(route('rpc.point'))
             ->rpc('binding@subtract', ['a' => 42, 'b' => 23])
@@ -32,7 +35,8 @@ class MakesRpcRequestsTest extends TestCase
             ->assertJsonPath('result', 19);
     }
 
-    public function testPassesPositionalParameters(): void
+    #[Test]
+    public function passesPositionalParameters(): void
     {
         $this->withRpcEndpoint(route('rpc.point'))
             ->rpc('fixture@subtract', [42, 23])
@@ -45,7 +49,8 @@ class MakesRpcRequestsTest extends TestCase
     #[TestWith([['a' => 42, 'b' => 23], 'request-1'])]
     #[TestWith([[], '0'])]
     #[TestWith([[], null])]
-    public function testPreservesTheRequestPayload(array $params, string|int|null $id): void
+    #[Test]
+    public function preservesTheRequestPayload(array $params, string|int|null $id): void
     {
         Route::post('/rpc/inspect', fn (Request $request) => $request->json()->all());
 
@@ -59,7 +64,8 @@ class MakesRpcRequestsTest extends TestCase
             ]);
     }
 
-    public function testReturnsHttpErrorsWithoutAssertions(): void
+    #[Test]
+    public function returnsHttpErrorsWithoutAssertions(): void
     {
         Route::post('/rpc/forbidden', fn () => response('Forbidden', 403));
 
@@ -69,7 +75,8 @@ class MakesRpcRequestsTest extends TestCase
             ->assertContent('Forbidden');
     }
 
-    public function testReturnsRpcErrors(): void
+    #[Test]
+    public function returnsRpcErrors(): void
     {
         $this->withRpcEndpoint(route('rpc.point'))
             ->rpc('missing@method')
@@ -78,7 +85,8 @@ class MakesRpcRequestsTest extends TestCase
             ->assertJsonMissingPath('result');
     }
 
-    public function testRequiresAnEndpoint(): void
+    #[Test]
+    public function requiresAnEndpoint(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Set the RPC endpoint using withRpcEndpoint() before making a request.');

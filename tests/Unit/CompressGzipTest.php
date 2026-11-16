@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\Test;
 use Sajya\Server\Testing\MakesRpcRequests;
 use Sajya\Server\Tests\TestCase;
 
@@ -11,7 +12,8 @@ class CompressGzipTest extends TestCase
 {
     use MakesRpcRequests;
 
-    public function testSendAcceptCompressResponse(): void
+    #[Test]
+    public function sendAcceptCompressResponse(): void
     {
         $response = $this->json('POST', route('rpc.compress'), [
             'jsonrpc' => '2.0',
@@ -30,7 +32,8 @@ class CompressGzipTest extends TestCase
         $this->assertStringContainsString('"result":"Ok"', $content);
     }
 
-    public function testSendWithoutCompressResponse(): void
+    #[Test]
+    public function sendWithoutCompressResponse(): void
     {
         $this
             ->withRpcEndpoint(route('rpc.compress'))

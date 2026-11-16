@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\Test;
 use Sajya\Server\Http\Request;
 use Sajya\Server\Tests\TestCase;
 
 class RequestTest extends TestCase
 {
-    public function testFillableRequest(): void
+    #[Test]
+    public function fillableRequest(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
@@ -24,7 +26,8 @@ class RequestTest extends TestCase
         $this->assertEquals([42, 23], $request->getParams()->toArray());
     }
 
-    public function testRevertRequest(): void
+    #[Test]
+    public function revertRequest(): void
     {
         $request = tap(new Request, static function (Request $request) {
             $request->setId(1);
