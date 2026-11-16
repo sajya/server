@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests\Unit;
 
-use Sajya\Server\Testing\ProceduralRequests;
+use Sajya\Server\Testing\MakesRpcRequests;
 use Sajya\Server\Tests\TestCase;
 
 class CompressGzipTest extends TestCase
 {
-    use ProceduralRequests;
+    use MakesRpcRequests;
 
     public function testSendAcceptCompressResponse(): void
     {
@@ -33,8 +33,10 @@ class CompressGzipTest extends TestCase
     public function testSendWithoutCompressResponse(): void
     {
         $this
-            ->setRpcRoute('rpc.compress')
-            ->callProcedure('fixture@ok')
+            ->withRpcEndpoint(route('rpc.compress'))
+            ->rpc('fixture@ok')
+            ->assertOk()
+            ->assertHeader('content-type', 'application/json')
             ->assertHeaderMissing('content-encoding')
             ->assertJsonFragment([
                 'result' => 'Ok',

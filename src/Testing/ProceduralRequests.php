@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Testing;
 
+use Deprecated;
 use Illuminate\Testing\TestResponse;
 
+/**
+ * @deprecated Use MakesRpcRequests instead.
+ */
+#[Deprecated(message: 'Use MakesRpcRequests instead.')]
 trait ProceduralRequests
 {
     /**
