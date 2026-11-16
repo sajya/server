@@ -6,6 +6,8 @@ namespace Sajya\Server\Tests\Unit;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Sajya\Server\App;
+use Sajya\Server\Http\Request;
 use Sajya\Server\Tests\TestCase;
 
 class ArtisanTest extends TestCase
@@ -19,6 +21,14 @@ class ArtisanTest extends TestCase
             ->assertOk();
 
         $this->assertFileExists(app_path("Http/Procedures/$name.php"));
+
+        require app_path("Http/Procedures/$name.php");
+
+        $class = "App\\Http\\Procedures\\$name";
+        $guide = new App([$class]);
+        $request = (new Request)->setMethod($name.'@handle');
+
+        $this->assertSame($class.'@handle', $guide->findProcedure($request));
     }
 
     public function testArtisanMakeDocs(): void

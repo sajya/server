@@ -11,6 +11,7 @@ use Illuminate\Support\Stringable;
 use ReflectionClass;
 use ReflectionMethod;
 use Sajya\Server\Annotations\Param;
+use Sajya\Server\Attributes\Procedure;
 use Sajya\Server\Attributes\RpcMethod;
 
 class Docs
@@ -44,7 +45,7 @@ class Docs
         return collect($this->procedures)
             ->map(function (string $class) {
                 $reflectionClass = new ReflectionClass($class);
-                $name = $reflectionClass->getProperty('name')->getValue();
+                $name = Procedure::name($class);
 
                 return collect($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC))
                     ->map(function (ReflectionMethod $method) use ($name) {

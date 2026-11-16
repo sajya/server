@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Sajya\Server\Tests;
 
+use Sajya\Server\Attributes\Procedure;
 use Sajya\Server\Attributes\RpcMethod;
-use Sajya\Server\Procedure;
 
-class FixtureDocsProcedure extends Procedure
+#[Procedure('docs')]
+class FixtureDocsProcedure
 {
-    /**
-     * The name of the procedure that will be
-     * displayed and taken into account in the search.
-     *
-     * @var string
-     */
-    public static string $name = 'docs';
-
     #[
         RpcMethod(
             description: 'Execute the procedure.',

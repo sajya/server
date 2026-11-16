@@ -7,20 +7,15 @@ namespace Sajya\Server\Tests;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Sajya\Server\Attributes\Procedure;
 use Sajya\Server\Exceptions\InvalidRequestException;
 use Sajya\Server\Exceptions\RuntimeRpcException;
-use Sajya\Server\Procedure;
 use Sajya\Server\Tests\Fixture\RenderResponseException;
 use Sajya\Server\Tests\Fixture\ReportException;
 
-class FixtureProcedure extends Procedure
+#[Procedure('fixture')]
+class FixtureProcedure
 {
-    /**
-     * The name of the procedure that will be
-     * displayed and taken into account in the search.
-     */
-    public static string $name = 'fixture';
-
     private Repository $config;
 
     /**

@@ -57,6 +57,8 @@ jobs:
           tools: composer:v2
 
       - name: Install dependencies
+        env:
+          COMPOSER_NO_SECURITY_BLOCKING: ${{ (matrix.laravel == '10.*' || matrix.laravel == '11.*') && '1' || '0' }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction

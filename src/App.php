@@ -7,8 +7,8 @@ namespace Sajya\Server;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App as LaravelApplication;
 use Illuminate\Support\Str;
-use ReflectionClass;
 use ReflectionMethod;
+use Sajya\Server\Attributes\Procedure;
 use Sajya\Server\Exceptions\MaxBatchSizeExceededException;
 use Sajya\Server\Exceptions\MethodNotFound;
 use Sajya\Server\Http\Parser;
@@ -45,11 +45,7 @@ class App
     public function __construct(array $procedures = [], ?string $delimiter = null)
     {
         $this->map = collect($procedures)
-            ->each(fn (string $class) => abort_unless(
-                is_subclass_of($class, Procedure::class),
-                500,
-                "Class '$class' must extends ".Procedure::class
-            ));
+            ->each(fn (string $class) => Procedure::name($class));
         $this->delimiter = $delimiter ?? config('sajya.delimiter', self::DEFAULT_DELIMITER);
     }
 
@@ -133,23 +129,11 @@ class App
         $method = Str::afterLast($request->getMethod(), $this->delimiter);
 
         return $this->map
-            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => Procedure::name($procedure) === $class)
             ->filter(fn (string $procedure) => $this->checkExistPublicMethod($procedure, $method))
             ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.$method))
             ->whenEmpty(fn (Collection $collection) => $collection->push($this->findProxy($class)))
             ->first();
-    }
-
-    /**
-     * Get the name of the procedure for the given class.
-     *
-     * @param string $procedure
-     *
-     * @return string
-     */
-    private function getProcedureName(string $procedure): string
-    {
-        return (new ReflectionClass($procedure))->getStaticPropertyValue('name');
     }
 
     /**
@@ -175,7 +159,7 @@ class App
     public function findProxy(string $class): ?string
     {
         return $this->map
-            ->filter(fn (string $procedure) => $this->getProcedureName($procedure) === $class)
+            ->filter(fn (string $procedure) => Procedure::name($procedure) === $class)
             ->filter(fn (string $procedure) => is_subclass_of($procedure, Proxy::class))
             ->map(fn (string $procedure) => Str::finish($procedure, self::DEFAULT_DELIMITER.'__invoke'))
             ->first();
